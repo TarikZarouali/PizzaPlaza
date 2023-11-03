@@ -1,0 +1,74 @@
+<button class="btn btn--primary" aria-controls="drawer-cart-id">Show Cart</button>
+
+<div class="drawer dr-cart js-drawer" id="drawer-cart-id">
+  <div class="drawer__content bg-light inner-glow shadow-md flex flex-column" role="alertdialog" aria-labelledby="drawer-cart-title">
+    <header class="flex items-center justify-between flex-shrink-0 border-bottom border-contrast-lower padding-x-sm padding-y-xs">
+      <h1 id="drawer-cart-title" class="text-base text-truncate" >Your Cart (2)</h1>
+
+      <button class="reset drawer__close-btn js-drawer__close js-tab-focus">
+        <svg class="icon icon--xs" viewBox="0 0 16 16"><title>Close drawer panel</title><g stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"><line x1="13.5" y1="2.5" x2="2.5" y2="13.5"></line><line x1="2.5" y1="2.5" x2="13.5" y2="13.5"></line></g></svg>
+      </button>
+    </header>
+
+    <div class="drawer__body padding-x-sm padding-bottom-sm js-drawer__body">
+      <ol>
+        <li class="dr-cart__product">
+          <a href="#0" class="dr-cart__img"><img src="../../../app/assets/img/cart-drawer-img-1.jpg" alt="Image description"></a>
+
+          <div>
+            <h2 class="text-sm"><a href="#0" class="color-inherit">Product One</a></h2>
+            <p class="text-sm color-contrast-medium margin-top-xxxs">Color: Black, Size: M</p>
+
+            <div class="margin-top-xxxs">
+              <div class="select dr-cart__select">
+                <select class="select__input btn btn--subtle" name="select-product-qty-1" id="select-product-qty-1" data-label="Select product quantity">
+                  <option value="0">1</option>
+                  <option value="1">2</option>
+                  <option value="2">3</option>
+                </select>
+                
+                <svg class="icon select__icon" aria-hidden="true" viewBox="0 0 16 16"><polyline points="1 5 8 12 15 5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-right">
+            <p class="text-sm color-contrast-higher">$49.00</p>
+            <button class="dr-cart__remove-btn margin-top-xxxs">Remove</button>
+          </div>
+        </li>
+
+        <li class="dr-cart__product">
+          <a href="#0" class="dr-cart__img"><img src="../../../app/assets/img/cart-drawer-img-1.jpg" alt="Image description"></a>
+
+          <div>
+            <h2 class="text-sm"><a href="#0" class="color-inherit">Product Two</a></h2>
+            <p class="text-sm color-contrast-medium margin-top-xxxs">Color: Black, Size: M</p>
+
+            <div class="margin-top-xxxs">
+              <div class="select dr-cart__select">
+                <select class="select__input btn btn--subtle" name="select-product-qty-2" id="select-product-qty-2" data-label="Select product quantity">
+                  <option value="0">1</option>
+                  <option value="1">2</option>
+                  <option value="2">3</option>
+                </select>
+                
+                <svg class="icon select__icon" aria-hidden="true" viewBox="0 0 16 16"><polyline points="1 5 8 12 15 5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-right">
+            <p class="text-sm color-contrast-higher">$49.00</p>
+            <button class="dr-cart__remove-btn margin-top-xxxs">Remove</button>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <footer class="padding-x-sm padding-y-xs border-top border-contrast-lower flex-shrink-0">
+      <p class="text-sm flex justify-between"><span>Subtotal:</span> <span>$98.00</span></p>
+      <a href="#0" class="btn btn--primary btn--md width-100% margin-top-xs">Checkout &rarr;</a>
+    </footer>
+  </div>
+</div>

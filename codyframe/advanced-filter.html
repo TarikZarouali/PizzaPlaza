@@ -1,0 +1,385 @@
+<section class="adv-filter padding-y-lg js-adv-filter">
+  <div class="container max-width-adaptive-lg">
+    <div class="margin-bottom-md hide@md no-js:is-hidden">
+      <button class="btn btn--subtle width-100%" aria-controls="filter-panel">Show filters</button>
+    </div>
+  
+    <div class="flex@md">
+      <aside id="filter-panel" class="sidebar sidebar--static@md js-sidebar"  aria-labelledby="filter-panel-title">
+        <div class="sidebar__panel max-width-100% width-100%">
+          <header class="sidebar__header bg padding-y-sm padding-x-md border-bottom z-index-2">
+            <h1 class="text-md text-truncate" id="filter-panel-title">Filters</h1>
+      
+            <button class="reset sidebar__close-btn js-sidebar__close-btn js-tab-focus">
+              <svg class="icon icon--xs" viewBox="0 0 16 16"><title>Close panel</title><g stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"><line x1="13.5" y1="2.5" x2="2.5" y2="13.5"></line><line x1="2.5" y1="2.5" x2="13.5" y2="13.5"></line></g></svg>
+            </button>
+          </header>
+      
+          <form class="position-relative z-index-1 js-adv-filter__form">
+            <div class="padding-md padding-0@md margin-bottom-sm@md">
+              <button class="reset text-sm color-contrast-high text-underline cursor-pointer margin-bottom-sm text-xs@md js-adv-filter__reset js-tab-focus" type="reset">Reset all filters</button>
+
+              <div class="search-input search-input--icon-left text-sm@md">
+                <input class="search-input__input form-control" type="search" name="search-products" id="search-products" placeholder="Try category 1..." aria-label="Search" data-filter="searchInput" aria-controls="adv-filter-gallery">
+
+                <button class="search-input__btn">
+                  <svg class="icon" viewBox="0 0 20 20"><title>Submit</title><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="8" cy="8" r="6"/><line x1="12.242" y1="12.242" x2="18" y2="18"/></g></svg>
+                </button>
+              </div>
+            </div>
+
+            <ul class="accordion js-accordion" data-animation="on" data-multi-items="on">
+              <li class="accordion__item accordion__item--is-open js-accordion__item js-adv-filter__item" data-default-text="All" data-multi-select-text="{n} filters selected">
+                <button class="reset accordion__header padding-y-sm padding-x-md padding-x-xs@md js-tab-focus" type="button">
+                  <div>
+                    <div class="text-sm@md">Checkboxes</div>
+                    <div class="text-sm color-contrast-low"><i class="sr-only">Active filters: </i><span class="js-adv-filter__selection">All</span></div>
+                  </div>
+
+                  <svg class="icon accordion__icon-arrow-v2 no-js:is-hidden" viewBox="0 0 20 20">
+                    <g class="icon__group" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="3" y1="3" x2="17" y2="17"/>
+                      <line x1="17" y1="3" x2="3" y2="17"/>
+                    </g>
+                  </svg>
+                </button>
+            
+                <div class="accordion__panel js-accordion__panel">
+                  <div class="padding-top-xxxs padding-x-md padding-bottom-md padding-x-xs@md">
+                    <div class="adv-filter__checkbox-list flex flex-column gap-xxxs js-read-more" aria-controls="adv-filter-gallery" data-btn-labels="Show More, Show Less" data-ellipsis="off" data-btn-class="reset text-sm text-underline cursor-pointer margin-top-xs js-tab-focus">
+                      <!-- 👆 aria-controls -> filter plugin -->
+                      <!-- 👆 data-btn-labels, data-ellipsis, data-btn-class -> read more component -->
+                      <div>
+                        <input class="checkbox" type="checkbox" id="checkbox-primary" data-filter="bg-primary">
+                        <label for="checkbox-primary">Primary</label>
+                      </div>
+              
+                      <div>
+                        <input class="checkbox" type="checkbox" id="checkbox-accent" data-filter="bg-accent">
+                        <label for="checkbox-accent">Accent</label>
+                      </div>
+                      
+                      <div class="js-read-more__content">
+                        <div class="flex flex-column gap-xxxs">
+                          <div>
+                            <input class="checkbox" type="checkbox" id="checkbox-contrast-lower" data-filter="bg-contrast-lower">
+                            <label for="checkbox-contrast-lower">ContrastLower</label>
+                          </div>
+                        
+                          <div>
+                            <input class="checkbox" type="checkbox" id="checkbox-contrast-higher" data-filter="bg-contrast-higher">
+                            <label for="checkbox-contrast-higher">ContrastHigher</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            
+              <li class="accordion__item js-accordion__item js-adv-filter__item" data-default-text="All">
+                <button class="reset accordion__header padding-y-sm padding-x-md padding-x-xs@md js-tab-focus" type="button">
+                  <div>
+                    <div class="text-sm@md">Radio Buttons</div>
+                    <div class="text-sm color-contrast-low"><i class="sr-only">Active filters: </i><span class="js-adv-filter__selection">All</span></div>
+                  </div>
+
+                  <svg class="icon accordion__icon-arrow-v2 no-js:is-hidden" viewBox="0 0 20 20">
+                    <g class="icon__group" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="3" y1="3" x2="17" y2="17"/>
+                      <line x1="17" y1="3" x2="3" y2="17"/>
+                    </g>
+                  </svg>
+                </button>
+            
+                <div class="accordion__panel js-accordion__panel">
+                  <div class="padding-top-xxxs padding-x-md padding-bottom-md padding-x-xs@md">
+                    <ul class="adv-filter__radio-list flex flex-column gap-xxxs" aria-controls="adv-filter-gallery">
+                      <li>
+                        <input class="radio" type="radio" name="radio-filter" id="radio-all" data-filter="*" checked>
+                        <label for="radio-all">All</label>
+                      </li>
+
+                      <li>
+                        <input class="radio" type="radio" name="radio-filter" id="radio-category-1" data-filter="category-1">
+                        <label for="radio-category-1">Category 1</label>
+                      </li>
+              
+                      <li>
+                        <input class="radio" type="radio" name="radio-filter" id="radio-category-2" data-filter="category-2">
+                        <label for="radio-category-2">Category 2</label>
+                      </li>
+              
+                      <li>
+                        <input class="radio" type="radio" name="radio-filter" id="radio-category-3" data-filter="category-3">
+                        <label for="radio-category-3">Category 3</label>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+            
+              <li class="accordion__item accordion__item--is-open js-accordion__item js-adv-filter__item" data-number-format="${n}">
+                <button class="reset accordion__header padding-y-sm padding-x-md padding-x-xs@md js-tab-focus" type="button">
+                  <div>
+                    <div class="text-sm@md">Input Range</div>
+                    <div class="text-sm color-contrast-low"><i class="sr-only">Active filters: </i><span class="js-adv-filter__selection">$0 - $100</span></div>
+                  </div>
+
+                  <svg class="icon accordion__icon-arrow-v2 no-js:is-hidden" viewBox="0 0 20 20">
+                    <g class="icon__group" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="3" y1="3" x2="17" y2="17"/>
+                      <line x1="17" y1="3" x2="3" y2="17"/>
+                    </g>
+                  </svg>
+                </button>
+            
+                <div class="accordion__panel js-accordion__panel">
+                  <div class="padding-top-xxxs padding-x-md padding-bottom-md padding-x-xs@md flex justify-center">
+                    <div class="slider slider--multi-value js-slider js-filter__custom-control" aria-controls="adv-filter-gallery" data-filter="priceRange">
+                      <div class="slider__range">
+                        <label class="sr-only" for="slider-min-value">Slider min value</label>
+                        <input class="slider__input" type="range" id="slider-min-value" name="slider-min-value" min="0" max="100" step="1" value="0">
+                      </div>
+                  
+                      <div class="slider__range">
+                        <label class="sr-only" for="slider-max-value">Slider max value</label>
+                        <input class="slider__input" type="range" id="slider-max-value" name="slider-max-value" min="0" max="100" step="1" value="100">
+                      </div>
+                  
+                      <div class="margin-top-xs text-center text-sm" aria-hidden="true">
+                        <span class="slider__value">$<span class="js-slider__value">0</span> - $<span class="js-slider__value">100</span></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            
+              <li class="accordion__item js-accordion__item js-adv-filter__item" data-default-text="All" data-multi-select-text="{n} filters selected" data-number-format="{n}+">
+                <button class="reset accordion__header padding-y-sm padding-x-md padding-x-xs@md js-tab-focus" type="button">
+                  <div>
+                    <div class="text-sm@md">Input Number</div>
+                    <div class="text-sm color-contrast-low"><i class="sr-only">Active filters: </i><span class="js-adv-filter__selection">All</span></div>
+                  </div>
+
+                  <svg class="icon accordion__icon-arrow-v2 no-js:is-hidden" viewBox="0 0 20 20">
+                    <g class="icon__group" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="3" y1="3" x2="17" y2="17"/>
+                      <line x1="17" y1="3" x2="3" y2="17"/>
+                    </g>
+                  </svg>
+                </button>
+            
+                <div class="accordion__panel js-accordion__panel">
+                  <div class="padding-top-xxxs padding-x-md padding-bottom-md padding-x-xs@md">
+                    <div class="flex justify-between items-center">
+                      <label class="text-sm" for="index-value">Quantity</label>
+
+                      <div class="number-input number-input--v2 js-number-input js-filter__custom-control" aria-controls="adv-filter-gallery" data-filter="indexValue">
+                        <input class="form-control text-sm@md js-number-input__value" type="number" name="index-value" id="index-value" min="0" max="10" step="1" value="0">
+                        
+                        <button class="reset number-input__btn number-input__btn--plus js-number-input__btn" aria-label="Increase Number">
+                          <svg class="icon" viewBox="0 0 12 12" aria-hidden="true"><path d="M11,5H7V1A1,1,0,0,0,5,1V5H1A1,1,0,0,0,1,7H5v4a1,1,0,0,0,2,0V7h4a1,1,0,0,0,0-2Z" /></svg>
+                        </button>
+                      
+                        <button class="reset number-input__btn number-input__btn--minus js-number-input__btn" aria-label="Decrease Number">
+                          <svg class="icon" viewBox="0 0 12 12" aria-hidden="true"><path d="M11,7H1A1,1,0,0,1,1,5H11a1,1,0,0,1,0,2Z"/></svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+              <li class="accordion__item accordion__item--is-open position-relative z-index-2 js-accordion__item js-adv-filter__item">
+                <button class="reset accordion__header padding-y-sm padding-x-md padding-x-xs@md js-tab-focus" type="button">
+                  <div>
+                    <div class="text-sm@md">Select</div>
+                    <div class="text-sm color-contrast-low"><i class="sr-only">Active filters: </i><span class="js-adv-filter__selection">All</span></div>
+                  </div>
+
+                  <svg class="icon accordion__icon-arrow-v2 no-js:is-hidden" viewBox="0 0 20 20">
+                    <g class="icon__group" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="3" y1="3" x2="17" y2="17"/>
+                      <line x1="17" y1="3" x2="3" y2="17"/>
+                    </g>
+                  </svg>
+                </button>
+            
+                <div class="accordion__panel js-accordion__panel">
+                  <div class="padding-top-xxxs padding-x-md padding-bottom-md padding-x-xs@md flex">
+                    <label class="sr-only" for="select-filter-option">Select Option:</label>
+                    
+                    <div class="select width-100% js-select" data-trigger-class="btn btn--subtle flex-grow">
+                      <!-- data-trigger-class -> custom select component 👆 -->
+                      <select name="select-filter-option" id="select-filter-option" aria-controls="adv-filter-gallery" data-filter="true">
+                        <option value="*" selected>All</option>
+                        <option value="true">True</option>
+                        <option value="false">False</option>
+                      </select>
+                      
+                      <svg class="icon icon--xxs margin-left-xxs" aria-hidden="true" viewBox="0 0 12 12"><path d="M10.947,3.276A.5.5,0,0,0,10.5,3h-9a.5.5,0,0,0-.4.8l4.5,6a.5.5,0,0,0,.8,0l4.5-6A.5.5,0,0,0,10.947,3.276Z"/></svg>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </form>
+        </div>
+      </aside>
+      
+      <main class="flex-grow padding-left-xl@md sidebar-loaded:show">
+        <div class="flex items-center justify-between margin-bottom-sm">
+          <p class="text-sm"><span class="js-adv-filter__results-count">12</span> results</p>
+
+          <div class="flex items-baseline">
+            <label class="text-sm color-contrast-medium margin-right-xs" for="select-sorting">Sort:</label>
+            
+            <div class="select inline-block js-select" data-trigger-class="reset text-sm color-contrast-high text-underline inline-flex items-center cursor-pointer js-tab-focus">
+              <!-- data-trigger-class -> custom select component 👆 -->
+              <select name="select-sorting" id="select-sorting" aria-controls="adv-filter-gallery" data-sort="true">
+                <option value="*" selected>No sorting</option>
+                <option value="index" data-sort-number="true">Index</option>
+                <option value="index" data-sort-order="desc" data-sort-number="true">Index Desc</option>
+              </select>
+              
+              <svg class="icon icon--xxxs margin-left-xxs" viewBox="0 0 8 8"><path d="M7.934,1.251A.5.5,0,0,0,7.5,1H.5a.5.5,0,0,0-.432.752l3.5,6a.5.5,0,0,0,.864,0l3.5-6A.5.5,0,0,0,7.934,1.251Z"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <ul class="grid gap-sm js-adv-filter__gallery" id="adv-filter-gallery">
+            <li class="col-6@xs bg-contrast-lower height-xxxxl flex flex-center padding-sm js-filter__item" data-filter="category-1 category-2 bg-contrast-lower false" data-sort-index="3" data-price="60" data-search="Category 1, Category 2">
+              <div class="flex gap-xxs flex-wrap justify-center">
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Category 1</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Category 2</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">ContrastLower</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Index 3</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">$60</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">False</span>
+              </div>
+            </li>
+
+            <li class="col-6@xs bg-primary height-xxxxl flex flex-center padding-sm js-filter__item" data-filter="category-2 bg-primary true" data-sort-index="1" data-price="40" data-search="Category 2">
+              <div class="flex gap-xxs flex-wrap justify-center">
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Category 2</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Primary</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Index 1</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">$40</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">True</span>
+              </div>
+            </li>
+
+            <li class="col-6@xs bg-accent height-xxxxl flex flex-center padding-sm js-filter__item" data-filter="category-1 bg-accent true" data-sort-index="2" data-price="50" data-search="Category 1">
+              <div class="flex gap-xxs flex-wrap justify-center">
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Category 1</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Accent</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Index 2</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">$50</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">True</span>
+              </div>
+            </li>
+          
+            <li class="col-6@xs bg-contrast-higher height-xxxxl flex flex-center padding-sm js-filter__item" data-filter="category-1 bg-contrast-higher false" data-sort-index="8" data-price="10" data-search="Category 1">
+              <div class="flex gap-xxs flex-wrap justify-center">
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Category 1</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">ContrastHigher</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Index 8</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">$10</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">False</span>
+              </div>
+            </li>
+          
+            <li class="col-6@xs bg-primary height-xxxxl flex flex-center padding-sm js-filter__item" data-filter="category-3 bg-primary true" data-sort-index="5" data-price="80" data-search="Category 3">
+              <div class="flex gap-xxs flex-wrap justify-center">
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Category 3</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Primary</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Index 5</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">$80</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">True</span>
+              </div>
+            </li>
+          
+            <li class="col-6@xs bg-accent height-xxxxl flex flex-center padding-sm js-filter__item" data-filter="category-1 category-3 bg-accent false" data-sort-index="7" data-price="20" data-search="Category 1, Category 3">
+              <div class="flex gap-xxs flex-wrap justify-center">
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Category 1</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Category 3</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Accent</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Index 7</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">$20</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">False</span>
+              </div>
+            </li>
+          
+            <li class="col-6@xs bg-contrast-lower height-xxxxl flex flex-center padding-sm js-filter__item" data-filter="category-2 category-3 bg-contrast-lower true" data-sort-index="6" data-price="30" data-search="Category 2, Category 3">
+              <div class="flex gap-xxs flex-wrap justify-center">
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Category 2</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Category 3</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">ContrastLower</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Index 6</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">$30</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">True</span>
+              </div>
+            </li>
+          
+            <li class="col-6@xs bg-contrast-lower height-xxxxl flex flex-center padding-sm js-filter__item" data-filter="category-1 category-2 bg-contrast-lower false" data-sort-index="10" data-price="55" data-search="Category 1, Category 2">
+              <div class="flex gap-xxs flex-wrap justify-center">
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Category 1</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Category 2</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">ContrastLower</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Index 10</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">$55</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">False</span>
+              </div>
+            </li>
+          
+            <li class="col-6@xs bg-primary height-xxxxl flex flex-center padding-sm js-filter__item" data-filter="category-2 bg-primary true" data-sort-index="11" data-price="43" data-search="Category 2">
+              <div class="flex gap-xxs flex-wrap justify-center">
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Category 2</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Primary</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Index 11</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">$43</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">True</span>
+              </div>
+            </li>
+          
+            <li class="col-6@xs bg-primary height-xxxxl flex flex-center padding-sm js-filter__item" data-filter="category-3 bg-primary false" data-sort-index="9" data-price="65" data-search="Category 3">
+              <div class="flex gap-xxs flex-wrap justify-center">
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Category 3</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Primary</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Index 9</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">$65</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">False</span>
+              </div>
+            </li>
+          
+            <li class="col-6@xs bg-primary height-xxxxl flex flex-center padding-sm js-filter__item" data-filter="category-3 bg-primary true" data-sort-index="4" data-price="31" data-search="Category 3">
+              <div class="flex gap-xxs flex-wrap justify-center">
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Category 3</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Primary</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Index 4</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">$31</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">True</span>
+              </div>
+            </li>
+          
+            <li class="col-6@xs bg-contrast-higher height-xxxxl flex flex-center padding-sm js-filter__item" data-filter="category-3 bg-contrast-higher true" data-sort-index="5" data-price="10" data-search="Category 3">
+              <div class="flex gap-xxs flex-wrap justify-center">
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Category 3</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">ContrastHigher</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">Index 5</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">$10</span>
+                <span class="bg-contrast-higher bg-opacity-70% color-bg text-sm padding-y-xxxxs padding-x-xxxs radius-md">True</span>
+              </div>
+            </li>
+          </ul>
+          
+          <div class="margin-top-md" data-fallback-gallery-id="adv-filter-gallery">
+            <p class="color-contrast-medium text-center">No results</p>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</section>

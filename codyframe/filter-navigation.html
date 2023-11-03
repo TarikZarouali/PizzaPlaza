@@ -1,0 +1,38 @@
+<div class="filter-nav filter-nav--v1 filter-nav--expanded js-filter-nav">
+  <button class="reset btn btn--subtle is-hidden js-filter-nav__control" aria-label="Select a filter option" aria-controls="filter-nav">
+    <span class="js-filter-nav__placeholder" aria-hidden="true">All Products</span>
+
+    <svg class="icon icon--xxs margin-left-xxs" aria-hidden="true" viewBox="0 0 12 12"><polyline points="1 4 6 9 11 4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+  </button>
+
+  <div class="filter-nav__wrapper js-filter-nav__wrapper" id="filter-nav">
+    <nav class="filter-nav__nav justify-center js-filter-nav__nav">
+      <ul class="filter-nav__list js-filter-nav__list" aria-controls="product-gallery">
+        <li class="filter-nav__item">
+          <button class="reset filter-nav__btn js-filter-nav__btn js-tab-focus" aria-current="true" data-filter="*">All Products</button>
+        </li>
+        
+        <li class="filter-nav__item">
+          <button class="reset filter-nav__btn js-filter-nav__btn js-tab-focus" data-filter="coffee-mugs">Coffe mugs</button>
+        </li>
+      
+        <li class="filter-nav__item">
+          <button class="reset filter-nav__btn js-filter-nav__btn js-tab-focus" data-filter="tea-mugs">Tea mugs</button>
+        </li>
+      
+        <li class="filter-nav__item">
+          <button class="reset filter-nav__btn js-filter-nav__btn js-tab-focus" data-filter="premium-mugs">Premium mugs</button>
+        </li>
+      
+        <li class="filter-nav__item">
+          <button class="reset filter-nav__btn js-filter-nav__btn js-tab-focus" data-filter="others">Others</button>
+        </li>
+      <li class="filter-nav__marker js-filter-nav__marker" aria-hidden="true"></li>
+      </ul>
+
+      <button class="reset filter-nav__close-btn is-hidden js-filter-nav__close-btn js-tab-focus" aria-label="Close navigation">
+        <svg class="icon icon--xs" viewBox="0 0 16 16"><title>Close drawer panel</title><g stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"><line x1="13.5" y1="2.5" x2="2.5" y2="13.5"></line><line x1="2.5" y1="2.5" x2="13.5" y2="13.5"></line></g></svg>
+      </button>
+    </nav>
+  </div>
+</div>

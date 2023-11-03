@@ -1,26 +1,30 @@
 <?php require APPROOT . '/views/includes/head.php'; ?>
 
-<!DOCTYPE html>
-<html lang="en">
+<div class="container">
+    <div class="text-center">
+        <h1>Choose a store</h1>
+    </div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-</head>
+    <div class="grid gap-md">
+        <?php foreach ($data['Stores'] as $store) { ?>
+            <div class="card col-4">
+                <div class="padding-xs">
+                    <h4><?= $store->storeCity ?></h4>
 
-<body>
+                    <p class="margin-top-xs margin-bottom-sm text-sm color-contrast-medium line-height-md">
+                        <?= $store->storeStreetName . ' ' . $store->storeZipCode ?>
+                    </p>
+                    <p class="margin-top-xs margin-bottom-sm text-sm color-contrast-medium line-height-md">
+                        <?= $store->storePhone ?>
+                    </p>
 
-    <h1>welkom medewerker</h1>
+                    <footer>
+                        <a href="<?= URLROOT; ?>storesController/index/<?= $store->storeId ?>" class="btn btn--primary text-sm">Go to shop</a>
+                    </footer>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
+</div>
 
-
-    <a class="btn btn-info" style="width:50rem; font-size:2rem;" href="<?= URLROOT; ?>schoolscontroller/index/1">School</a>
-
-    <?php require APPROOT . '/views/includes/footer.php'; ?>
-
-
-</body>
-
-</html>
+<?php require APPROOT . '/views/includes/footer.php'; ?>

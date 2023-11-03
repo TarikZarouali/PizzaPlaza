@@ -17,8 +17,8 @@ class Core
             //destroy the first part of the url after the the urlroot
             // unset($url[0]);
         }
-        
-        
+
+
         //if the controller doesn't exist then change the controller to $currentController
         require_once APPROOT . '/controllers/' . $this->currentController . '.php';
         //instantiate the controllerClass
@@ -32,18 +32,19 @@ class Core
             }
         }
 
-        $this->params = $url ? [$url[2]]: [];
+        $this->params = $url ? [$url[2]] : [];
 
         call_user_func_array([$this->currentController, $this->currentMethod], $this->params);
     }
 
-    public function getUrl() {
+    public function getUrl()
+    {
         //$_GET['url'] comes from the /public/.htaccess line 7
         $incoming = $_SERVER['REQUEST_URI'];
 
         // 20230224 - forgive me, but PHP + apache mod_rewrite is just no fun...
         // especially on a Friday! 
-        $incoming = str_replace("/school/", "", $incoming);
+        $incoming = str_replace("/pizzaplaza/", "", $incoming);
         if (isset($incoming)) {
             //remove the backslash from the front of the url
             $incoming = trim($incoming, "/");
