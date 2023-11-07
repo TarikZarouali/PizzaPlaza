@@ -1,4 +1,5 @@
 <script src="<?= URLROOT; ?>/assets/js/scripts.js"></script>
-</body>
+<script src="<?= URLROOT; ?>/public/js/app.js"> </script>
+< /body>
 
-</html>
+    < /html>

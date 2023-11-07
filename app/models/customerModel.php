@@ -14,7 +14,7 @@ class customerModel
     public function getActiveCustomers()
     {
         try {
-            $getCustomersQuery = "SELECT `customerId`, `customerType`, `customerFirstName`, `customerLastName`, `customerEmail`, `customerPhone`, `customerAddress`, `customerZipCode`, `customerCreateDate`, `customerIsActive` FROM `customers` WHERE customerIsActive = 1";
+            $getCustomersQuery = 'SELECT `customerId`, `customerType`, `customerFirstName`, `customerLastName`, `customerEmail`, `customerPhone`, `customerAddress`, `customerZipCode`, `customerCreateDate`, `customerIsActive` FROM `customers` WHERE customerIsActive = 1';
 
             $this->db->query($getCustomersQuery);
 
@@ -22,15 +22,14 @@ class customerModel
 
             return $result ?? [];
         } catch (PDOException $ex) {
-            error_log("Error: Failed to get active customers from the database in class storeModel.");
-            die('Error: Failed to get active customers');
+            error_log('Error: Failed to get active customers from the database in class storeModel.');
         }
     }
 
     public function getCustomerById($customerId)
     {
         try {
-            $getCustomerQuery = "SELECT `customerId`, `customerType`, `customerFirstName`, `customerLastName`, `customerEmail`, `customerPhone`, `customerAddress`, `customerZipCode`, `customerCreateDate`, `customerIsActive` FROM `customers` WHERE `customerId` = :customerId";
+            $getCustomerQuery = 'SELECT `customerId`, `customerType`, `customerFirstName`, `customerLastName`, `customerEmail`, `customerPhone`, `customerAddress`, `customerZipCode`, `customerCreateDate`, `customerIsActive` FROM `customers` WHERE `customerId` = :customerId';
 
             $this->db->query($getCustomerQuery);
 
@@ -40,8 +39,7 @@ class customerModel
 
             return $result ?? null;
         } catch (PDOException $ex) {
-            error_log("Error: Failed to get customer by ID from the database");
-            die('Error: Failed to get customer by ID');
+            error_log('Error: Failed to get customer by ID from the database');
         }
     }
 
@@ -50,8 +48,8 @@ class customerModel
         global $var;
 
         try {
-            $createCustomerQuery = "INSERT INTO `customers` (`customerId`, `customerType`, `customerFirstName`, `customerLastName`, `customerEmail`, `customerPhone`, `customerAddress`, `customerZipCode`, `customerCreateDate`, `customerIsActive`) 
-                            VALUES (:customerId, :customerType, :customerFirstName, :customerLastName, :customerEmail, :customerPhone, :customerAddress, :customerZipCode, :customerCreateDate, 1)";
+            $createCustomerQuery = 'INSERT INTO `customers` (`customerId`, `customerType`, `customerFirstName`, `customerLastName`, `customerEmail`, `customerPhone`, `customerAddress`, `customerZipCode`, `customerCreateDate`, `customerIsActive`) 
+                            VALUES (:customerId, :customerType, :customerFirstName, :customerLastName, :customerEmail, :customerPhone, :customerAddress, :customerZipCode, :customerCreateDate, 1)';
 
             $this->db->query($createCustomerQuery);
             $this->db->bind(':customerId', $var['rand']);
@@ -66,15 +64,14 @@ class customerModel
 
             return $this->db->execute();
         } catch (PDOException $ex) {
-            error_log("ERROR: Failed to create Customer");
-            die("ERROR: Failed to create Customer");
+            error_log('ERROR: Failed to create Customer');
         }
     }
 
     public function updateCustomer($customerId, $updatedCustomer)
     {
         try {
-            $updateCustomerQuery = "UPDATE `customers` 
+            $updateCustomerQuery = 'UPDATE `customers` 
                                SET `customerType` = :customerType,
                                    `customerFirstName` = :customerFirstName,
                                    `customerLastName` = :customerLastName,
@@ -82,7 +79,7 @@ class customerModel
                                    `customerPhone` = :customerPhone,
                                    `customerAddress` = :customerAddress,
                                    `customerZipCode` = :customerZipCode
-                                WHERE `customerId` = :customerId";
+                                WHERE `customerId` = :customerId';
 
             $this->db->query($updateCustomerQuery);
             $this->db->bind(':customerId', $customerId);
@@ -96,30 +93,29 @@ class customerModel
 
             return $this->db->execute();
         } catch (PDOException $ex) {
-            error_log("Error: Failed to update customer");
-            die('Error: Failed to update customer');
+            error_log('Error: Failed to update customer');
         }
     }
 
     public function deleteCustomer($customerId)
     {
         try {
-            $deleteCustomerQuery = "UPDATE `customers` 
-                                SET `customerIsActive` = '0' 
-                                WHERE `customers`.`customerId` = :customerId";
+            $deleteCustomerQuery = 'UPDATE `customers` 
+                                SET `customerIsActive` = 0 
+                                WHERE `customers`.`customerId` = :customerId';
             $this->db->query($deleteCustomerQuery);
             $this->db->bind(':customerId', $customerId);
 
             // Execute the query
             if ($this->db->execute()) {
-                error_log("INFO: Customer has been marked as inactive");
+                error_log('INFO: Customer has been marked as inactive');
                 return true;
             } else {
-                error_log("ERROR: Customer could not be marked as inactive");
+                error_log('ERROR: Customer could not be marked as inactive');
                 return false;
             }
         } catch (PDOException $ex) {
-            error_log("ERROR: Exception occurred while marking the customer as inactive: " . $ex->getMessage());
+            error_log('ERROR: Exception occurred while marking the customer as inactive: ' . $ex->getMessage());
             return false;
         }
     }

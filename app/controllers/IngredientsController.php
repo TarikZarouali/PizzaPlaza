@@ -9,7 +9,7 @@ class IngredientsController extends Controller
         $this->ingredientModel = $this->model('ingredientModel');
     }
 
-    public function index()
+    public function overview()
     {
 
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -18,7 +18,7 @@ class IngredientsController extends Controller
                 'Ingredients' => $getIngredients
             ];
 
-            $this->view('ingredients/index', $data);
+            $this->view('ingredients/overview', $data);
         }
     }
 
@@ -30,26 +30,24 @@ class IngredientsController extends Controller
             $createIngredient = $this->ingredientModel->createIngredient($post);
 
             if ($createIngredient) {
-                echo "ingredient created successfully.";
-                header("Location: " . URLROOT . 'ingredientscontroller/index');
+                header('Location: ' . URLROOT . 'ingredientscontroller/overview');
                 exit();
             } else {
-                echo "Failed to create the ingredient.";
-                header("Location: " . URLROOT . 'ingredientscontroller/index');
+                header('Location: ' . URLROOT . 'ingredientscontroller/overview');
                 exit();
             }
         } else {
             // Display the form
-            $this->view('ingredients/index');
+            $this->view('ingredients/create');
         }
     }
 
     public function delete($ingredientId)
     {
         if ($this->ingredientModel->deleteIngredient($ingredientId)) {
-            header("Location: " . URLROOT . 'ingredientsController/index');
+            header('Location: ' . URLROOT . 'ingredientsController/overview');
         } else {
-            echo "Er is iets fout gegaan"; // Corrected capitalization
+            echo 'Something went wrong'; // Corrected capitalization
         }
     }
 
@@ -59,9 +57,7 @@ class IngredientsController extends Controller
         $selectedIngredient = $this->ingredientModel->getIngredientByid($ingredientId);
 
         if (!$selectedIngredient) {
-            // Handle the case where the ingredient is not found, e.g., show an error message or redirect.
-            // You might want to add more error handling here.
-            die("ingredient not found");
+            die('ingredient not found');
         }
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -72,13 +68,13 @@ class IngredientsController extends Controller
             $updated = $this->ingredientModel->updateIngredient($ingredientId, $post);
 
             if ($updated) {
-                // Product updated successfully, redirect to the product index page
-                header("Location: " . URLROOT . 'ingredientsController/index');
+                // Product updated successfully, redirect to the product overview page
+                header('Location: ' . URLROOT . 'ingredientsController/overview');
                 exit;
             } else {
                 // Handle the case where the update failed, e.g., show an error message.
                 // You might want to add more error handling here.
-                die("Ingredient update failed");
+                die('Ingredient update failed');
             }
         }
 

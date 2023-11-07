@@ -228,32 +228,50 @@
 
                             <ul class="sidenav__list">
                                 <li class="sidenav__item">
-                                    <a href="<?= URLROOT; ?>ProductsController/index" class="sidenav__link">
+                                    <a href="<?= URLROOT; ?>ProductsController/overview/" class="sidenav__link">
                                         <span class="sidenav__text text-sm@md">products</span>
                                     </a>
                                 </li>
 
                                 <li class="sidenav__item">
-                                    <a href="<?= URLROOT; ?>customersController/index" class="sidenav__link">
+                                    <a href="<?= URLROOT; ?>customersController/overview/" class="sidenav__link">
                                         <span class="sidenav__text text-sm@md">Customers</span>
                                     </a>
                                 </li>
 
                                 <li class="sidenav__item">
-                                    <a href="<?= URLROOT; ?>promotionscontroller/index" class="sidenav__link">
+                                    <a href="<?= URLROOT; ?>promotionscontroller/overview/" class="sidenav__link">
                                         <span class="sidenav__text text-sm@md">Promotions</span>
                                     </a>
                                 </li>
 
                                 <li class="sidenav__item">
-                                    <a href="<?= URLROOT; ?>storesController/index" class="sidenav__link">
+                                    <a href="<?= URLROOT; ?>storesController/overview/" class="sidenav__link">
                                         <span class="sidenav__text text-sm@md">Stores</span>
                                     </a>
                                 </li>
 
                                 <li class="sidenav__item">
-                                    <a href="<?= URLROOT; ?>ingredientscontroller/index" class="sidenav__link">
+                                    <a href="<?= URLROOT; ?>ingredientscontroller/overview/" class="sidenav__link">
                                         <span class="sidenav__text text-sm@md">Ingredients</span>
+                                    </a>
+                                </li>
+
+                                <li class="sidenav__item">
+                                    <a href="<?= URLROOT; ?>vehiclescontroller/overview/" class="sidenav__link">
+                                        <span class="sidenav__text text-sm@md">vehicles</span>
+                                    </a>
+                                </li>
+
+                                <li class="sidenav__item">
+                                    <a href="<?= URLROOT; ?>employeescontroller/overview/" class="sidenav__link">
+                                        <span class="sidenav__text text-sm@md">employees</span>
+                                    </a>
+                                </li>
+
+                                <li class="sidenav__item">
+                                    <a href="<?= URLROOT; ?>orderscontroller/overview/" class="sidenav__link">
+                                        <span class="sidenav__text text-sm@md">orders</span>
                                     </a>
                                 </li>
                             </ul>
@@ -323,7 +341,7 @@
             <nav class="breadcrumbs text-sm" aria-label="Breadcrumbs">
                 <ol class="flex flex-wrap gap-xxs">
                     <li class="breadcrumbs__item">
-                        <a href="<?= URLROOT ?>customerscontroller/index" class="color-inherit">All Products</a>
+                        <a href="<?= URLROOT ?>customerscontroller/overview/" class="color-inherit">All Customers</a>
                         <span class="color-contrast-low margin-left-xxs" aria-hidden="true">/</span>
                     </li>
 
@@ -336,7 +354,7 @@
             <form method="POST" action="<?= URLROOT ?>customerscontroller/update/<?= $data['Customer']->customerId ?>">
                 <div class="padding-md">
                     <fieldset class="margin-bottom-xl">
-                        <legend class="form-legend margin-bottom-md">Edit Product</legend>
+                        <legend class="form-legend margin-bottom-md">Edit Selected Customer</legend>
 
                         <!-- Customer ID -->
                         <input type="hidden" name="customerId" value="<?= $data['Customer']->customerId ?>">
@@ -350,7 +368,8 @@
                                 </div>
                                 <div class="col-6@lg">
                                     <select class="form-control width-100" name="customerType" id="customerType" required>
-                                        <option value="customer" <?= ($data['Customer']->customerType === 'customer') ? 'selected' : '' ?>>Customer
+                                        <option value="customer" <?= ($data['Customer']->customerType === 'customer') ? 'selected' : '' ?>>
+                                            Customer
                                         </option>
                                         <option value="guest" <?= ($data['Customer']->customerType === 'guest') ? 'selected' : '' ?>>
                                             Guest

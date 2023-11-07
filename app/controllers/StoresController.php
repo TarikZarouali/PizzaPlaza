@@ -9,7 +9,7 @@ class StoresController extends Controller
         $this->storeModel = $this->model('storeModel');
     }
 
-    public function index()
+    public function overview()
     {
 
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -18,7 +18,7 @@ class StoresController extends Controller
                 'Stores' => $getStores
             ];
 
-            $this->view('stores/index', $data);
+            $this->view('stores/overview', $data);
         }
     }
 
@@ -30,26 +30,24 @@ class StoresController extends Controller
             $createStore = $this->storeModel->createStore($post);
 
             if ($createStore) {
-                echo "Product created successfully.";
-                header("Location: " . URLROOT . 'storescontroller/index');
+                header('Location: ' . URLROOT . 'storescontroller/overview');
                 exit();
             } else {
-                echo "Failed to create the product.";
-                header("Location: " . URLROOT . 'storescontroller/index');
+                header('Location: ' . URLROOT . 'storescontroller/overview');
                 exit();
             }
         } else {
             // Display the form
-            $this->view('stores/index');
+            $this->view('stores/create');
         }
     }
 
     public function delete($storeId)
     {
         if ($this->storeModel->deleteStore($storeId)) {
-            header("Location: " . URLROOT . 'storescontroller/index');
+            header('Location: ' . URLROOT . 'storescontroller/overview');
         } else {
-            echo "Something went wrong while deleting the store."; // Provide a more user-friendly message
+            echo 'Something went wrong while deleting the store.'; // Provide a more user-friendly message
         }
     }
 
@@ -61,7 +59,7 @@ class StoresController extends Controller
         if (!$selectedStore) {
             // Handle the case where the product is not found, e.g., show an error message or redirect.
             // You might want to add more error handling here.
-            die("Product not found");
+            die('Product not found');
         }
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -72,13 +70,11 @@ class StoresController extends Controller
             $updated = $this->storeModel->updateStore($storeId, $post);
 
             if ($updated) {
-                // Product updated successfully, redirect to the product index page
-                header("Location: " . URLROOT . 'storescontroller/index');
+                // Product updated successfully, redirect to the product overview page
+                header('Location: ' . URLROOT . 'storescontroller/overview');
                 exit;
             } else {
-                // Handle the case where the update failed, e.g., show an error message.
-                // You might want to add more error handling here.
-                die("Product update failed");
+                die('Product update failed');
             }
         }
 

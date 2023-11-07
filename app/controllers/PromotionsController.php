@@ -10,7 +10,7 @@ class PromotionsController extends Controller
         $this->promotionModel = $this->model('promotionModel');
     }
 
-    public function index()
+    public function overview()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $getPromotions = $this->promotionModel->getActivePromotions();
@@ -18,7 +18,9 @@ class PromotionsController extends Controller
                 'Promotions' => $getPromotions
             ];
 
-            $this->view('promotions/index', $data);
+
+
+            $this->view('promotions/overview', $data);
         }
     }
 
@@ -30,17 +32,15 @@ class PromotionsController extends Controller
             $createPromotion = $this->promotionModel->createPromotion($post);
 
             if ($createPromotion) {
-                echo "Promotion created successfully.";
-                header("Location: " . URLROOT . 'promotionscontroller/index');
+                header('Location: ' . URLROOT . 'promotionscontroller/overview');
                 exit();
             } else {
-                echo "Failed to create the promotion.";
-                header("Location: " . URLROOT . 'promotionscontroller/index');
+                header('Location: ' . URLROOT . 'promotionscontroller/overview');
                 exit();
             }
         } else {
             // Display the form
-            $this->view('promotions/index');
+            $this->view('promotions/create');
         }
     }
 
@@ -52,7 +52,7 @@ class PromotionsController extends Controller
         if (!$selectedPromotion) {
             // Handle the case where the promotion is not found, e.g., show an error message or redirect.
             // You might want to add more error handling here.
-            die("Promotion not found");
+            die('Promotion not found');
         }
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -63,13 +63,13 @@ class PromotionsController extends Controller
             $updated = $this->promotionModel->updatePromotion($promotionId, $post);
 
             if ($updated) {
-                // Promotion updated successfully, redirect to the promotion index page
-                header("Location: " . URLROOT . 'promotionscontroller/index');
+                // Promotion updated successfully, redirect to the promotion overview page
+                header('Location: ' . URLROOT . 'promotionscontroller/overview');
                 exit;
             } else {
                 // Handle the case where the update failed, e.g., show an error message.
                 // You might want to add more error handling here.
-                die("Promotion update failed");
+                die('Promotion update failed');
             }
         }
 
@@ -83,9 +83,9 @@ class PromotionsController extends Controller
     public function delete($promotionId)
     {
         if ($this->promotionModel->deletePromotion($promotionId)) {
-            header("Location: " . URLROOT . 'promotionscontroller/index');
+            header('Location: ' . URLROOT . 'promotionscontroller/overview');
         } else {
-            echo "Er is iets fout gegaan"; // Corrected capitalization
+            echo 'Something went wrong.'; // Corrected capitalization
         }
     }
 }

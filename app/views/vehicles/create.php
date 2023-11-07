@@ -73,6 +73,7 @@
                     </svg>
                 </a>
 
+
                 <div class="dropdown inline-block js-dropdown">
                     <div class="dropdown__wrapper">
                         <a class="app-ui__user-btn js-dropdown__trigger js-tab-focus" href="settings.html">
@@ -103,7 +104,35 @@
             </div>
         </div>
     </header>
+    <div class="toast toast--hidden toast--top-right js-toast" role="alert" aria-live="assertive" aria-atomic="true" id="toast-5">
+        <div class="flex items-start justify-between">
+            <div class="toast__icon-wrapper toast__icon-wrapper--success margin-right-xs">
+                <svg class="icon" viewBox="0 0 16 16">
+                    <title>Success</title>
+                    <g>
+                        <path d="M6,15a1,1,0,0,1-.707-.293l-5-5A1,1,0,1,1,1.707,8.293L5.86,12.445,14.178.431a1,1,0,1,1,1.644,1.138l-9,13A1,1,0,0,1,6.09,15C6.06,15,6.03,15,6,15Z">
+                        </path>
+                    </g>
+                </svg>
+            </div>
 
+            <div class="text-component text-sm">
+                <h1 class="toast__title text-md">Title Five</h1>
+                <p class="toast__p">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo esse
+                    maiores assumenda.</p>
+            </div>
+
+            <button class="reset toast__close-btn margin-left-xxxxs js-toast__close-btn js-tab-focus">
+                <svg class="icon" viewBox="0 0 12 12">
+                    <title>Close notification</title>
+                    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                        <line x1="1" y1="1" x2="11" y2="11" />
+                        <line x1="11" y1="1" x2="1" y2="11" />
+                    </g>
+                </svg>
+            </button>
+        </div>
+    </div>
     <!-- navigation -->
     <div class="app-ui__nav js-app-ui__nav" id="app-ui-navigation">
         <div class="flex flex-column height-100%">
@@ -351,58 +380,38 @@
         </div>
 
         <div class="bg radius-md shadow-xs">
-            <form method="POST" action="<?= URLROOT ?>promotionscontroller/update/<?= $data['Promotion']->promotionId ?>">
-                <!-- Hidden input for promotionId -->
-                <input type="hidden" name="promotionId" value="<?= $data['Promotion']->promotionId ?>">
-
-                <div class="padding-md">
-                    <fieldset class="margin-bottom-xl">
-                        <legend class="form-legend margin-bottom-md">Edit Promotion</legend>
-
-                        <!-- Promotion Name -->
-                        <div class="margin-bottom-sm">
-                            <div class="grid gap-xxs">
-                                <div class="col-3@lg">
-                                    <label class="inline-block text-sm padding-top-xs@lg" for="promotionName">Promotion Name</label>
-                                </div>
-                                <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="text" name="promotionName" id="promotionName" value="<?= $data['Promotion']->promotionName ?>">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Promotion Description -->
-                        <div class="margin-bottom-sm">
-                            <div class="grid gap-xxs">
-                                <div class="col-3@lg">
-                                    <label class="inline-block text-sm padding-top-xs@lg" for="promotionDescription">Promotion Description</label>
-                                </div>
-                                <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="text" name="promotionDescription" id="promotionDescription" value="<?= $data['Promotion']->promotionDescription ?>">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Promotion End Date -->
-                        <div class="margin-bottom-sm">
-                            <div class="grid gap-xxs">
-                                <div class="col-3@lg">
-                                    <label class="inline-block text-sm padding-top-xs@lg" for="promotionEndDate">Promotion End Date</label>
-                                </div>
-                                <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="date" name="promotionEndDate" id="promotionEndDate" value="<?= $data['Promotion']->promotionEndDate ?>">
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-
-                <div class="border-top border-alpha padding-md">
-                    <div class="flex flex-wrap gap-xs justify-between">
-                        <button class="btn btn--accent" aria-controls="dialog-delete-promotion-confirmation">Delete</button>
-                        <button class="btn btn--primary" type="submit">Save</button>
+            <form method="POST" action="<?= URLROOT ?>/vehiclescontroller/create">
+                <div class="grid gap-sm">
+                    <div class="col-12">
+                        <label class="form-label margin-bottom-xxs" for="storeId">Select Store</label>
+                        <select class="form-control width-100" name="vehicleStoreId" id="storeId" required>
+                            <?php foreach ($data['Stores'] as $store) : ?>
+                                <option value="<?= $store->storeId ?>">
+                                    <?= $store->storeId . "-" . $store->storeStreetName ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
+                    <div class="col-12">
+                        <label class="form-label margin-bottom-xxs" for="maintenance-date">Maintenance Date</label>
+                        <input class="form-control width-100" type="date" name="vehicleMaintenanceDate" id="maintenance-date" required>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label margin-bottom-xxs" for="vehicle-type">Select Vehicle Type</label>
+                        <select class="form-control width-100" name="vehicleType" id="vehicle-type" required>
+                            <option value="scooter">Scooter</option>
+                            <option value="car">Car</option>
+                            <option value="bike">Bike</option>
+                            <!-- Add more vehicle types as needed -->
+                        </select>
+                    </div>
+                    <!-- Add more fields for other vehicle details here -->
                 </div>
+                <footer class="padding-md border-top border-alpha">
+                    <div class="flex justify-end gap-xs">
+                        <button class="btn btn--subtle js-modal__close">Cancel</button>
+                        <button type="submit" class="btn btn--primary" onclick="js-openToast()">Save</button>
+                    </div>
+                </footer>
             </form>
 
 

@@ -351,46 +351,68 @@
         </div>
 
         <div class="bg radius-md shadow-xs">
-            <form method="POST" action="<?= URLROOT ?>promotionscontroller/update/<?= $data['Promotion']->promotionId ?>">
-                <!-- Hidden input for promotionId -->
-                <input type="hidden" name="promotionId" value="<?= $data['Promotion']->promotionId ?>">
-
+            <<form method="POST" action="<?= URLROOT ?>/vehiclescontroller/update/<?= $data['vehicle']->vehicleId ?>">
                 <div class="padding-md">
                     <fieldset class="margin-bottom-xl">
-                        <legend class="form-legend margin-bottom-md">Edit Promotion</legend>
+                        <legend class="form-legend margin-bottom-md">Edit Vehicle</legend>
 
-                        <!-- Promotion Name -->
+                        <!-- Vehicle ID (hidden input for updating the correct vehicle) -->
+                        <input type="hidden" name="vehicleId" value="<?= $data['vehicle']->vehicleId ?>">
+
+                        <!-- Select Store -->
                         <div class="margin-bottom-sm">
                             <div class="grid gap-xxs">
                                 <div class="col-3@lg">
-                                    <label class="inline-block text-sm padding-top-xs@lg" for="promotionName">Promotion Name</label>
+                                    <label class="inline-block text-sm padding-top-xs@lg" for="vehicleStoreId">Select
+                                        Store</label>
                                 </div>
                                 <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="text" name="promotionName" id="promotionName" value="<?= $data['Promotion']->promotionName ?>">
+                                    <select class="form-control width-100" name="vehicleStoreId" id="vehicleStoreId" required>
+                                        <?php foreach ($data['Stores'] as $store) : ?>
+                                            <option value="<?= $store->storeId ?>" <?= ($store->storeId == $data['vehicle']->vehicleStoreId) ? 'selected' : '' ?>>
+                                                <?= $store->storeId . "-" . $store->storeStreetName ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Promotion Description -->
+                        <!-- Maintenance Date -->
                         <div class="margin-bottom-sm">
                             <div class="grid gap-xxs">
                                 <div class="col-3@lg">
-                                    <label class="inline-block text-sm padding-top-xs@lg" for="promotionDescription">Promotion Description</label>
+                                    <label class="inline-block text-sm padding-top-xs@lg" for="vehicleMaintenanceDate">Maintenance Date</label>
                                 </div>
                                 <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="text" name="promotionDescription" id="promotionDescription" value="<?= $data['Promotion']->promotionDescription ?>">
+                                    <?php
+                                    // Retrieve the date from the database
+                                    $maintenanceDate = $data['vehicle']->vehicleMaintenanceDate;
+
+                                    // Format the date to d/m/Y
+                                    $formattedDate = date('d/m/Y', strtotime($maintenanceDate));
+                                    ?>
+                                    <input class="form-control width-100" type="date" name="vehicleMaintenanceDate" id="vehicleMaintenanceDate" value="<?= $maintenanceDate ?>">
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Promotion End Date -->
+                        <!-- Select Vehicle Type -->
                         <div class="margin-bottom-sm">
                             <div class="grid gap-xxs">
                                 <div class="col-3@lg">
-                                    <label class="inline-block text-sm padding-top-xs@lg" for="promotionEndDate">Promotion End Date</label>
+                                    <label class="inline-block text-sm padding-top-xs@lg" for="vehicleType">Select
+                                        Vehicle Type</label>
                                 </div>
                                 <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="date" name="promotionEndDate" id="promotionEndDate" value="<?= $data['Promotion']->promotionEndDate ?>">
+                                    <select class="form-control width-100" name="vehicleType" id="vehicleType" required>
+                                        <option value="scooter" <?= ($data['vehicle']->vehicleType === 'scooter') ? 'selected' : '' ?>>
+                                            Scooter</option>
+                                        <option value="car" <?= ($data['vehicle']->vehicleType === 'car') ? 'selected' : '' ?>>Car
+                                        </option>
+                                        <option value="bike" <?= ($data['vehicle']->vehicleType === 'bike') ? 'selected' : '' ?>>Bike
+                                        </option>
+                                        <!-- Add more vehicle types as needed -->
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -399,11 +421,12 @@
 
                 <div class="border-top border-alpha padding-md">
                     <div class="flex flex-wrap gap-xs justify-between">
-                        <button class="btn btn--accent" aria-controls="dialog-delete-promotion-confirmation">Delete</button>
+                        <button class="btn btn--accent" aria-controls="dialog-delete-vehicle-confirmation">Delete</button>
                         <button class="btn btn--primary" type="submit">Save</button>
                     </div>
                 </div>
-            </form>
+                </form>
+
 
 
         </div>

@@ -351,58 +351,30 @@
         </div>
 
         <div class="bg radius-md shadow-xs">
-            <form method="POST" action="<?= URLROOT ?>promotionscontroller/update/<?= $data['Promotion']->promotionId ?>">
-                <!-- Hidden input for promotionId -->
-                <input type="hidden" name="promotionId" value="<?= $data['Promotion']->promotionId ?>">
-
-                <div class="padding-md">
-                    <fieldset class="margin-bottom-xl">
-                        <legend class="form-legend margin-bottom-md">Edit Promotion</legend>
-
-                        <!-- Promotion Name -->
-                        <div class="margin-bottom-sm">
-                            <div class="grid gap-xxs">
-                                <div class="col-3@lg">
-                                    <label class="inline-block text-sm padding-top-xs@lg" for="promotionName">Promotion Name</label>
-                                </div>
-                                <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="text" name="promotionName" id="promotionName" value="<?= $data['Promotion']->promotionName ?>">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Promotion Description -->
-                        <div class="margin-bottom-sm">
-                            <div class="grid gap-xxs">
-                                <div class="col-3@lg">
-                                    <label class="inline-block text-sm padding-top-xs@lg" for="promotionDescription">Promotion Description</label>
-                                </div>
-                                <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="text" name="promotionDescription" id="promotionDescription" value="<?= $data['Promotion']->promotionDescription ?>">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Promotion End Date -->
-                        <div class="margin-bottom-sm">
-                            <div class="grid gap-xxs">
-                                <div class="col-3@lg">
-                                    <label class="inline-block text-sm padding-top-xs@lg" for="promotionEndDate">Promotion End Date</label>
-                                </div>
-                                <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="date" name="promotionEndDate" id="promotionEndDate" value="<?= $data['Promotion']->promotionEndDate ?>">
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-
-                <div class="border-top border-alpha padding-md">
-                    <div class="flex flex-wrap gap-xs justify-between">
-                        <button class="btn btn--accent" aria-controls="dialog-delete-promotion-confirmation">Delete</button>
-                        <button class="btn btn--primary" type="submit">Save</button>
+            <form method="POST" action="<?= URLROOT ?>/promotionscontroller/create">
+                <div class="grid gap-sm">
+                    <div class="col-12">
+                        <label class="form-label margin-bottom-xxs" for="modal-customer-promotionName">Promotion
+                            Name</label>
+                        <input class="form-control width-100%" type="text" name="promotionName" id="modal-customer-promotionName" required>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label margin-bottom-xxs" for="modal-customer-promotionDescription">Promotion
+                            Description</label>
+                        <input class="form-control width-100%" type="text" name="promotionDescription" id="modal-customer-promotionDescription" required>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label margin-bottom-xxs" for="modal-customer-promotionEndDate">Promotion End
+                            Date</label>
+                        <input class="form-control width-100%" type="date" name="promotionEndDate" id="modal-customer-promotionEndDate" required>
                     </div>
                 </div>
+                <footer class="padding-md border-top border-alpha">
+                    <div class="flex justify-end gap-xs">
+                        <button class="btn btn--subtle js-modal__close">Cancel</button>
+                        <button type="submit" class="btn btn--primary">Save</button>
+                    </div>
+                </footer>
             </form>
 
 

@@ -9,6 +9,7 @@ class Core
     {
         //get the current url
         $url = $this->getUrl();
+        $urlSlug = $url;
 
         //check if the controller exists for the current url
         if (file_exists(APPROOT . '/controllers/' . ucwords($url[0]) . '.php')) {
@@ -28,7 +29,7 @@ class Core
         if (isset($url[1])) {
             if (method_exists($this->currentController, $url[1])) {
                 $this->currentMethod = $url[1];
-                // unset($url[1]);
+                unset($urlSlug[1]);
             }
         }
 
@@ -39,35 +40,59 @@ class Core
 
     public function getUrl()
     {
-        //$_GET['url'] comes from the /public/.htaccess line 7
+        // $_GET['url'] comes from the /public/.htaccess line 7
         $incoming = $_SERVER['REQUEST_URI'];
 
-        // 20230224 - forgive me, but PHP + apache mod_rewrite is just no fun...
-        // especially on a Friday! 
+        // Remove the base URL from the request
         $incoming = str_replace("/pizzaplaza/", "", $incoming);
-        if (isset($incoming)) {
-            //remove the backslash from the front of the url
-            $incoming = trim($incoming, "/");
-            $url = filter_var($incoming, FILTER_SANITIZE_URL);
-            $url = explode('/', $url);
 
-            // TODO: check if there is a value here for $urlController
-            $urlController = $url[0];
-
-            $urlAction = "";
-            if (array_key_exists(1, $url)) {
-                $urlAction = explode('?', $url[1])[0];
-            }
-
-            $urlSlug = "";
-            if (array_key_exists(2, $url)) {
-                $urlSlug = $url[2];
-            }
-            $output = [$urlController, $urlAction, $urlSlug];
-
-            return $output;
-        } else {
-            return array('DashboardController', 'index');
+        // Ensure a trailing slash
+        if (!empty($incoming) && substr($incoming, -1) !== '/') {
+            $incoming .= '/';
         }
+
+        // Trim leading and trailing slashes
+        $incoming = trim($incoming, "/");
+
+        $url = filter_var($incoming, FILTER_SANITIZE_URL);
+        $url = explode('/', $url);
+
+        $urlController = $url[0];
+
+        $urlAction = "";
+        if (array_key_exists(1, $url)) {
+            $urlAction = explode('?', $url[1])[0];
+        }
+
+        $urlSlug = $url;
+        if (array_key_exists(2, $url)) {
+            $urlSlug = $url[2];
+        }
+
+
+
+        $modal = array('title' => '', 'message' => '');
+
+        // //$data = $url[2];
+
+        // // Remove curly braces "{" and "}" from the string
+        // $data = str_replace(['%7B', '%7D'], '', $data);
+        // $data = explode(";", $data);
+
+        // foreach ($data as $entry) {
+        //     $entry = explode(':', $entry);
+        //     if ($entry[0] == 'title') {
+        //         $modal['title'] = $entry[1];
+        //     }
+
+        //     if ($entry[0] == 'message') {
+        //         $modal['message'] = $entry[1];
+        //     }
+        // }
+
+
+        $output = [$urlController, $urlAction, $urlSlug];
+
+        return $output;
     }
 }

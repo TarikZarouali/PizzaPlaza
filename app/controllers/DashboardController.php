@@ -9,16 +9,16 @@ class DashboardController extends Controller
     $this->storeModel = $this->model('storeModel');
   }
 
-  public function index()
+  public function overview()
   {
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-      $getStores = $this->storeModel->getActiveStores();
+      $getActiveStores = $this->storeModel->getActiveStores();
       $data = [
-        'Stores' => $getStores
+        'Stores' => $getActiveStores
       ];
 
-      $this->view('homepages/index', $data);
+      $this->view('homepages/overview', $data);
     }
   }
 }

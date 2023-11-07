@@ -175,32 +175,50 @@
 
                             <ul class="sidenav__list">
                                 <li class="sidenav__item">
-                                    <a href="<?= URLROOT; ?>ProductsController/index" class="sidenav__link">
+                                    <a href="<?= URLROOT; ?>ProductsController/overview/" class="sidenav__link">
                                         <span class="sidenav__text text-sm@md">products</span>
                                     </a>
                                 </li>
 
                                 <li class="sidenav__item">
-                                    <a href="<?= URLROOT; ?>customersController/index" class="sidenav__link">
+                                    <a href="<?= URLROOT; ?>customersController/overview/" class="sidenav__link">
                                         <span class="sidenav__text text-sm@md">Customers</span>
                                     </a>
                                 </li>
 
                                 <li class="sidenav__item">
-                                    <a href="<?= URLROOT; ?>promotionscontroller/index" class="sidenav__link">
+                                    <a href="<?= URLROOT; ?>promotionscontroller/overview/" class="sidenav__link">
                                         <span class="sidenav__text text-sm@md">Promotions</span>
                                     </a>
                                 </li>
 
                                 <li class="sidenav__item">
-                                    <a href="<?= URLROOT; ?>storesController/index" class="sidenav__link">
+                                    <a href="<?= URLROOT; ?>storesController/overview/" class="sidenav__link">
                                         <span class="sidenav__text text-sm@md">Stores</span>
                                     </a>
                                 </li>
 
                                 <li class="sidenav__item">
-                                    <a href="<?= URLROOT; ?>ingredientscontroller/index" class="sidenav__link">
+                                    <a href="<?= URLROOT; ?>ingredientscontroller/overview/" class="sidenav__link">
                                         <span class="sidenav__text text-sm@md">Ingredients</span>
+                                    </a>
+                                </li>
+
+                                <li class="sidenav__item">
+                                    <a href="<?= URLROOT; ?>vehiclescontroller/overview/" class="sidenav__link">
+                                        <span class="sidenav__text text-sm@md">vehicles</span>
+                                    </a>
+                                </li>
+
+                                <li class="sidenav__item">
+                                    <a href="<?= URLROOT; ?>employeescontroller/overview/" class="sidenav__link">
+                                        <span class="sidenav__text text-sm@md">employees</span>
+                                    </a>
+                                </li>
+
+                                <li class="sidenav__item">
+                                    <a href="<?= URLROOT; ?>orderscontroller/overview/" class="sidenav__link">
+                                        <span class="sidenav__text text-sm@md">orders</span>
                                     </a>
                                 </li>
                             </ul>
@@ -263,14 +281,15 @@
     <!-- main content -->
     <main class="app-ui__body padding-md js-app-ui__body">
         <div class="margin-bottom-md">
-            <h1 class="text-lg">Products</h1>
+            <h1 class="text-lg">Customers Overview</h1>
         </div>
 
         <div class="margin-bottom-md">
             <div class="flex flex-wrap gap-sm items-center justify-between">
-                <button class="btn btn--primary" aria-controls="modal-new-customer">+ New product</button>
+                <a href="<?= URLROOT ?>/customerscontroller/create" class="btn btn--primary">+ New Customer</a>
             </div>
         </div>
+
 
         <!-- interactive table -->
         <div class="bg radius-md padding-md inner-glow shadow-xs">
@@ -387,134 +406,35 @@
 
                                 <th class="int-table__cell int-table__cell--th int-table__cell--sort js-int-table__cell--sort">
                                     <div class="flex items-center">
-                                        <span>Product Name</span>
-
-                                        <svg class="icon icon--xxs margin-left-xxxs int-table__sort-icon" aria-hidden="true" viewBox="0 0 12 12">
-                                            <polygon class="arrow-up" points="6 0 10 5 2 5 6 0" />
-                                            <polygon class="arrow-down" points="6 12 2 7 10 7 6 12" />
-                                        </svg>
-                                    </div>
-
-                                    <ul class="sr-only js-int-table__sort-list">
-                                        <li>
-                                            <input type="radio" name="sortingName" id="sortingNameNone" value="none" checked>
-                                            <label for="sortingNameNone">No sorting</label>
-                                        </li>
-
-                                        <li>
-                                            <input type="radio" name="sortingName" id="sortingNameAsc" value="asc">
-                                            <label for="sortingNameAsc">Sort in ascending order</label>
-                                        </li>
-
-                                        <li>
-                                            <input type="radio" name="sortingName" id="sortingNameDes" value="desc">
-                                            <label for="sortingNameDes">Sort in descending order</label>
-                                        </li>
-                                    </ul>
+                                        <span>Customer Type</span>
                                 </th>
                                 <th class="int-table__cell int-table__cell--th text-left">
-                                    productOwner
+                                    Customer Name
                                 </th>
                                 <th class="int-table__cell int-table__cell--th int-table__cell--sort js-int-table__cell--sort">
                                     <div class="flex items-center">
-                                        <span>Product Description</span>
-
-                                        <svg class="icon icon--xxs margin-left-xxxs int-table__sort-icon" aria-hidden="true" viewBox="0 0 12 12">
-                                            <polygon class="arrow-up" points="6 0 10 5 2 5 6 0" />
-                                            <polygon class="arrow-down" points="6 12 2 7 10 7 6 12" />
-                                        </svg>
-                                    </div>
-
-                                    <ul class="sr-only js-int-table__sort-list">
-                                        <li>
-                                            <input type="radio" name="sortingEmail" id="sortingEmailNone" value="none" checked>
-                                            <label for="sortingEmailNone">No sorting</label>
-                                        </li>
-
-                                        <li>
-                                            <input type="radio" name="sortingEmail" id="sortingEmailAsc" value="asc">
-                                            <label for="sortingEmailAsc">Sort in ascending order</label>
-                                        </li>
-
-                                        <li>
-                                            <input type="radio" name="sortingEmail" id="sortingEmailDes" value="desc">
-                                            <label for="sortingEmailDes">Sort in descending order</label>
-                                        </li>
-                                    </ul>
-                                </th>
-
-                                <th class="int-table__cell int-table__cell--th int-table__cell--sort js-int-table__cell--sort">
-                                    <div class="flex items-center">
-                                        <span>Product Price</span>
-
-                                        <svg class="icon icon--xxs margin-left-xxxs int-table__sort-icon" aria-hidden="true" viewBox="0 0 12 12">
-                                            <polygon class="arrow-up" points="6 0 10 5 2 5 6 0" />
-                                            <polygon class="arrow-down" points="6 12 2 7 10 7 6 12" />
-                                        </svg>
-                                    </div>
-
-                                    <ul class="sr-only js-int-table__sort-list">
-                                        <li>
-                                            <input type="radio" name="sortingEmail" id="sortingEmailNone" value="none" checked>
-                                            <label for="sortingEmailNone">No sorting</label>
-                                        </li>
-
-                                        <li>
-                                            <input type="radio" name="sortingEmail" id="sortingEmailAsc" value="asc">
-                                            <label for="sortingEmailAsc">Sort in ascending order</label>
-                                        </li>
-
-                                        <li>
-                                            <input type="radio" name="sortingEmail" id="sortingEmailDes" value="desc">
-                                            <label for="sortingEmailDes">Sort in descending order</label>
-                                        </li>
-                                    </ul>
+                                        <span>Customer Email</span>
                                 </th>
 
                                 <th class="int-table__cell int-table__cell--th text-left">
-                                    ProductType
+                                    Customer Phone
                                 </th>
 
-                                <th class="int-table__cell int-table__cell--th int-table__cell--sort js-int-table__cell--sort" data-date-format="dd-mm-yyyy">
-                                    <div class="flex items-center">
-                                        <span>productIsActive</span>
-
-                                        <svg class="icon icon--xxs margin-left-xxxs int-table__sort-icon" aria-hidden="true" viewBox="0 0 12 12">
-                                            <polygon class="arrow-up" points="6 0 10 5 2 5 6 0" />
-                                            <polygon class="arrow-down" points="6 12 2 7 10 7 6 12" />
-                                        </svg>
-                                    </div>
-
-                                    <ul class="sr-only js-int-table__sort-list">
-                                        <li>
-                                            <input type="radio" name="sortingDate" id="sortingDateNone" value="none" checked>
-                                            <label for="sortingDateNone">No sorting</label>
-                                        </li>
-
-                                        <li>
-                                            <input type="radio" name="sortingDate" id="sortingDateAsc" value="asc">
-                                            <label for="sortingDateAsc">Sort in ascending order</label>
-                                        </li>
-
-                                        <li>
-                                            <input type="radio" name="sortingDate" id="sortingDateDes" value="desc">
-                                            <label for="sortingDateDes">Sort in descending order</label>
-                                        </li>
-                                    </ul>
-                                </th>
-
-                                <th class="int-table__cell int-table__cell--th text-left">productCreateDate</th>
+                                <th class="int-table__cell int-table__cell--th text-left">Customer Address</th>
                                 <th class="int-table__cell int-table__cell--th text-left">
-                                    Edit
+                                    Customer Zipcode
                                 </th>
                                 <th class="int-table__cell int-table__cell--th text-left">
-                                    Delete
+                                    Customer Createdate
+                                </th>
+                                <th class="int-table__cell int-table__cell--th text-left">
+                                    Action
                                 </th>
                             </tr>
                         </thead>
 
                         <tbody class="int-table__body js-int-table__body">
-                            <?php foreach ($data['Products'] as $product) : ?>
+                            <?php foreach ($data['Customers'] as $customer) : ?>
                                 <tr class="int-table__row">
                                     <th class="int-table__cell" scope="row">
                                         <div class="custom-checkbox int-table__checkbox">
@@ -522,20 +442,20 @@
                                             <div class="custom-checkbox__control" aria-hidden="true"></div>
                                         </div>
                                     </th>
-                                    <input type="hidden" name="productId" value="<?= $product->productId ?>">
+                                    <input type="hidden" name="productId" value="<?= $customer->customerId ?>">
                                     <td class="int-table__cell">
-                                        <?= $product->productName ?></td>
+                                        <?= $customer->customerType ?></td>
                                     <td class="int-table__cell">
-                                        <?= $product->productOwner ? $product->productOwner : 'admin' ?></td>
-                                    <td class="int-table__cell"><?= $product->productDescription ?></td>
-                                    <td class="int-table__cell"><?= $product->productPrice ?></td>
+                                        <?= $customer->customerFirstName . ' ' . $customer->customerLastName ?></td>
+                                    <td class="int-table__cell"><?= $customer->customerEmail ?></td>
+                                    <td class="int-table__cell"><?= $customer->customerPhone ?></td>
                                     <td class="int-table__cell text-truncate max-width-xxxxs">
-                                        <?= $product->productType ?></td>
-                                    <td class="int-table__cell"><?= $product->productIsActive ?></td>
-                                    <td class="int-table__cell"><?= date('d/m/y', $product->productCreateDate) ?></td>
-                                    <td class="int-table__cell"><a href="<?= URLROOT ?>productscontroller/update/<?= $product->productId ?>">Edit</a>
-                                    </td>
-                                    <td class="int-table__cell"><a href="<?= URLROOT ?>productscontroller/delete/<?= $product->productId ?>">Delete</a>
+                                        <?= $customer->customerAddress ?></td>
+                                    <td class="int-table__cell"><?= $customer->customerZipCode ?></td>
+                                    <td class="int-table__cell"><?= date('d/m/y', $customer->customerCreateDate) ?></td>
+                                    <td class="int-table__cell">
+                                        <a href="<?= URLROOT ?>customerscontroller/update/<?= $customer->customerId ?>/" class="btn btn--primary">Edit</a>
+                                        <a href="<?= URLROOT ?>customerscontroller/delete/<?= $customer->customerId ?>/" class="btn btn--primary">Delete</a>
                                     </td>
                                     <button class="reset int-table__menu-btn margin-left-auto js-tab-focus" data-label="Edit row" aria-controls="menu-example">
                                         <svg class="icon" viewBox="0 0 16 16">
@@ -626,134 +546,5 @@
     </main>
 </div>
 
-<!-- notification popover -->
-<div id="notifications-popover" class="popover notif-popover bg radius-md shadow-md js-popover" role="dialog">
-    <header class="bg bg-opacity-90% backdrop-blur-10 text-sm padding-sm shadow-xs position-sticky top-0 z-index-2">
-        <div class="flex justify-between items-baseline">
-            <h1 class="text-md">Notifications</h1>
-            <a href="notifications.html" class="js-tab-focus">View all</a>
-        </div>
-    </header>
 
-    <ul class="notif text-sm">
-        <li class="notif__item ">
-            <a class="notif__link flex padding-sm" href="#0">
-                <figure class="notif__figure margin-right-xs color-primary" aria-hidden="true">
-                    <img src="assets/img/table-v2-img-1.jpg" alt="user picture">
-                </figure>
-
-                <div class="flex-grow margin-right-xs">
-                    <div>
-                        <p><i class="font-semibold">Olivia Saturday</i> commented on your <i class="font-semibold">"This
-                                is all it takes to improve..."</i> post.</p>
-                        <p class="text-sm color-contrast-medium margin-top-xxxs"><time>1 hour ago</time></p>
-                    </div>
-                </div>
-
-                <div class="notif__dot margin-left-auto" aria-hidden="true"></div>
-            </a>
-        </li>
-
-        <li class="notif__item ">
-            <a class="notif__link flex padding-sm" href="#0">
-                <figure class="notif__figure margin-right-xs color-accent" aria-hidden="true">
-                    <img src="assets/img/table-v2-img-2.jpg" alt="user picture">
-                </figure>
-
-                <div class="flex-grow margin-right-xs">
-                    <div>
-                        <p>It's <i class="font-semibold">David Smith</i>'s birthday. Wish him well!</p>
-                        <p class="text-sm color-contrast-medium margin-top-xxxs"><time>12 hours ago</time></p>
-                    </div>
-                </div>
-
-                <div class="notif__dot margin-left-auto" aria-hidden="true"></div>
-            </a>
-        </li>
-
-        <li class="notif__item ">
-            <a class="notif__link flex padding-sm" href="#0">
-                <figure class="notif__figure margin-right-xs color-primary" aria-hidden="true">
-                    <img src="assets/img/table-v2-img-3.jpg" alt="user picture">
-                </figure>
-
-                <div class="flex-grow margin-right-xs">
-                    <div>
-                        <p><i class="font-semibold">Marta Rossi</i> posted <i class="font-semibold">"10 helpful tips to
-                                learn web design"</i>.</p>
-                        <p class="text-sm color-contrast-medium margin-top-xxxs"><time>a day ago</time></p>
-
-                        <div class="bg radius-md padding-sm shadow-sm margin-top-sm">
-                            <p class="color-contrast-medium line-height-lg">Lorem ipsum dolor sit amet consectetur,
-                                adipisicing elit. Harum beatae commodi quibusdam officiis...</p>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </li>
-    </ul>
-</div>
-
-<!-- modal window -->
-<div class="modal modal--animate-translate-up flex flex-center bg-black bg-opacity-90% padding-md js-modal" id="modal-new-customer">
-    <div class="modal__content width-100% max-width-xs bg radius-md shadow-md" role="alertdialog" aria-labelledby="modal-title">
-        <header class="bg-contrast-lower bg-opacity-50% padding-y-sm padding-x-md flex items-center justify-between">
-            <h4 class="text-truncate" id="modal-title">New Product</h4>
-
-            <button class="reset modal__close-btn modal__close-btn--inner js-modal__close js-tab-focus">
-                <svg class="icon" viewBox="0 0 20 20">
-                    <title>Close modal window</title>
-                    <g fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2">
-                        <line x1="3" y1="3" x2="17" y2="17" />
-                        <line x1="17" y1="3" x2="3" y2="17" />
-                    </g>
-                </svg>
-            </button>
-        </header>
-
-        <div class="padding-md">
-            <form method="POST" action="<?= URLROOT ?>/productsController/create">
-                <div class="grid gap-sm">
-
-                    <label class="form-label margin-bottom-xxs" for="modal-customer-productName">Product
-                        Name</label>
-                    <input class="form-control width-100%" type="text" name="productName" id="modal-customer-productName" required>
-                </div>
-
-                <div class="col-12">
-                    <label class="form-label margin-bottom-xxs" for="modal-customer-productDescription">Product
-                        Description</label>
-                    <input class="form-control width-100%" type="text" name="productDescription" id="modal-customer-productDescription" required>
-                </div>
-
-                <div class="col-12">
-                    <label class="form-label margin-bottom-xxs" for="modal-customer-productPrice">Product
-                        Price</label>
-                    <input class="form-control width-100%" type="text" name="productPrice" id="modal-customer-productPrice" required>
-                </div>
-
-                <div class="col-12">
-                    <label class="form-label margin-bottom-xxs" for="modal-customer-productType">Product
-                        Type</label>
-                    <select class="form-control width-100" name="productType" id="modal-customer-productType" required>
-                        <option value="pizza">Pizza</option>
-                        <option value="coupons">Coupons</option>
-                        <option value="drinks">Drinks</option>
-                        <option value="snacks">Snacks</option>
-                        <option value="custom_pizza">Custom Pizza</option>
-                    </select>
-                </div>
-
-        </div>
-        <footer class="padding-md border-top border-alpha">
-            <div class="flex justify-end gap-xs">
-                <button class="btn btn--subtle js-modal__close">Cancel</button>
-                <button type="submit" class="btn btn--primary">Save</button>
-            </div>
-        </footer>
-        </form>
-    </div>
-
-</div>
-</div>
 <?php require APPROOT . '/views/includes/footer.php'; ?>

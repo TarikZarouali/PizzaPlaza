@@ -9,7 +9,7 @@ class ProductsController extends Controller
         $this->productModel = $this->model('productModel');
     }
 
-    public function index()
+    public function overview()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $getProducts = $this->productModel->getActiveproducts();
@@ -17,7 +17,7 @@ class ProductsController extends Controller
                 'Products' => $getProducts
             ];
 
-            $this->view('products/index', $data);
+            $this->view('products/overview', $data);
         }
     }
 
@@ -29,26 +29,26 @@ class ProductsController extends Controller
             $createProduct = $this->productModel->createProduct($post);
 
             if ($createProduct) {
-                echo "Product created successfully.";
-                header("Location: " . URLROOT . 'productsController/index');
+                header('Location: ' . URLROOT . 'productsController/overview');
                 exit();
             } else {
-                echo "Failed to create the product.";
-                header("Location: " . URLROOT . 'productsController/index');
+                header('Location: ' . URLROOT . 'productsController/overview');
                 exit();
             }
         } else {
             // Display the form
-            $this->view('products/index');
+            $this->view('products/create');
         }
     }
+
+
 
     public function delete($productId)
     {
         if ($this->productModel->deleteProduct($productId)) {
-            header("Location: " . URLROOT . 'ProductsController/index');
+            header('Location: ' . URLROOT . 'ProductsController/overview');
         } else {
-            echo "Er is iets fout gegaan"; // Corrected capitalization
+            echo 'Something went wrong.'; // Corrected capitalization
         }
     }
 
@@ -60,7 +60,7 @@ class ProductsController extends Controller
         if (!$selectedProduct) {
             // Handle the case where the product is not found, e.g., show an error message or redirect.
             // You might want to add more error handling here.
-            die("Product not found");
+            die('Product not found');
         }
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -71,13 +71,11 @@ class ProductsController extends Controller
             $updated = $this->productModel->updateProduct($productId, $post);
 
             if ($updated) {
-                // Product updated successfully, redirect to the product index page
-                header("Location: " . URLROOT . 'productsController/index');
+                // Product updated successfully, redirect to the product overview page
+                header('Location: ' . URLROOT . 'productsController/overview');
                 exit;
             } else {
-                // Handle the case where the update failed, e.g., show an error message.
-                // You might want to add more error handling here.
-                die("Product update failed");
+                die('Product update failed');
             }
         }
 

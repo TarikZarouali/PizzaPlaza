@@ -1,5 +1,4 @@
 <?php require APPROOT . '/views/includes/head.php'; ?>
-
 <div class="app-ui js-app-ui">
     <!-- header -->
     <header class="app-ui__header shadow-xs padding-x-md padding-x-0@md">
@@ -132,7 +131,7 @@
 
                     <ul class="sidenav__list">
                         <li class="sidenav__item">
-                            <a href="index.html" class="sidenav__link">
+                            <a href="index.html" class="sidenav__link" aria-current="page">
                                 <svg class="icon sidenav__icon" aria-hidden="true" viewBox="0 0 16 16">
                                     <g>
                                         <path d="M6,0H1C0.4,0,0,0.4,0,1v5c0,0.6,0.4,1,1,1h5c0.6,0,1-0.4,1-1V1C7,0.4,6.6,0,6,0z M5,5H2V2h3V5z">
@@ -150,60 +149,8 @@
                                 <span class="sidenav__counter">12 <i class="sr-only">notifications</i></span>
                             </a>
                         </li>
-
-                        <li class="sidenav__item">
-                            <a href="components.html" class="sidenav__link">
-                                <svg class="icon sidenav__icon" aria-hidden="true" viewBox="0 0 16 16">
-                                    <g>
-                                        <circle cx="13" cy="5" r="3"></circle>
-                                        <rect x="3" y="8" width="7" height="7" rx="1" ry="1"></rect>
-                                        <polygon points="4 0 0 6 8 6 4 0"></polygon>
-                                    </g>
-                                </svg>
-                                <span class="sidenav__text text-sm@md">Components</span>
-                            </a>
-
-                            <button class="reset sidenav__sublist-control js-sidenav__sublist-control js-tab-focus" aria-label="Toggle sub navigation">
-                                <svg class="icon" viewBox="0 0 12 12">
-                                    <polygon points="4 3 8 6 4 9 4 3" />
-                                </svg>
-                            </button>
-
-                            <ul class="sidenav__list">
-                                <li class="sidenav__item">
-                                    <a href="components-charts.html" class="sidenav__link">
-                                        <span class="sidenav__text text-sm@md">Charts</span>
-                                    </a>
-                                </li>
-
-                                <li class="sidenav__item">
-                                    <a href="components-tables.html" class="sidenav__link">
-                                        <span class="sidenav__text text-sm@md">Tables</span>
-                                    </a>
-                                </li>
-
-                                <li class="sidenav__item">
-                                    <a href="components-cards.html" class="sidenav__link">
-                                        <span class="sidenav__text text-sm@md">Cards</span>
-                                    </a>
-                                </li>
-
-                                <li class="sidenav__item">
-                                    <a href="components-buttons.html" class="sidenav__link">
-                                        <span class="sidenav__text text-sm@md">Buttons</span>
-                                    </a>
-                                </li>
-
-                                <li class="sidenav__item">
-                                    <a href="components-forms.html" class="sidenav__link">
-                                        <span class="sidenav__text text-sm@md">Forms</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
                         <li class="sidenav__item sidenav__item--expanded">
-                            <a href="pages.html" class="sidenav__link">
+                            <a href="#" class="sidenav__link">
                                 <svg class="icon sidenav__icon" aria-hidden="true" viewBox="0 0 16 16">
                                     <g>
                                         <path d="M14,0H2C1.4,0,1,0.4,1,1v14c0,0.6,0.4,1,1,1h12c0.6,0,1-0.4,1-1V1C15,0.4,14.6,0,14,0z M13,14H3V2h10V14z">
@@ -217,7 +164,7 @@
                                     </g>
                                 </svg>
 
-                                <span class="sidenav__text text-sm@md">Pages</span>
+                                <span class="sidenav__text text-sm@md">Overviews</span>
                             </a>
 
                             <button class="reset sidenav__sublist-control js-sidenav__sublist-control js-tab-focus" aria-label="Toggle sub navigation">
@@ -334,97 +281,258 @@
     <!-- main content -->
     <main class="app-ui__body padding-md js-app-ui__body">
         <div class="margin-bottom-md">
-            <h1 class="text-lg">Customer</h1>
+            <h1 class="text-lg">Orders</h1>
         </div>
 
         <div class="margin-bottom-md">
-            <nav class="breadcrumbs text-sm" aria-label="Breadcrumbs">
-                <ol class="flex flex-wrap gap-xxs">
-                    <li class="breadcrumbs__item">
-                        <a href="<?= URLROOT ?>productscontroller/index" class="color-inherit">All Products</a>
-                        <span class="color-contrast-low margin-left-xxs" aria-hidden="true">/</span>
+            <div class="flex flex-wrap gap-sm items-center justify-between">
+                <a href="<?= URLROOT ?>/orderscontroller/create" class="btn btn--primary">+ New Order</a>
+            </div>
+        </div>
+
+
+        <!-- interactive table -->
+        <div class="bg radius-md padding-md inner-glow shadow-xs">
+            <div class="int-table-actions padding-bottom-xxxs border-bottom border-alpha" data-table-controls="interactive-table-1">
+                <menu class="menu-bar js-int-table-actions__no-items-selected js-menu-bar">
+                    <li class="menu-bar__item menu-bar__item--trigger js-menu-bar__trigger" role="menuitem" aria-label="More options">
+                        <svg class="icon menu-bar__icon" aria-hidden="true" viewBox="0 0 16 16">
+                            <circle cx="8" cy="7.5" r="1.5" />
+                            <circle cx="1.5" cy="7.5" r="1.5" />
+                            <circle cx="14.5" cy="7.5" r="1.5" />
+                        </svg>
                     </li>
 
-                    <li class="breadcrumbs__item">#U2123</li>
-                </ol>
-            </nav>
-        </div>
+                    <li class="menu-bar__item " role="menuitem">
+                        <svg class="icon menu-bar__icon" aria-hidden="true" viewBox="0 0 16 16">
+                            <g>
+                                <path d="M8,3c1.179,0,2.311,0.423,3.205,1.17L8.883,6.492l6.211,0.539L14.555,0.82l-1.93,1.93 C11.353,1.632,9.71,1,8,1C4.567,1,1.664,3.454,1.097,6.834l1.973,0.331C3.474,4.752,5.548,3,8,3z">
+                                </path>
+                                <path d="M8,13c-1.179,0-2.311-0.423-3.205-1.17l2.322-2.322L0.906,8.969l0.539,6.211l1.93-1.93 C4.647,14.368,6.29,15,8,15c3.433,0,6.336-2.454,6.903-5.834l-1.973-0.331C12.526,11.248,10.452,13,8,13z">
+                                </path>
+                            </g>
+                        </svg>
+                        <span class="menu-bar__label">Refresh</span>
+                    </li>
 
-        <div class="bg radius-md shadow-xs">
-            <form method="POST" action="<?= URLROOT ?>promotionscontroller/update/<?= $data['Promotion']->promotionId ?>">
-                <!-- Hidden input for promotionId -->
-                <input type="hidden" name="promotionId" value="<?= $data['Promotion']->promotionId ?>">
+                    <li class="menu-bar__item " role="menuitem">
+                        <svg class="icon menu-bar__icon" aria-hidden="true" viewBox="0 0 16 16">
+                            <g>
+                                <path d="M15,16H1c-0.6,0-1-0.4-1-1V3c0-0.6,0.4-1,1-1h3v2H2v10h12V9h2v6C16,15.6,15.6,16,15,16z">
+                                </path>
+                                <path d="M10,3c-3.2,0-6,2.5-6,7c1.1-1.7,2.4-3,6-3v3l6-5l-6-5V3z"></path>
+                            </g>
+                        </svg>
+                        <span class="menu-bar__label">Export</span>
+                    </li>
+                </menu>
 
-                <div class="padding-md">
-                    <fieldset class="margin-bottom-xl">
-                        <legend class="form-legend margin-bottom-md">Edit Promotion</legend>
+                <menu class="menu-bar is-hidden js-int-table-actions__items-selected js-menu-bar">
+                    <li class="menu-bar__item menu-bar__item--trigger js-menu-bar__trigger" role="menuitem" aria-label="More options">
+                        <svg class="icon menu-bar__icon" aria-hidden="true" viewBox="0 0 16 16">
+                            <circle cx="8" cy="7.5" r="1.5" />
+                            <circle cx="1.5" cy="7.5" r="1.5" />
+                            <circle cx="14.5" cy="7.5" r="1.5" />
+                        </svg>
+                    </li>
 
-                        <!-- Promotion Name -->
-                        <div class="margin-bottom-sm">
-                            <div class="grid gap-xxs">
-                                <div class="col-3@lg">
-                                    <label class="inline-block text-sm padding-top-xs@lg" for="promotionName">Promotion Name</label>
-                                </div>
-                                <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="text" name="promotionName" id="promotionName" value="<?= $data['Promotion']->promotionName ?>">
-                                </div>
-                            </div>
-                        </div>
+                    <li class="menu-bar__item " role="menuitem">
+                        <svg class="icon menu-bar__icon" aria-hidden="true" viewBox="0 0 16 16">
+                            <g>
+                                <path d="M2,6v8c0,1.1,0.9,2,2,2h8c1.1,0,2-0.9,2-2V6H2z"></path>
+                                <path d="M12,3V1c0-0.6-0.4-1-1-1H5C4.4,0,4,0.4,4,1v2H0v2h16V3H12z M10,3H6V2h4V3z">
+                                </path>
+                            </g>
+                        </svg>
+                        <span class="menu-bar__label">Delete</span>
+                    </li>
 
-                        <!-- Promotion Description -->
-                        <div class="margin-bottom-sm">
-                            <div class="grid gap-xxs">
-                                <div class="col-3@lg">
-                                    <label class="inline-block text-sm padding-top-xs@lg" for="promotionDescription">Promotion Description</label>
-                                </div>
-                                <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="text" name="promotionDescription" id="promotionDescription" value="<?= $data['Promotion']->promotionDescription ?>">
-                                </div>
-                            </div>
-                        </div>
+                    <li class="menu-bar__item " role="menuitem">
+                        <svg class="icon menu-bar__icon" aria-hidden="true" viewBox="0 0 16 16">
+                            <g>
+                                <path d="M15.977,4.887a.975.975,0,0,0-.04-.2.909.909,0,0,0-.089-.186,1.048,1.048,0,0,0-.048-.1l-3-4A1,1,0,0,0,12,0H4a1,1,0,0,0-.8.4l-3,4a1.048,1.048,0,0,0-.048.1.892.892,0,0,0-.089.187.957.957,0,0,0-.04.2A.885.885,0,0,0,0,5v9a2,2,0,0,0,2,2H14a2,2,0,0,0,2-2V5A.87.87,0,0,0,15.977,4.887ZM8,13.5,5,10H7V7H9v3h2ZM3,4,4.5,2h7L13,4Z">
+                                </path>
+                            </g>
+                        </svg>
+                        <span class="menu-bar__label">Archive</span>
+                    </li>
 
-                        <!-- Promotion End Date -->
-                        <div class="margin-bottom-sm">
-                            <div class="grid gap-xxs">
-                                <div class="col-3@lg">
-                                    <label class="inline-block text-sm padding-top-xs@lg" for="promotionEndDate">Promotion End Date</label>
-                                </div>
-                                <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="date" name="promotionEndDate" id="promotionEndDate" value="<?= $data['Promotion']->promotionEndDate ?>">
-                                </div>
-                            </div>
-                        </div>
-                    </fieldset>
+                    <li class="menu-bar__item " role="menuitem">
+                        <svg class="icon menu-bar__icon" aria-hidden="true" viewBox="0 0 16 16">
+                            <g>
+                                <path d="M14.6,5.6l-8.2,8.2C6.9,13.9,7.5,14,8,14c3.6,0,6.4-3.1,7.6-4.9c0.5-0.7,0.5-1.6,0-2.3 C15.4,6.5,15,6.1,14.6,5.6z">
+                                </path>
+                                <path d="M14.3,0.3L11.6,3C10.5,2.4,9.3,2,8,2C4.4,2,1.6,5.1,0.4,6.9c-0.5,0.7-0.5,1.6,0,2.2c0.5,0.8,1.4,1.8,2.4,2.7 l-2.5,2.5c-0.4,0.4-0.4,1,0,1.4C0.5,15.9,0.7,16,1,16s0.5-0.1,0.7-0.3l14-14c0.4-0.4,0.4-1,0-1.4S14.7-0.1,14.3,0.3z M5.3,9.3 C5.1,8.9,5,8.5,5,8c0-1.7,1.3-3,3-3c0.5,0,0.9,0.1,1.3,0.3L5.3,9.3z">
+                                </path>
+                            </g>
+                        </svg>
+                        <span class="menu-bar__label">Hide</span>
+                    </li>
+                </menu>
+            </div>
+
+            <div id="interactive-table-1" class="int-table text-sm js-int-table">
+                <div class="int-table__inner">
+                    <table class="int-table__table" aria-label="Interactive table example">
+                        <thead class="int-table__header js-int-table__header">
+                            <tr class="int-table__row">
+                                <td class="int-table__cell">
+                                    <div class="custom-checkbox int-table__checkbox">
+                                        <input class="custom-checkbox__input js-int-table__select-all" type="checkbox" aria-label="Select all rows" />
+                                        <div class="custom-checkbox__control" aria-hidden="true"></div>
+                                    </div>
+                                </td>
+                                <ul class="sr-only js-int-table__sort-list">
+                                    <li>
+                                        <input type="radio" name="sortingId" id="sortingIdNone" value="none" checked>
+                                        <label for="sortingIdNone">No sorting</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="radio" name="sortingId" id="sortingIdAsc" value="asc">
+                                        <label for="sortingIdAsc">Sort in ascending order</label>
+                                    </li>
+
+                                    <li>
+                                        <input type="radio" name="sortingId" id="sortingIdDes" value="desc">
+                                        <label for="sortingIdDes">Sort in descending order</label>
+                                    </li>
+                                </ul>
+                                </th>
+
+                                <th class="int-table__cell int-table__cell--th int-table__cell--sort js-int-table__cell--sort">
+                                    <div class="flex items-center">
+                                        <span>Order CustomerId</span>
+                                </th>
+                                <th class="int-table__cell int-table__cell--th text-left">
+                                    order createdate
+                                </th>
+                                <th class="int-table__cell int-table__cell--th int-table__cell--sort js-int-table__cell--sort">
+                                    <div class="flex items-center">
+                                        <span>order state</span>
+                                </th>
+
+                                <th class="int-table__cell int-table__cell--th text-left">
+                                    order status
+                                </th>
+
+                                <th class="int-table__cell int-table__cell--th text-left">
+                                    orderPrice
+                                </th>
+                                <th class="int-table__cell int-table__cell--th text-left">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="int-table__body js-int-table__body">
+                            <?php foreach ($data['Orders'] as $order) : ?>
+                                <tr class="int-table__row">
+                                    <th class="int-table__cell" scope="row">
+                                        <div class="custom-checkbox int-table__checkbox">
+                                            <input class="custom-checkbox__input js-int-table__select-row" type="checkbox" aria-label="Select this row" />
+                                            <div class="custom-checkbox__control" aria-hidden="true"></div>
+                                        </div>
+                                    </th>
+                                    <input type="hidden" name="productId" value="<?= $order->orderId ?>">
+                                    <td class="int-table__cell">
+                                        <?= $order->orderCustomerId ?></td>
+                                    <td class="int-table__cell">
+                                        <?= date('d/m/y', ($order->orderCreateDate)) ?></td>
+                                    <td class="int-table__cell"><?= $order->orderState ?></td>
+                                    <td class="int-table__cell"><?= $order->orderStatus ?></td>
+                                    <td class="int-table__cell"><?= $order->orderPrice ?></td>
+                                    <td class="int-table__cell">
+                                        <a href="<?= URLROOT ?>orderscontroller/update/<?= $order->orderId ?>/" class="btn btn--primary">Edit</a>
+                                        <a href="<?= URLROOT ?>orderscontroller/delete/<?= $order->orderId ?>/" class="btn btn--primary">Delete</a>
+                                    </td>
+                                    <td class="reset int-table__menu-btn margin-left-auto js-tab-focus" data-label="Edit row" aria-controls="menu-example">
+                                        <svg class="icon" viewBox="0 0 16 16">
+                                            <circle cx="8" cy="7.5" r="1.5" />
+                                            <circle cx="1.5" cy="7.5" r="1.5" />
+                                            <circle cx="14.5" cy="7.5" r="1.5" />
+                                        </svg>
+                                    </td>
+                                    </td>
+                                </tr>
+                            <?php endforeach ?>
+                        </tbody>
+                    </table>
                 </div>
+            </div>
 
-                <div class="border-top border-alpha padding-md">
-                    <div class="flex flex-wrap gap-xs justify-between">
-                        <button class="btn btn--accent" aria-controls="dialog-delete-promotion-confirmation">Delete</button>
-                        <button class="btn btn--primary" type="submit">Save</button>
-                    </div>
-                </div>
-            </form>
+            <div class="flex items-center justify-between padding-top-sm">
+                <!-- <p class="text-sm"><?= $data['countEmployees'] ?> results</p> -->
 
+                <nav class="pagination text-sm" aria-label="Pagination">
+                    <ul class="pagination__list flex flex-wrap gap-xxxs">
+                        <li>
+                            <a href="#0" class="pagination__item">
+                                <svg class="icon" viewBox="0 0 16 16">
+                                    <title>Go to previous page</title>
+                                    <g stroke-width="1.5" stroke="currentColor">
+                                        <polyline fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="9.5,3.5 5,8 9.5,12.5 "></polyline>
+                                    </g>
+                                </svg>
+                            </a>
+                        </li>
 
+                        <li>
+                            <span class="pagination__jumper flex items-center">
+                                <input aria-label="Page number" class="form-control" type="text" id="pageNumber" name="pageNumber" value="1">
+                                <em>of 50</em>
+                            </span>
+                        </li>
+
+                        <li>
+                            <a href="#0" class="pagination__item">
+                                <svg class="icon" viewBox="0 0 16 16">
+                                    <title>Go to next page</title>
+                                    <g stroke-width="1.5" stroke="currentColor">
+                                        <polyline fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="6.5,3.5 11,8 6.5,12.5 "></polyline>
+                                    </g>
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <menu id="menu-example" class="menu js-menu" data-scrollable-element=".js-app-ui__body">
+                <li role="menuitem">
+                    <span class="menu__content js-menu__content">
+                        <svg class="icon menu__icon" aria-hidden="true" viewBox="0 0 12 12">
+                            <path d="M10.121.293a1,1,0,0,0-1.414,0L1,8,0,12l4-1,7.707-7.707a1,1,0,0,0,0-1.414Z"></path>
+                        </svg>
+                        <span>Edit</span>
+                    </span>
+                </li>
+
+                <li role="menuitem">
+                    <span class="menu__content js-menu__content">
+                        <svg class="icon menu__icon" aria-hidden="true" viewBox="0 0 16 16">
+                            <path d="M15,4H1C0.4,4,0,4.4,0,5v10c0,0.6,0.4,1,1,1h14c0.6,0,1-0.4,1-1V5C16,4.4,15.6,4,15,4z M14,14H2V6h12V14z">
+                            </path>
+                            <rect x="2" width="12" height="2"></rect>
+                        </svg>
+                        <span>Copy</span>
+                    </span>
+                </li>
+
+                <li role="menuitem">
+                    <span class="menu__content js-menu__content">
+                        <svg class="icon menu__icon" aria-hidden="true" viewBox="0 0 12 12">
+                            <path d="M8.354,3.646a.5.5,0,0,0-.708,0L6,5.293,4.354,3.646a.5.5,0,0,0-.708.708L5.293,6,3.646,7.646a.5.5,0,0,0,.708.708L6,6.707,7.646,8.354a.5.5,0,1,0,.708-.708L6.707,6,8.354,4.354A.5.5,0,0,0,8.354,3.646Z">
+                            </path>
+                            <path d="M6,0a6,6,0,1,0,6,6A6.006,6.006,0,0,0,6,0ZM6,10a4,4,0,1,1,4-4A4,4,0,0,1,6,10Z">
+                            </path>
+                        </svg>
+                        <span>Delete</span>
+                    </span>
+                </li>
+            </menu>
         </div>
     </main>
-</div>
-
-<!-- dialog -->
-<div class="dialog dialog--sticky js-dialog" id="dialog-delete-user-confirmation" data-animation="on">
-    <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1" aria-describedby="dialog-description">
-        <div class="text-component">
-            <h4 id="dialog-title-1">Are you sure you want to delete this user?</h4>
-            <p id="dialog-description">This action cannot be undone.</p>
-        </div>
-
-        <footer class="margin-top-md">
-            <div class="flex justify-end gap-xs flex-wrap">
-                <button class="btn btn--subtle js-dialog__close">Cancel</button>
-                <button class="btn btn--accent">Delete</button>
-            </div>
-        </footer>
-    </div>
 </div>
 
 <!-- notification popover -->
@@ -494,79 +602,66 @@
         </li>
     </ul>
 </div>
-<script src="assets/js/scripts.js"></script>
-</body>
 
-</html>
-</footer>
-</div>
-</div>
+<!-- modal window -->
+<div class="modal modal--animate-translate-up flex flex-center bg-black bg-opacity-90% padding-md js-modal" id="modal-new-vehicle">
+    <div class="modal__content width-100% max-width-xs bg radius-md shadow-md" role="alertdialog" aria-labelledby="modal-title">
+        <header class="bg-contrast-lower bg-opacity-50% padding-y-sm padding-x-md flex items-center justify-between">
+            <h4 class="text-truncate" id="modal-title">New Customer</h4>
 
-<!-- notification popover -->
-<div id="notifications-popover" class="popover notif-popover bg radius-md shadow-md js-popover" role="dialog">
-    <header class="bg bg-opacity-90% backdrop-blur-10 text-sm padding-sm shadow-xs position-sticky top-0 z-index-2">
-        <div class="flex justify-between items-baseline">
-            <h1 class="text-md">Notifications</h1>
-            <a href="notifications.html" class="js-tab-focus">View all</a>
+            <button class="reset modal__close-btn modal__close-btn--inner js-modal__close js-tab-focus">
+                <svg class="icon" viewBox="0 0 20 20">
+                    <title>Close modal window</title>
+                    <g fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2">
+                        <line x1="3" y1="3" x2="17" y2="17" />
+                        <line x1="17" y1="3" x2="3" y2="17" />
+                    </g>
+                </svg>
+            </button>
+        </header>
+
+        <div class="padding-md">
+            <form method="POST" action="<?= URLROOT ?>/vehiclesController/create">
+                <div class="grid gap-sm">
+                    <div class="col-12">
+                        <label class="form-label margin-bottom-xxs" for="storeId">Select Store</label>
+                        <select class="form-control width-100" name="storeId" id="storeId" required>
+                            <?php foreach ($data['Stores'] as $store) : ?>
+                                <option value="<?= $store['storeId'] ?>">
+                                    <?= $store['storeId'] . ' - ' . $store['storeStreetName'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+
+
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label margin-bottom-xxs" for="maintenance-date">Maintenance Date</label>
+                        <input class="form-control width-100" type="date" name="maintenanceDate" id="maintenance-date" required>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label margin-bottom-xxs" for="vehicle-type">Select Vehicle Type</label>
+                        <select class="form-control width-100" name="vehicleType" id="vehicle-type" required>
+                            <option value="scooter">Scooter</option>
+                            <option value="car">Car</option>
+                            <option value="bike">Bike</option>
+                            <!-- Add more vehicle types as needed -->
+                        </select>
+                    </div>
+                    <!-- Add more fields for other vehicle details here -->
+                </div>
+                <footer class="padding-md border-top border-alpha">
+                    <div class="flex justify-end gap-xs">
+                        <button class="btn btn--subtle js-modal__close">Cancel</button>
+                        <button type="submit" class="btn btn--primary">Save</button>
+                    </div>
+                </footer>
+            </form>
+
+
+
+
         </div>
-    </header>
 
-    <ul class="notif text-sm">
-        <li class="notif__item ">
-            <a class="notif__link flex padding-sm" href="#0">
-                <figure class="notif__figure margin-right-xs color-primary" aria-hidden="true">
-                    <img src="assets/img/table-v2-img-1.jpg" alt="user picture">
-                </figure>
-
-                <div class="flex-grow margin-right-xs">
-                    <div>
-                        <p><i class="font-semibold">Olivia Saturday</i> commented on your <i class="font-semibold">"This
-                                is all it takes to improve..."</i> post.</p>
-                        <p class="text-sm color-contrast-medium margin-top-xxxs"><time>1 hour ago</time></p>
-                    </div>
-                </div>
-
-                <div class="notif__dot margin-left-auto" aria-hidden="true"></div>
-            </a>
-        </li>
-
-        <li class="notif__item ">
-            <a class="notif__link flex padding-sm" href="#0">
-                <figure class="notif__figure margin-right-xs color-accent" aria-hidden="true">
-                    <img src="assets/img/table-v2-img-2.jpg" alt="user picture">
-                </figure>
-
-                <div class="flex-grow margin-right-xs">
-                    <div>
-                        <p>It's <i class="font-semibold">David Smith</i>'s birthday. Wish him well!</p>
-                        <p class="text-sm color-contrast-medium margin-top-xxxs"><time>12 hours ago</time></p>
-                    </div>
-                </div>
-
-                <div class="notif__dot margin-left-auto" aria-hidden="true"></div>
-            </a>
-        </li>
-
-        <li class="notif__item ">
-            <a class="notif__link flex padding-sm" href="#0">
-                <figure class="notif__figure margin-right-xs color-primary" aria-hidden="true">
-                    <img src="assets/img/table-v2-img-3.jpg" alt="user picture">
-                </figure>
-
-                <div class="flex-grow margin-right-xs">
-                    <div>
-                        <p><i class="font-semibold">Marta Rossi</i> posted <i class="font-semibold">"10 helpful tips
-                                to learn web design"</i>.</p>
-                        <p class="text-sm color-contrast-medium margin-top-xxxs"><time>a day ago</time></p>
-
-                        <div class="bg radius-md padding-sm shadow-sm margin-top-sm">
-                            <p class="color-contrast-medium line-height-lg">Lorem ipsum dolor sit amet consectetur,
-                                adipisicing elit. Harum beatae commodi quibusdam officiis...</p>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </li>
-    </ul>
+    </div>
 </div>
 <?php require APPROOT . '/views/includes/footer.php'; ?>

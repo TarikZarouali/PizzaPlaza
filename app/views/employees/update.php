@@ -351,46 +351,102 @@
         </div>
 
         <div class="bg radius-md shadow-xs">
-            <form method="POST" action="<?= URLROOT ?>promotionscontroller/update/<?= $data['Promotion']->promotionId ?>">
-                <!-- Hidden input for promotionId -->
-                <input type="hidden" name="promotionId" value="<?= $data['Promotion']->promotionId ?>">
-
+            <form method="POST" action="<?= URLROOT ?>/employeescontroller/update/<?= $data['Employee']->employeeId ?>">
                 <div class="padding-md">
                     <fieldset class="margin-bottom-xl">
-                        <legend class="form-legend margin-bottom-md">Edit Promotion</legend>
+                        <legend class="form-legend margin-bottom-md">Edit Employee</legend>
 
-                        <!-- Promotion Name -->
+                        <!-- Employee ID (hidden input for updating the correct employee) -->
+                        <input type="hidden" name="employeeId" value="<?= $data['Employee']->employeeId ?>">
+
+                        <!-- Select Store -->
                         <div class="margin-bottom-sm">
                             <div class="grid gap-xxs">
                                 <div class="col-3@lg">
-                                    <label class="inline-block text-sm padding-top-xs@lg" for="promotionName">Promotion Name</label>
+                                    <label class="inline-block text-sm padding-top-xs@lg" for="employeeStoreId">Select
+                                        Store</label>
                                 </div>
                                 <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="text" name="promotionName" id="promotionName" value="<?= $data['Promotion']->promotionName ?>">
+                                    <select class="form-control width-100" name="employeeStoreId" id="employeeStoreId" required>
+                                        <?php foreach ($data['Stores'] as $store) : ?>
+                                            <option value="<?= $store->storeId ?>" <?= ($store->storeId == $data['Employee']->employeeStoreId) ? 'selected' : '' ?>>
+                                                <?= $store->storeId . "-" . $store->storeStreetName ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Promotion Description -->
+                        <!-- Employee Firstname -->
                         <div class="margin-bottom-sm">
                             <div class="grid gap-xxs">
                                 <div class="col-3@lg">
-                                    <label class="inline-block text-sm padding-top-xs@lg" for="promotionDescription">Promotion Description</label>
+                                    <label class="inline-block text-sm padding-top-xs@lg" for="employeeFirstName">employee
+                                        Firstname</label>
                                 </div>
                                 <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="text" name="promotionDescription" id="promotionDescription" value="<?= $data['Promotion']->promotionDescription ?>">
+                                    <input class="form-control width-100%" type="text" name="employeeFirstName" id="employeeFirstName" value="<?= $data['Employee']->employeeFirstName ?>" required>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Promotion End Date -->
+                        <!-- Employee Lastname -->
                         <div class="margin-bottom-sm">
                             <div class="grid gap-xxs">
                                 <div class="col-3@lg">
-                                    <label class="inline-block text-sm padding-top-xs@lg" for="promotionEndDate">Promotion End Date</label>
+                                    <label class="inline-block text-sm padding-top-xs@lg" for="customerLastName">Employee LastName</label>
                                 </div>
                                 <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="date" name="promotionEndDate" id="promotionEndDate" value="<?= $data['Promotion']->promotionEndDate ?>">
+                                    <input class="form-control width-100%" type="text" name="employeeLastName" id="employeeLastName" value="<?= $data['Employee']->employeeLastName ?>" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Employee Zipcode -->
+                        <div class="margin-bottom-sm">
+                            <div class="grid gap-xxs">
+                                <div class="col-3@lg">
+                                    <label class="inline-block text-sm padding-top-xs@lg" for="employeeZipCode">Employee
+                                        Zipcode</label>
+                                </div>
+                                <div class="col-6@lg">
+                                    <input class="form-control width-100%" type="text" name="employeeZipCode" id="employeeZipCode" value="<?= $data['Employee']->employeeZipCode ?>" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Employee Role -->
+                        <div class="margin-bottom-sm">
+                            <div class="grid gap-xxs">
+                                <div class="col-3@lg">
+                                    <label class="inline-block text-sm padding-top-xs@lg" for="employeeRole">Employee
+                                        Role</label>
+                                </div>
+                                <div class="col-6@lg">
+                                    <select class="form-control width-100" name="employeeRole" id="employeeRole" required>
+                                        <option value="baker" <?= ($data['Employee']->employeeRole === 'Employee') ? 'selected' : '' ?>>
+                                            Baker
+                                        </option>
+                                        <option value="deliverer" <?= ($data['Employee']->employeeRole === 'deliverer') ? 'selected' : '' ?>>
+                                            Deliverer
+                                        </option>
+                                        <option value="manager" <?= ($data['Employee']->employeeRole === 'manager') ? 'selected' : '' ?>>
+                                            Manager
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Employee Description -->
+                        <div class="margin-bottom-sm">
+                            <div class="grid gap-xxs">
+                                <div class="col-3@lg">
+                                    <label class="inline-block text-sm padding-top-xs@lg" for="employeeDescription">Employee Description</label>
+                                </div>
+                                <div class="col-6@lg">
+                                    <textarea class="form-control width-100" name="employeeDescription" id="employeeDescription" required><?= $data['Employee']->employeeDescription ?></textarea>
                                 </div>
                             </div>
                         </div>
@@ -399,11 +455,12 @@
 
                 <div class="border-top border-alpha padding-md">
                     <div class="flex flex-wrap gap-xs justify-between">
-                        <button class="btn btn--accent" aria-controls="dialog-delete-promotion-confirmation">Delete</button>
+                        <button class="btn btn--accent" aria-controls="dialog-delete-vehicle-confirmation">Delete</button>
                         <button class="btn btn--primary" type="submit">Save</button>
                     </div>
                 </div>
             </form>
+
 
 
         </div>

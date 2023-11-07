@@ -228,32 +228,50 @@
 
                             <ul class="sidenav__list">
                                 <li class="sidenav__item">
-                                    <a href="<?= URLROOT; ?>ProductsController/index" class="sidenav__link">
+                                    <a href="<?= URLROOT; ?>ProductsController/overview/" class="sidenav__link">
                                         <span class="sidenav__text text-sm@md">products</span>
                                     </a>
                                 </li>
 
                                 <li class="sidenav__item">
-                                    <a href="<?= URLROOT; ?>customersController/index" class="sidenav__link">
+                                    <a href="<?= URLROOT; ?>customersController/overview/" class="sidenav__link">
                                         <span class="sidenav__text text-sm@md">Customers</span>
                                     </a>
                                 </li>
 
                                 <li class="sidenav__item">
-                                    <a href="<?= URLROOT; ?>promotionscontroller/index" class="sidenav__link">
+                                    <a href="<?= URLROOT; ?>promotionscontroller/overview/" class="sidenav__link">
                                         <span class="sidenav__text text-sm@md">Promotions</span>
                                     </a>
                                 </li>
 
                                 <li class="sidenav__item">
-                                    <a href="<?= URLROOT; ?>storesController/index" class="sidenav__link">
+                                    <a href="<?= URLROOT; ?>storesController/overview/" class="sidenav__link">
                                         <span class="sidenav__text text-sm@md">Stores</span>
                                     </a>
                                 </li>
 
                                 <li class="sidenav__item">
-                                    <a href="<?= URLROOT; ?>ingredientscontroller/index" class="sidenav__link">
+                                    <a href="<?= URLROOT; ?>ingredientscontroller/overview/" class="sidenav__link">
                                         <span class="sidenav__text text-sm@md">Ingredients</span>
+                                    </a>
+                                </li>
+
+                                <li class="sidenav__item">
+                                    <a href="<?= URLROOT; ?>vehiclescontroller/overview/" class="sidenav__link">
+                                        <span class="sidenav__text text-sm@md">vehicles</span>
+                                    </a>
+                                </li>
+
+                                <li class="sidenav__item">
+                                    <a href="<?= URLROOT; ?>employeescontroller/overview/" class="sidenav__link">
+                                        <span class="sidenav__text text-sm@md">employees</span>
+                                    </a>
+                                </li>
+
+                                <li class="sidenav__item">
+                                    <a href="<?= URLROOT; ?>orderscontroller/overview/" class="sidenav__link">
+                                        <span class="sidenav__text text-sm@md">orders</span>
                                     </a>
                                 </li>
                             </ul>
