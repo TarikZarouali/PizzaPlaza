@@ -33,7 +33,8 @@ class StoresController extends Controller
                 header('Location: ' . URLROOT . 'storescontroller/overview');
                 exit();
             } else {
-                header('Location: ' . URLROOT . 'storescontroller/overview');
+                Helper::log('error', 'store could not be created');
+                header('Location: ' . URLROOT . 'storescontroller/create/');
                 exit();
             }
         } else {
@@ -47,7 +48,9 @@ class StoresController extends Controller
         if ($this->storeModel->deleteStore($storeId)) {
             header('Location: ' . URLROOT . 'storescontroller/overview');
         } else {
-            echo 'Something went wrong while deleting the store.'; // Provide a more user-friendly message
+            Helper::log('error', 'store could not be deleted');
+            header('Location:' . URLROOT . 'storescontroller/overview/');
+            exit;
         }
     }
 
@@ -59,7 +62,9 @@ class StoresController extends Controller
         if (!$selectedStore) {
             // Handle the case where the product is not found, e.g., show an error message or redirect.
             // You might want to add more error handling here.
-            die('Product not found');
+            Helper::log('error', 'store Id could not be found.');
+            header('Location:' . URLROOT . 'storescontroller/overview/');
+            exit;
         }
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -74,7 +79,9 @@ class StoresController extends Controller
                 header('Location: ' . URLROOT . 'storescontroller/overview');
                 exit;
             } else {
-                die('Product update failed');
+                Helper::log('error', 'Store update failed');
+                header('Location:' . URLROOT . 'storescontroller/update/' . $storeId);
+                exit;
             }
         }
 

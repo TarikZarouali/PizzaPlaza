@@ -41,14 +41,15 @@ class vehiclesController extends Controller
                 exit();
             } else {
                 // If vehicle creation failed, you can handle it here
-                header('Location: ' . URLROOT . '/vehiclescontroller/overview');
+                Helper::log('error', 'store could not be created.');
+                header('Location: ' . URLROOT . '/vehiclescontroller/overview/');
                 exit();
             }
         } else {
             // Display the form for creating a new vehicle with the list of active stores
-            $stores = $this->storeModel->getActiveStores(); // Retrieve active stores
+            $activeStores = $this->storeModel->getActiveStores(); // Retrieve active stores
             $data = [
-                'Stores' => $stores,
+                'Stores' => $activeStores,
             ];
 
             $this->view('vehicles/create', $data);
@@ -61,7 +62,9 @@ class vehiclesController extends Controller
         $stores = $this->storeModel->getActiveStores();
 
         if (!$selectedVehicle) {
-            die('Vehicle not found');
+            Helper::log('error', 'vehicle Id could not be found.');
+            header('Location:' . URLROOT . 'vehiclescontroller/overview/');
+            exit;
         }
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -73,10 +76,12 @@ class vehiclesController extends Controller
 
             if ($updated) {
                 // Vehicle updated successfully, redirect to the vehicle overview page
-                header('Location: ' . URLROOT . 'vehiclescontroller/overview');
+                header('Location: ' . URLROOT . 'vehiclescontroller/overview/');
                 exit;
             } else {
-                die('Vehicle update failed');
+                Helper::log('error', 'vehicle update failed.');
+                header('Location:' . URLROOT . 'vehiclescontroller/update/' . $vehicleId);
+                exit;
             }
         }
 
@@ -93,7 +98,9 @@ class vehiclesController extends Controller
         if ($this->vehicleModel->deleteVehicle($vehicleId)) {
             header('Location:' . URLROOT . 'vehiclescontroller/overview');
         } else {
-            echo 'An error occurred'; // Corrected capitalization
+            Helper::log('error', 'vehicle deletion failed.');
+            header('Location:' . URLROOT . 'vehiclescontroller/overview/');
+            exit;
         }
     }
 }

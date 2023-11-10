@@ -1,8 +1,6 @@
 <?php
 class PromotionsController extends Controller
 {
-
-
     private $promotionModel;
 
     public function __construct()
@@ -32,10 +30,11 @@ class PromotionsController extends Controller
             $createPromotion = $this->promotionModel->createPromotion($post);
 
             if ($createPromotion) {
-                header('Location: ' . URLROOT . 'promotionscontroller/overview');
+                header('Location: ' . URLROOT . 'promotionscontroller/overview/');
                 exit();
             } else {
-                header('Location: ' . URLROOT . 'promotionscontroller/overview');
+                Helper::log('error', 'promotion creation failed');
+                header('Location: ' . URLROOT . 'promotionscontroller/create/');
                 exit();
             }
         } else {
@@ -52,7 +51,8 @@ class PromotionsController extends Controller
         if (!$selectedPromotion) {
             // Handle the case where the promotion is not found, e.g., show an error message or redirect.
             // You might want to add more error handling here.
-            die('Promotion not found');
+            Helper::log('error', 'Promotion Id could not be found');
+            exit;
         }
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -69,7 +69,9 @@ class PromotionsController extends Controller
             } else {
                 // Handle the case where the update failed, e.g., show an error message.
                 // You might want to add more error handling here.
-                die('Promotion update failed');
+                Helper::log('error', 'Promotion creation failed');
+                header('Location:' . URLROOT . 'promotionscontroller/update/' . $promotionId);
+                exit;
             }
         }
 
@@ -83,9 +85,11 @@ class PromotionsController extends Controller
     public function delete($promotionId)
     {
         if ($this->promotionModel->deletePromotion($promotionId)) {
-            header('Location: ' . URLROOT . 'promotionscontroller/overview');
+            header('Location: ' . URLROOT . 'promotionscontroller/overview/');
         } else {
-            echo 'Something went wrong.'; // Corrected capitalization
+            Helper::log('error', 'Production deletion failed.');
+            header('Location:' . URLROOT . 'promotionscontroller/overview/');
+            exit;
         }
     }
 }

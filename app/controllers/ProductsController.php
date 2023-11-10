@@ -29,10 +29,11 @@ class ProductsController extends Controller
             $createProduct = $this->productModel->createProduct($post);
 
             if ($createProduct) {
-                header('Location: ' . URLROOT . 'productsController/overview');
+                header('Location: ' . URLROOT . 'productsController/overview/');
                 exit();
             } else {
-                header('Location: ' . URLROOT . 'productsController/overview');
+                Helper::log('error', 'Product creation failed');
+                header('Location: ' . URLROOT . 'productsController/create/');
                 exit();
             }
         } else {
@@ -41,14 +42,14 @@ class ProductsController extends Controller
         }
     }
 
-
-
     public function delete($productId)
     {
         if ($this->productModel->deleteProduct($productId)) {
-            header('Location: ' . URLROOT . 'ProductsController/overview');
+            header('Location: ' . URLROOT . 'ProductsController/overview/');
         } else {
-            echo 'Something went wrong.'; // Corrected capitalization
+            Helper::log('error', 'Product deletion has failed');
+            header('Location:' . URLROOT . 'productscontroller/overview/');
+            exit;
         }
     }
 
@@ -60,7 +61,8 @@ class ProductsController extends Controller
         if (!$selectedProduct) {
             // Handle the case where the product is not found, e.g., show an error message or redirect.
             // You might want to add more error handling here.
-            die('Product not found');
+            Helper::log('error', 'Could not find the Product Id');
+            exit;
         }
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -72,10 +74,12 @@ class ProductsController extends Controller
 
             if ($updated) {
                 // Product updated successfully, redirect to the product overview page
-                header('Location: ' . URLROOT . 'productsController/overview');
+                header('Location: ' . URLROOT . 'productsController/overview/');
                 exit;
             } else {
-                die('Product update failed');
+                Helper::log('error', 'Product update failed');
+                header('Location:' . URLROOT . 'productscontroller/update/' . $productId);
+                exit;
             }
         }
 

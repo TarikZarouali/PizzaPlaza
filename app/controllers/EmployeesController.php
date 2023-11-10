@@ -2,7 +2,6 @@
 class EmployeesController extends Controller
 {
 
-
     private $employeeModel;
     private $storeModel;
 
@@ -33,10 +32,11 @@ class EmployeesController extends Controller
             $createEmployee = $this->employeeModel->createEmployee($post);
 
             if ($createEmployee) {
-                header('Location: ' . URLROOT . '/employeesController/overview');
+                header('Location: ' . URLROOT . '/employeesController/overview/');
                 exit();
             } else {
-                header('Location: ' . URLROOT . '/employeesController/overview');
+                Helper::log('error', 'Employee creation failed');
+                header('Location: ' . URLROOT . '/employeesController/overview/');
                 exit();
             }
         } else {
@@ -56,7 +56,8 @@ class EmployeesController extends Controller
         $activeStores = $this->storeModel->getActiveStores();
 
         if (!$selectedEmployee) {
-            die('employee not found');
+            Helper::log('error', 'Employee Id was not found.');
+            exit;
         }
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -68,13 +69,14 @@ class EmployeesController extends Controller
 
             if ($updated) {
                 // employee updated successfully, redirect to the employee overview page
-                header('Location: ' . URLROOT . 'employeescontroller/overview');
+                header('Location: ' . URLROOT . 'employeescontroller/overview/');
                 exit;
             } else {
-                die('employee update failed');
+                Helper::log('error', 'Employee update failed');
+                header('Location:' . URLROOT . 'employeescontroller/update/' . $employeeId);
+                exit;
             }
         }
-
         // Load the update view with the selected employee data
         $data = [
             'Employee' => $selectedEmployee,
@@ -83,14 +85,14 @@ class EmployeesController extends Controller
         $this->view('employees/update', $data);
     }
 
-
-
     public function delete($employeeId)
     {
         if ($this->employeeModel->deleteEmployee($employeeId)) {
             header('Location:' . URLROOT . 'employeescontroller/overview');
         } else {
-            echo 'Something went wrong.'; // Corrected capitalization
+            Helper::log('error', 'Employee delete failed');
+            header('Location:' . URLROOT . 'employeescontroller/overview/');
+            exit;
         }
     }
 }

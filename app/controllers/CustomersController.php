@@ -1,4 +1,5 @@
 <?php
+
 class CustomersController extends Controller
 {
     // Initialize the customer model
@@ -25,6 +26,7 @@ class CustomersController extends Controller
         }
     }
 
+
     public function create()
     {
         // Check if the request method is POST (form submission)
@@ -38,7 +40,11 @@ class CustomersController extends Controller
                 header('Location: ' . URLROOT . 'customerscontroller/overview');
                 exit();
             } else {
-                header('Location: ' . URLROOT . 'customerscontroller/create');
+                // Log the error using Helper
+                Helper::log('error', 'Customer creation failed.');
+
+                // Use header to redirect on failure
+                header('Location: ' . URLROOT . 'customerscontroller/create/');
                 exit();
             }
         } else {
@@ -54,9 +60,9 @@ class CustomersController extends Controller
 
         if (!$selectedCustomer) {
             // Handle the case where the customer is not found
-            die('Customer not found');
+            Helper::log('error', 'Customer Id could not have been found.');
+            exit;
         }
-
         // Check if the request method is POST (form submission)
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Filter and validate the submitted POST data
@@ -68,10 +74,12 @@ class CustomersController extends Controller
             // Check if the update was successful
             if ($updatedCustomer) {
                 // Redirect to the customer overview page
-                header('Location: ' . URLROOT . 'customersController/overview');
+                header('Location: ' . URLROOT . 'customersController/overview/');
                 exit;
             } else {
-                die('Customer update failed');
+                Helper::log('error', 'Customer update failed.');
+                header('Location: ' . URLROOT . 'customerscontroller/update/' . $customerId);
+                exit;
             }
         }
 
@@ -88,7 +96,9 @@ class CustomersController extends Controller
         if ($this->customerModel->deleteCustomer($customerId)) {
             header('Location: ' . URLROOT . 'customerscontroller/overview');
         } else {
-            echo 'Er is iets fout gegaan'; // Display an error message if deletion fails
+            Helper::log('error', 'Customer Deletion has failed');
+            header('Location:' . URLROOT . 'customerscontroller/overview/');
+            exit;
         }
     }
 }
