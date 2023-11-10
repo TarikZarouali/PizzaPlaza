@@ -53,10 +53,11 @@ class productModel
 
         try {
             $createProductQuery = "INSERT INTO `products` (`productId`, `productOwner`, `productName`, `productDescription`, `productPrice`, `productType`, `productIsActive`, `productCreateDate`) 
-                            VALUES (:productId, null , :productName, :productDescription, :productPrice, :productType, 1, :productCreateDate)";
+                            VALUES (:productId, :productOwner , :productName, :productDescription, :productPrice, :productType, 1, :productCreateDate)";
 
             $this->db->query($createProductQuery);
             $this->db->bind(':productId', $var['rand']);
+            $this->db->bind(':productOwner', $newProduct['productOwner']);
             $this->db->bind(':productName', $newProduct['productName']);
             $this->db->bind(':productDescription', $newProduct['productDescription']);
             $this->db->bind(':productPrice', $newProduct['productPrice']);

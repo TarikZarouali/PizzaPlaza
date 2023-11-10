@@ -37,12 +37,11 @@ class CustomersController extends Controller
 
             // Check if the customer creation was successful
             if ($createCustomer) {
-                header('Location: ' . URLROOT . 'customerscontroller/overview');
+                header('Location: ' . URLROOT . 'customerscontroller/overview/');
                 exit();
             } else {
                 // Log the error using Helper
                 Helper::log('error', 'Customer creation failed.');
-
                 // Use header to redirect on failure
                 header('Location: ' . URLROOT . 'customerscontroller/create/');
                 exit();
@@ -94,7 +93,7 @@ class CustomersController extends Controller
     {
         // Delete a customer by ID
         if ($this->customerModel->deleteCustomer($customerId)) {
-            header('Location: ' . URLROOT . 'customerscontroller/overview');
+            header('Location: ' . URLROOT . 'customerscontroller/overview/');
         } else {
             Helper::log('error', 'Customer Deletion has failed');
             header('Location:' . URLROOT . 'customerscontroller/overview/');

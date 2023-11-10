@@ -73,22 +73,22 @@ class Core
 
         // $modal = array('title' => '', 'message' => '');
 
-        // // //$data = $url[2];
+        // $data = $url[2];
 
-        // // // Remove curly braces "{" and "}" from the string
-        // // $data = str_replace(['%7B', '%7D'], '', $data);
-        // // $data = explode(";", $data);
+        // // Remove curly braces "{" and "}" from the string
+        // $data = str_replace(['%7B', '%7D'], '', $data);
+        // $data = explode(";", $data);
 
-        // // foreach ($data as $entry) {
-        // //     $entry = explode(':', $entry);
-        // //     if ($entry[0] == 'title') {
-        // //         $modal['title'] = $entry[1];
-        // //     }
+        // foreach ($data as $entry) {
+        //     $entry = explode(':', $entry);
+        //     if ($entry[0] == 'title') {
+        //         $modal['title'] = $entry[1];
+        //     }
 
-        // //     if ($entry[0] == 'message') {
-        // //         $modal['message'] = $entry[1];
-        // //     }
-        // // }
+        //     if ($entry[0] == 'message') {
+        //         $modal['message'] = $entry[1];
+        //     }
+        // }
 
 
         $output = [$urlController, $urlAction, $urlSlug];

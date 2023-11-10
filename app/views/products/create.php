@@ -26,25 +26,39 @@
 
                     <label class="form-label margin-bottom-xxs" for="modal-customer-productName">Product
                         Name</label>
-                    <input class="form-control width-100%" type="text" name="productName" id="modal-customer-productName" required>
+                    <input class="form-control width-100%" type="text" name="productName"
+                        id="modal-customer-productName">
+                </div>
+                <div class="col-12">
+                    <label class="form-label margin-bottom-xxs" for="productOwner">Product Owner</label>
+                    <select class="form-control width-100" name="productOwner" id="productOwner">
+                        <?php foreach ($data['Customers'] as $customer) : ?>
+                        <option value="<?= $customer->customerId ?>">
+                            <?= $customer->customerId . "-" . $customer->customerFirstName . '-' . $customer->customerLastName . '-' . $customer->customerType ?>
+                        </option>
+                        <?php endforeach; ?>
+                    </select>
+
                 </div>
 
                 <div class="col-12">
                     <label class="form-label margin-bottom-xxs" for="modal-customer-productDescription">Product
                         Description</label>
-                    <input class="form-control width-100%" type="text" name="productDescription" id="modal-customer-productDescription" required>
+                    <input class="form-control width-100%" type="text" name="productDescription"
+                        id="modal-customer-productDescription">
                 </div>
 
                 <div class="col-12">
                     <label class="form-label margin-bottom-xxs" for="modal-customer-productPrice">Product
                         Price</label>
-                    <input class="form-control width-100%" type="text" name="productPrice" id="modal-customer-productPrice" required>
+                    <input class="form-control width-100%" type="text" name="productPrice"
+                        id="modal-customer-productPrice">
                 </div>
 
                 <div class="col-12">
                     <label class="form-label margin-bottom-xxs" for="modal-customer-productType">Product
                         Type</label>
-                    <select class="form-control width-100" name="productType" id="modal-customer-productType" required>
+                    <select class="form-control width-100" name="productType" id="modal-customer-productType">
                         <option value="pizza">Pizza</option>
                         <option value="coupons">Coupons</option>
                         <option value="drinks">Drinks</option>
@@ -68,7 +82,8 @@
 
 <!-- dialog -->
 <div class="dialog dialog--sticky js-dialog" id="dialog-delete-user-confirmation" data-animation="on">
-    <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1" aria-describedby="dialog-description">
+    <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1"
+        aria-describedby="dialog-description">
         <div class="text-component">
             <h4 id="dialog-title-1">Are you sure you want to delete this user?</h4>
             <p id="dialog-description">This action cannot be undone.</p>

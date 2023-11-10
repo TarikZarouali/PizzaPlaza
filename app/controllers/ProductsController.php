@@ -3,10 +3,12 @@ class ProductsController extends Controller
 {
 
     private $productModel;
+    private $customerModel;
 
     public function __construct()
     {
         $this->productModel = $this->model('productModel');
+        $this->customerModel = $this->model('customerModel');
     }
 
     public function overview()
@@ -21,24 +23,43 @@ class ProductsController extends Controller
         }
     }
 
+
     public function create()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Handle the form submission
             $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $createProduct = $this->productModel->createProduct($post);
 
-            if ($createProduct) {
-                header('Location: ' . URLROOT . 'productsController/overview/');
-                exit();
+            $productOwner = ($post['productOwner']);
+            $productName = ($post['productName']);
+            $productDescription = ($post['productDescription']);
+            $productPrice = ($post['productPrice']);
+            $productType = ($post['productType']);
+
+            if (
+                empty($productOwner) || empty($productName) ||
+                empty($productDescription) || empty($productPrice) ||
+                empty($productType)
+            ) {
+                $toast = urlencode('false');
+                $toasttitle = urlencode('Failed');
+                $toastmessage = urlencode('Your create of the customer has failed');
+                header('Location:' . URLROOT . '/productscontroller/overview/' . $toast . '/' . $toasttitle . '/' . $toastmessage);
             } else {
-                Helper::log('error', 'Product creation failed');
-                header('Location: ' . URLROOT . 'productsController/create/');
-                exit();
+                // Form data is valid; proceed with creating the customer
+                $this->productModel->createProduct($post);
+                $toast = urlencode('true');
+                $toasttitle = urlencode('Success');
+                $toastmessage = urlencode('Your create of the customer was successful');
+
+                header('Location:' . URLROOT . '/productscontroller/overview/' . $toast . '/' . $toasttitle . '/' . $toastmessage);
             }
         } else {
-            // Display the form
-            $this->view('products/create');
+            $activeCustomers = $this->customerModel->getactiveCustomers(); // Retrieve active stores
+            $data = [
+                'Customers' => $activeCustomers,
+            ];
+
+            $this->view('products/create', $data);
         }
     }
 
