@@ -85,4 +85,44 @@ class Controller
       'thirdPage' => $thirdPage
     ];
   }
+
+  public function imageUploader($screenId)
+  {
+    // Define the allowed file types
+    $allowedExtensions = ['png', 'jpg', 'jpeg', 'bmp'];
+    // Check if the file input is set and not empty
+    if (isset($_FILES['file']) && !empty($_FILES['file']['name'])) {
+      $file = $_FILES['file'];
+      // Get the file extension
+      $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+      // Check if the file extension is allowed
+      if (in_array($fileExtension, $allowedExtensions)) {
+        // Create the directory if it doesn't exist
+        $uploadDir = ROOT . '/public/media/' . date('Ymd');
+        if (!file_exists($uploadDir)) {
+          mkdir($uploadDir, 0777, true);
+        }
+        // Generate the filename using the provided screenId
+        $filename = $screenId . '.jpg';
+        $filePath = $uploadDir . '/' . $filename;
+        // Check if the file is successfully moved and saved
+        if (move_uploaded_file($file['tmp_name'], $filePath)) {
+          // Return a success message or the file path
+          return array(
+            'status' => 200,
+            'message' => 'Image uploaded successfully'
+          );
+        } else {
+          return array(
+            'status' => 500,
+            'message' => 'Error uploading image. Please try again.'
+          );
+        }
+      } else {
+        return 'Invalid file type. Allowed types are: ' . implode(', ', $allowedExtensions);
+      }
+    } else {
+      return 'No file selected for upload.';
+    }
+  }
 }

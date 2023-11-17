@@ -3,7 +3,7 @@
     <!-- main content -->
     <main class="app-ui__body padding-md js-app-ui__body">
         <div class="margin-bottom-md">
-            <h1 class="text-lg">Customers</h1>
+            <h1 class="text-lg">Ingredients</h1>
         </div>
 
         <div class="margin-bottom-md">

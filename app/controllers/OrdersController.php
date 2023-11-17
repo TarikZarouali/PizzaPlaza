@@ -1,7 +1,6 @@
 <?php
 class OrdersController extends Controller
 {
-
     private $orderModel;
     private $storeModel;
     private $customerModel;
@@ -30,20 +29,28 @@ class OrdersController extends Controller
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            // Validate and process the form data, and insert a new vehicle into the database
+            // Validate and process the form data, and insert a new order into the database
             $createOrder = $this->orderModel->createOrder($post);
 
             if ($createOrder) {
-                header('Location: ' . URLROOT . '/orderscontroller/overview');
+                // Redirect on success with a success message
+                $toast = urlencode('true');
+                $toasttitle = urlencode('Success');
+                $toastmessage = urlencode('Order creation was successful.');
+                header('Location: ' . URLROOT . '/orderscontroller/overview/' . $toast . '/' . $toasttitle . '/' . $toastmessage);
                 exit();
             } else {
-                // If vehicle creation failed, you can handle it here
+                // Log the error using Helper
                 Helper::log('error', 'Order could not be created.');
-                header('Location: ' . URLROOT . '/orderscontroller/overview/');
+                // Redirect on failure with an error message
+                $toast = urlencode('false');
+                $toasttitle = urlencode('Failed');
+                $toastmessage = urlencode('Order creation failed. Please try again.');
+                header('Location: ' . URLROOT . '/orderscontroller/create/' . $toast . '/' . $toasttitle . '/' . $toastmessage);
                 exit();
             }
         } else {
-            // Display the form for creating a new vehicle with the list of active stores
+            // Display the form for creating a new order with the list of active stores and customers
             $activeStores = $this->storeModel->getActiveStores(); // Retrieve active stores
             $activeCustomers = $this->customerModel->getActiveCustomers();
             $data = [
@@ -62,8 +69,13 @@ class OrdersController extends Controller
         $customerByStoreId = $this->customerModel->getActiveCustomers();
 
         if (!$selectedOrder) {
+            // Handle the case where the order is not found
             Helper::log('error', 'Order ID could not be found.');
-            header('Location:' . URLROOT . 'orderscontroller/overview/');
+            // Redirect on failure with an error message
+            $toast = urlencode('false');
+            $toasttitle = urlencode('Failed');
+            $toastmessage = urlencode('Order ID could not be found.');
+            header('Location:' . URLROOT . 'orderscontroller/overview/' . $toast . '/' . $toasttitle . '/' . $toastmessage);
             exit;
         }
 
@@ -71,18 +83,26 @@ class OrdersController extends Controller
             // Filter and validate your POST data properly
             $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-
             // Update the order using the retrieved POST data
             $updated = $this->orderModel->updateOrder($orderId, $post);
 
             if ($updated) {
-                // Order updated successfully, redirect to the order overview page
-                header('Location: ' . URLROOT . 'orderscontroller/overview/');
+                // Redirect on success with a success message
+                $toast = urlencode('true');
+                $toasttitle = urlencode('Success');
+                $toastmessage = urlencode('Order update was successful.');
+                header('Location: ' . URLROOT . 'orderscontroller/overview/' . $toast . '/' . $toasttitle . '/' . $toastmessage);
+                exit;
             } else {
+                // Log the error using Helper
                 Helper::log('error', 'Order update failed.');
-                header('Location:' . URLROOT . 'orderscontroller/update/' . $orderId);
+                // Redirect on failure with an error message
+                $toast = urlencode('false');
+                $toasttitle = urlencode('Failed');
+                $toastmessage = urlencode('Order update failed.');
+                header('Location:' . URLROOT . 'orderscontroller/update/' . $orderId . '/' . $toast . '/' . $toasttitle . '/' . $toastmessage);
+                exit;
             }
-            exit; // Move the exit statement here
         }
 
         // Load the update view with the selected order data
@@ -94,14 +114,23 @@ class OrdersController extends Controller
         $this->view('orders/update', $data);
     }
 
-
     public function delete($orderId)
     {
         if ($this->orderModel->deleteOrder($orderId)) {
-            header('Location:' . URLROOT . 'orderscontroller/overview');
+            // Redirect on success with a success message
+            $toast = urlencode('true');
+            $toasttitle = urlencode('Success');
+            $toastmessage = urlencode('Order deletion was successful.');
+            header('Location:' . URLROOT . 'orderscontroller/overview/' . $toast . '/' . $toasttitle . '/' . $toastmessage);
+            exit;
         } else {
-            Helper::log('error', 'vehicle deletion failed.');
-            header('Location:' . URLROOT . 'orderscontroller/overview/');
+            // Log the error using Helper
+            Helper::log('error', 'Order deletion failed.');
+            // Redirect on failure with an error message
+            $toast = urlencode('false');
+            $toasttitle = urlencode('Failed');
+            $toastmessage = urlencode('Order deletion failed.');
+            header('Location:' . URLROOT . 'orderscontroller/overview/' . $toast . '/' . $toasttitle . '/' . $toastmessage);
             exit;
         }
     }

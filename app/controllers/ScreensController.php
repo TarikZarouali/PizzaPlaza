@@ -26,16 +26,25 @@ class ScreensController extends Controller
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
+
             // Validate and process the form data, and insert a new screen into the database
             $createScreen = $this->screenModel->createScreen($post);
 
             if ($createScreen) {
-                header('Location: ' . URLROOT . '/screenscontroller/overview/');
+                // Redirect on success with a success message
+                $toast = urlencode('true');
+                $toasttitle = urlencode('Success');
+                $toastmessage = urlencode('Screen creation successful.');
+                header('Location: ' . URLROOT . '/screenscontroller/overview/' . $toast . '/' . $toasttitle . '/' . $toastmessage);
                 exit();
             } else {
-                // If screen creation failed, you can handle it here
+                // Log the error using Helper
                 Helper::log('error', 'Screen could not be created.');
-                header('Location: ' . URLROOT . '/screenscontroller/create/');
+                // Redirect on failure with an error message
+                $toast = urlencode('false');
+                $toasttitle = urlencode('Failed');
+                $toastmessage = urlencode('Screen creation failed. Please try again.');
+                header('Location: ' . URLROOT . '/screenscontroller/create/' . $toast . '/' . $toasttitle . '/' . $toastmessage);
                 exit();
             }
         } else {
@@ -43,14 +52,20 @@ class ScreensController extends Controller
         }
     }
 
+
     public function update($screenId)
     {
         $selectedScreen = $this->screenModel->getScreenById($screenId);
 
         if (!$selectedScreen) {
+            // Handle the case where the screen is not found
             Helper::log('error', 'Screen ID could not be found.');
-            header('Location:' . URLROOT . 'screenscontroller/index/');
-            exit;
+            // Redirect on failure with an error message
+            $toast = urlencode('false');
+            $toasttitle = urlencode('Failed');
+            $toastmessage = urlencode('Screen ID could not be found.');
+            header('Location:' . URLROOT . 'screenscontroller/overview/' . $toast . '/' . $toasttitle . '/' . $toastmessage);
+            exit();
         }
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -61,13 +76,22 @@ class ScreensController extends Controller
             $updated = $this->screenModel->updateScreen($screenId, $post);
 
             if ($updated) {
-                // Screen updated successfully, redirect to the screen overview page
-                header('Location: ' . URLROOT . 'screenscontroller/index/');
+                // Redirect on success with a success message
+                $toast = urlencode('true');
+                $toasttitle = urlencode('Success');
+                $toastmessage = urlencode('Screen update was successful.');
+                header('Location: ' . URLROOT . 'screenscontroller/overview/' . $toast . '/' . $toasttitle . '/' . $toastmessage);
+                exit();
             } else {
+                // Log the error using Helper
                 Helper::log('error', 'Screen update failed.');
-                header('Location:' . URLROOT . 'screenscontroller/update/' . $screenId);
+                // Redirect on failure with an error message
+                $toast = urlencode('false');
+                $toasttitle = urlencode('Failed');
+                $toastmessage = urlencode('Screen update failed.');
+                header('Location:' . URLROOT . 'screenscontroller/update/' . $screenId . '/' . $toast . '/' . $toasttitle . '/' . $toastmessage);
+                exit();
             }
-            exit; // Move the exit statement here
         }
 
         // Load the update view with the selected screen data and list of entities
@@ -80,11 +104,21 @@ class ScreensController extends Controller
     public function delete($screenId)
     {
         if ($this->screenModel->deleteScreen($screenId)) {
-            header('Location:' . URLROOT . 'screenscontroller/overview/');
+            // Redirect on success with a success message
+            $toast = urlencode('true');
+            $toasttitle = urlencode('Success');
+            $toastmessage = urlencode('Screen deletion was successful.');
+            header('Location:' . URLROOT . 'screenscontroller/overview/' . $toast . '/' . $toasttitle . '/' . $toastmessage);
+            exit();
         } else {
-            Helper::log('error', 'vehicle deletion failed.');
-            header('Location:' . URLROOT . 'screenscontroller/overview/');
-            exit;
+            // Log the error using Helper
+            Helper::log('error', 'Screen deletion failed.');
+            // Redirect on failure with an error message
+            $toast = urlencode('false');
+            $toasttitle = urlencode('Failed');
+            $toastmessage = urlencode('Screen deletion failed.');
+            header('Location:' . URLROOT . 'screenscontroller/overview/' . $toast . '/' . $toasttitle . '/' . $toastmessage);
+            exit();
         }
     }
 }

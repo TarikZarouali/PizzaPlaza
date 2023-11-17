@@ -25,19 +25,48 @@
                     <label class="form-label margin-bottom-xxs" for="customerId">Select Customer</label>
                     <select class="form-control width-100" name="reviewCustomerId" id="customerId" required>
                         <?php foreach ($data['Customers'] as $customer) : ?>
-                            <option value="<?= $customer->customerId ?>">
-                                <?= $customer->customerId . " - " . $customer->customerFirstName ?></option>
+                        <option value="<?= $customer->customerId ?>">
+                            <?= $customer->customerId . " - " . $customer->customerFirstName ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="col-12">
-                    <label class="form-label margin-bottom-xxs" for="entityId">Select Entity</label>
-                    <select class="form-control width-100" name="reviewEntityId" id="entityId" required>
-                        <!-- Replace with your list of available entities -->
-                        <option value="1">Entity 1</option>
-                        <option value="2">Entity 2</option>
-                        <option value="3">Entity 3</option>
-                        <!-- Add more entity options as needed -->
+                    <label class="form-label margin-bottom-xxs" for="entityType">Select Entity Type</label>
+                    <select class="form-control width-100" name="entityType" id="entityType"
+                        onchange="updateEntityOptions()" required>
+                        <option value="1">Order</option>
+                        <option value="2">Store</option>
+                        <option value="3">Product</option>
+                    </select>
+                </div>
+                <div class="col-12 js-storeDropdown" style="display:none;">
+                    <input type="hidden" name="reviewEntityId" id="storeEntityId" value="">
+                    <label class="form-label margin-bottom-xxs" for="storeId">Select Store</label>
+                    <select class="form-control width-100" name="reviewEntityId" id="storeId" required>
+                        <?php foreach ($data['Stores'] as $store) : ?>
+                        <option value="<?= $store->storeId ?>">
+                            <?= $store->storeStreetName ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="col-12 js-orderDropdown" style="display:none;">
+                    <input type="hidden" name="reviewEntityId" id="orderEntityId" value="">
+                    <label class="form-label margin-bottom-xxs" for="orderId">Select Order</label>
+                    <select class="form-control width-100" name="reviewEntityId" id="orderId" required>
+                        <?php foreach ($data['Orders'] as $order) : ?>
+                        <option value="<?= $order->orderId ?>">
+                            <?= $order->orderId ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="col-12 js-productDropdown" style="display:none;">
+                    <input type="hidden" name="reviewEntityId" id="productEntityId" value="">
+                    <label class="form-label margin-bottom-xxs" for="productId">Select Product</label>
+                    <select class="form-control width-100" name="reviewEntityId" id="productId" required>
+                        <?php foreach ($data['Products'] as $product) : ?>
+                        <option value="<?= $product->productId ?>">
+                            <?= $product->productName ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="col-12">
@@ -46,7 +75,8 @@
                 </div>
                 <div class="col-12">
                     <label class="form-label margin-bottom-xxs" for="reviewDescription">Review Description</label>
-                    <textarea class="form-control width-100" name="reviewDescription" id="reviewDescription" rows="4" required></textarea>
+                    <textarea class="form-control width-100" name="reviewDescription" id="reviewDescription" rows="4"
+                        required></textarea>
                 </div>
                 <!-- Add more fields for other review details here -->
             </div>
@@ -57,6 +87,7 @@
                 </div>
             </footer>
         </form>
+
     </div>
 </main>
 </div>

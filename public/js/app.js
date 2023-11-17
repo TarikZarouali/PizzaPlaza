@@ -61,3 +61,45 @@ if (match) {
   // 'toast' parameter is not present
   console.log("Toast parameter is not present in the URL.");
 }
+
+function updateEntityOptions() {
+  // Get the selected Entity Type
+  var entityType = document.getElementById("entityType").value;
+
+  // Get the dropdown elements for Store, Order, and Product
+  var storeDropdowns = document.getElementsByClassName("js-storeDropdown");
+  var orderDropdowns = document.getElementsByClassName("js-orderDropdown");
+  var productDropdowns = document.getElementsByClassName("js-productDropdown");
+
+  // Hide all dropdowns
+  hideDropdowns(storeDropdowns);
+  hideDropdowns(orderDropdowns);
+  hideDropdowns(productDropdowns);
+
+  // Display the selected dropdown based on the Entity Type
+  switch (entityType) {
+    case "1": // Order
+      showDropdowns(orderDropdowns);
+      break;
+    case "2": // Store
+      showDropdowns(storeDropdowns);
+      break;
+    case "3": // Product
+      showDropdowns(productDropdowns);
+      break;
+  }
+}
+
+function hideDropdowns(dropdowns) {
+  // Hide all dropdowns
+  for (var i = 0; i < dropdowns.length; i++) {
+    dropdowns[i].style.display = "none";
+  }
+}
+
+function showDropdowns(dropdowns) {
+  // Show all dropdowns
+  for (var i = 0; i < dropdowns.length; i++) {
+    dropdowns[i].style.display = "block";
+  }
+}

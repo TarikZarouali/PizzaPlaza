@@ -23,7 +23,7 @@
         <div class="bg radius-md shadow-xs">
             <form method="POST" action="<?= URLROOT ?>promotionscontroller/update/<?= $data['Promotion']->promotionId ?>">
                 <!-- Hidden input for promotionId -->
-                <input type="hidden" name="promotionId" value="<?= $data['Promotion']->promotionId ?>">
+                <input type="hidden" name="promotionId" value="<?= $data['promotion']->promotionId ?>">
 
                 <div class="padding-md">
                     <fieldset class="margin-bottom-xl">
@@ -37,7 +37,7 @@
                                         Name</label>
                                 </div>
                                 <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="text" name="promotionName" id="promotionName" value="<?= $data['Promotion']->promotionName ?>">
+                                    <input class="form-control width-100%" type="text" name="promotionName" id="promotionName" value="<?= $data['promotion']->promotionName ?>">
                                 </div>
                             </div>
                         </div>
@@ -49,7 +49,7 @@
                                     <label class="inline-block text-sm padding-top-xs@lg" for="promotionDescription">Promotion Description</label>
                                 </div>
                                 <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="text" name="promotionDescription" id="promotionDescription" value="<?= $data['Promotion']->promotionDescription ?>">
+                                    <input class="form-control width-100%" type="text" name="promotionDescription" id="promotionDescription" value="<?= $data['promotion']->promotionDescription ?>">
                                 </div>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                                     <label class="inline-block text-sm padding-top-xs@lg" for="promotionEndDate">Promotion End Date</label>
                                 </div>
                                 <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="date" name="promotionEndDate" id="promotionEndDate" value="<?= $data['Promotion']->promotionEndDate ?>">
+                                    <input class="form-control width-100%" type="date" name="promotionEndDate" id="promotionEndDate" value="<?= $data['promotion']->promotionEndDate ?>">
                                 </div>
                             </div>
                         </div>
@@ -75,8 +75,50 @@
                     </div>
                 </div>
             </form>
-
-
+        </div>
+        <div class="bg radius-md shadow-xs">
+            <form action="<?= URLROOT; ?>promotionscontroller/updateImage/<?= $data['promotion']->promotionId ?>" method="post" enctype="multipart/form-data">
+                <div class="padding-md">
+                    <!-- basic form controls -->
+                    <fieldset class="margin-bottom-xl">
+                        <div class="margin-bottom-sm">
+                            <div class="grid gap-xxs">
+                                <div class="col-3@lg">
+                                    <label class="inline-block text-sm padding-top-xs@lg" for="file">Image</label>
+                                </div>
+                                <div class="col-6@lg">
+                                    <input type="file" name="file" id="file" accept="image/*">
+                                </div>
+                            </div>
+                            <div class="margin-bottom-sm">
+                                <div class="grid gap-xxs">
+                                    <div class="col-3@lg">
+                                        <label class="inline-block text-sm padding-top-xs@lg" for="file">file</label>
+                                    </div>
+                                    <div class="col-6@lg">
+                                        <?php if ($data['imageSrc'] && $data['imageSrc'] !== URLROOT . 'public/default-image.jpg') : ?>
+                                            <figure class="user-menu-control__img-wrapper radius-50%">
+                                                <img class="user-menu-control__img image_picture" src="<?= $data['imageSrc'] ?>" alt="User picture">
+                                            </figure>
+                                        <?php else : ?>
+                                            <p>There is no image uploaded</p>
+                                        <?php endif; ?>
+                                        <!-- Add delete button conditionally -->
+                                        <?php if ($data['imageSrc'] && $data['imageSrc'] !== URLROOT . 'public/default-image.jpg') : ?>
+                                            <a href="<?= URLROOT; ?>promotionscontroller/deleteImage/<?= $data['image']->screenId ?>" class="btn btn--danger">Delete Image</a>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="border-top border-alpha padding-md">
+                    <div class="flex flex-wrap gap-xs justify-between">
+                        <button class="btn btn--primary">Save</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </main>
 </div>

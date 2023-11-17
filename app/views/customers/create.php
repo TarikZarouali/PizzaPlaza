@@ -26,7 +26,8 @@
                     <div class="col-12">
                         <label class="form-label margin-bottom-xxs" for="modal-customer-customerType">Customer
                             Type</label>
-                        <select class="form-control width-100" name="customerType" id="modal-customer-customerType" required>
+                        <select class="form-control width-100" name="customerType" id="modal-customer-customerType"
+                            required>
                             <option value="customer">Customer</option>
                             <option value="guest">Guest</option>
                             <option value="admin">Admin</option>
@@ -35,32 +36,38 @@
                     <div class="col-12">
                         <label class="form-label margin-bottom-xxs" for="modal-customer-customerFirstName">Customer
                             Firstname</label>
-                        <input class "form-control width-100%" type="text" name="customerFirstName" id="modal-customer-customerFirstName" required>
+                        <input class="form-control width-100%" type="text" name="customerFirstName"
+                            id="modal-customer-customerFirstName" required>
                     </div>
                     <div class="col-12">
                         <label class="form-label margin-bottom-xxs" for="modal-customer-customerLastName">Customer Last
                             Name</label>
-                        <input class="form-control width-100%" type="text" name="customerLastName" id="modal-customer-customerLastName" required>
+                        <input class="form-control width-100%" type="text" name="customerLastName"
+                            id="modal-customer-customerLastName" required>
                     </div>
                     <div class="col-12">
                         <label class="form-label margin-bottom-xxs" for="modal-customer-customerEmail">Customer
                             Email</label>
-                        <input class="form-control width-100%" type="text" name="customerEmail" id="modal-customer-customerEmail" required>
+                        <input class="form-control width-100%" type="text" name="customerEmail"
+                            id="modal-customer-customerEmail" required>
                     </div>
                     <div class="col-12">
                         <label class="form-label margin-bottom-xxs" for="modal-customer-customerPhone">Customer
                             Phone</label>
-                        <input class="form-control width-100%" type="text" name="customerPhone" id="modal-customer-customerPhone" required>
+                        <input class="form-control width-100%" type="text" name="customerPhone"
+                            id="modal-customer-customerPhone" required>
                     </div>
                     <div class="col-12">
                         <label class="form-label margin-bottom-xxs" for="modal-customer-customerAddress">Customer
                             Address</label>
-                        <input class="form-control width-100%" type="text" name="customerAddress" id="modal-customer-customerAddress" required>
+                        <input class="form-control width-100%" type="text" name="customerAddress"
+                            id="modal-customer-customerAddress" required>
                     </div>
                     <div class="col-12">
                         <label class="form-label margin-bottom-xxs" for="modal-customer-customerZipCode">Customer
                             Zipcode</label>
-                        <input class="form-control width-100%" type="text" name="customerZipCode" id="modal-customer-customerZipCode" required>
+                        <input class="form-control width-100%" type="text" name="customerZipCode"
+                            id="modal-customer-customerZipCode" required>
                     </div>
                 </div>
                 <footer class="padding-md border-top border-alpha">
@@ -77,7 +84,8 @@
 
 <!-- dialog -->
 <div class="dialog dialog--sticky js-dialog" id="dialog-delete-user-confirmation" data-animation="on">
-    <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1" aria-describedby="dialog-description">
+    <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1"
+        aria-describedby="dialog-description">
         <div class="text-component">
             <h4 id="dialog-title-1">Are you sure you want to delete this user?</h4>
             <p id="dialog-description">This action cannot be undone.</p>

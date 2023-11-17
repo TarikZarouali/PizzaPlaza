@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="col-6@lg">
                                     <select class="form-control width-100" name="reviewCustomerId" id="reviewCustomerId" required>
-                                        <?php foreach ($data['Customers'] as $customer) : ?>
+                                        <?php foreach ($data['Customer'] as $customer) : ?>
                                             <option value="<?= $customer->customerId ?>" <?= ($customer->customerId == $data['review']->reviewCustomerId) ? 'selected' : '' ?>>
                                                 <?= $customer->customerId . "-" . $customer->customerFirstName ?></option>
                                         <?php endforeach; ?>
@@ -92,6 +92,50 @@
                     <div class="flex flex-wrap gap-xs justify-between">
                         <button class="btn btn--accent" aria-controls="dialog-delete-review-confirmation">Delete</button>
                         <button class="btn btn--primary" type="submit">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="bg radius-md shadow-xs">
+            <form action="<?= URLROOT; ?>reviewscontroller/updateImage/<?= $data['review']->reviewId ?>" method="post" enctype="multipart/form-data">
+                <div class="padding-md">
+                    <!-- basic form controls -->
+                    <fieldset class="margin-bottom-xl">
+                        <div class="margin-bottom-sm">
+                            <div class="grid gap-xxs">
+                                <div class="col-3@lg">
+                                    <label class="inline-block text-sm padding-top-xs@lg" for="file">Image</label>
+                                </div>
+                                <div class="col-6@lg">
+                                    <input type="file" name="file" id="file" accept="image/*">
+                                </div>
+                            </div>
+                            <div class="margin-bottom-sm">
+                                <div class="grid gap-xxs">
+                                    <div class="col-3@lg">
+                                        <label class="inline-block text-sm padding-top-xs@lg" for="file">file</label>
+                                    </div>
+                                    <div class="col-6@lg">
+                                        <?php if ($data['imageSrc'] && $data['imageSrc'] !== URLROOT . 'public/default-image.jpg') : ?>
+                                            <figure class="user-menu-control__img-wrapper radius-50%">
+                                                <img class="user-menu-control__img image_picture" src="<?= $data['imageSrc'] ?>" alt="User picture">
+                                            </figure>
+                                        <?php else : ?>
+                                            <p>There is no image uploaded</p>
+                                        <?php endif; ?>
+                                        <!-- Add delete button conditionally -->
+                                        <?php if ($data['imageSrc'] && $data['imageSrc'] !== URLROOT . 'public/default-image.jpg') : ?>
+                                            <a href="<?= URLROOT; ?>reviewscontroller/deleteImage/<?= $data['image']->screenId ?>" class="btn btn--danger">Delete Image</a>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="border-top border-alpha padding-md">
+                    <div class="flex flex-wrap gap-xs justify-between">
+                        <button class="btn btn--primary">Save</button>
                     </div>
                 </div>
             </form>

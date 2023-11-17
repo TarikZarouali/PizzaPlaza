@@ -37,7 +37,8 @@
                                         Name</label>
                                 </div>
                                 <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="text" name="productName" id="productName" value="<?= $data['Product']->productName ?>" required>
+                                    <input class="form-control width-100%" type="text" name="productName"
+                                        id="productName" value="<?= $data['Product']->productName ?>" required>
                                 </div>
                             </div>
                         </div>
@@ -46,10 +47,13 @@
                         <div class="margin-bottom-sm">
                             <div class="grid gap-xxs">
                                 <div class="col-3@lg">
-                                    <label class="inline-block text-sm padding-top-xs@lg" for="productDescription">Product Description</label>
+                                    <label class="inline-block text-sm padding-top-xs@lg"
+                                        for="productDescription">Product Description</label>
                                 </div>
                                 <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="text" name="productDescription" id="productDescription" value="<?= $data['Product']->productDescription ?>" required>
+                                    <input class="form-control width-100%" type="text" name="productDescription"
+                                        id="productDescription" value="<?= $data['Product']->productDescription ?>"
+                                        required>
                                 </div>
                             </div>
                         </div>
@@ -62,11 +66,14 @@
                                         Price</label>
                                 </div>
                                 <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="text" name="productPrice" id="productPrice" value="<?= $data['Product']->productPrice ?>" required>
+                                    <input class="form-control width-100%" type="text" name="productPrice"
+                                        id="productPrice" value="<?= $data['Product']->productPrice ?>" required>
                                 </div>
                             </div>
                         </div>
 
+                        <!-- Check if 'productType' exists before using it -->
+                        <?php if (isset($data['Product']->productType)) : ?>
                         <!-- Product Type (Customize as needed) -->
                         <div class="margin-bottom-sm">
                             <div class="grid gap-xxs">
@@ -76,34 +83,88 @@
                                 </div>
                                 <div class="col-6@lg">
                                     <select class="form-control width-100" name="productType" id="productType" required>
-                                        <option value="pizza" <?= ($data['Product']->productType === 'pizza') ? 'selected' : '' ?>>Pizza
+                                        <option value="pizza"
+                                            <?= ($data['Product']->productType === 'pizza') ? 'selected' : '' ?>>Pizza
                                         </option>
-                                        <option value="coupons" <?= ($data['Product']->productType === 'coupons') ? 'selected' : '' ?>>
-                                            Coupons
+                                        <option value="coupons"
+                                            <?= ($data['Product']->productType === 'coupons') ? 'selected' : '' ?>>
+                                            Coupons</option>
+                                        <option value="drinks"
+                                            <?= ($data['Product']->productType === 'drinks') ? 'selected' : '' ?>>Drinks
+                                        </option>
+                                        <option value="snacks"
+                                            <?= ($data['Product']->productType === 'snacks') ? 'selected' : '' ?>>Snacks
                                         </option>
                                         <!-- Add more options based on your product types -->
                                     </select>
                                 </div>
                             </div>
                         </div>
+                        <?php endif; ?>
                     </fieldset>
                 </div>
-
                 <div class="border-top border-alpha padding-md">
                     <div class="flex flex-wrap gap-xs justify-between">
-                        <button class="btn btn--accent" aria-controls="dialog-delete-product-confirmation">Delete</button>
                         <button class="btn btn--primary" type="submit">Save</button>
                     </div>
                 </div>
             </form>
+        </div>
 
+        <div class="bg radius-md shadow-xs">
+            <form action="<?= URLROOT; ?>productscontroller/updateImage/<?= $data['Product']->productId ?>"
+                method="post" enctype="multipart/form-data">
+                <div class="padding-md">
+                    <!-- basic form controls -->
+                    <fieldset class="margin-bottom-xl">
+                        <div class="margin-bottom-sm">
+                            <div class="grid gap-xxs">
+                                <div class="col-3@lg">
+                                    <label class="inline-block text-sm padding-top-xs@lg" for="file">Image</label>
+                                </div>
+                                <div class="col-6@lg">
+                                    <input type="file" name="file" id="file" accept="image/*">
+                                </div>
+                            </div>
+                            <div class="margin-bottom-sm">
+                                <div class="grid gap-xxs">
+                                    <div class="col-3@lg">
+                                        <label class="inline-block text-sm padding-top-xs@lg" for="file">file</label>
+                                    </div>
+                                    <div class="col-6@lg">
+                                        <?php if ($data['imageSrc'] && $data['imageSrc'] !== URLROOT . 'public/default-image.jpg') : ?>
+                                        <figure class="user-menu-control__img-wrapper radius-50%">
+                                            <img class="user-menu-control__img image_picture"
+                                                src="<?= $data['imageSrc'] ?>" alt="User picture">
+                                        </figure>
+                                        <?php else : ?>
+                                        <p>There is no image uploaded</p>
+                                        <?php endif; ?>
+                                        <!-- Add delete button conditionally -->
+                                        <?php if ($data['imageSrc'] && $data['imageSrc'] !== URLROOT . 'public/default-image.jpg') : ?>
+                                        <a href="<?= URLROOT; ?>productscontroller/deleteImage/<?= $data['image']->screenId ?>"
+                                            class="btn btn--danger">Delete Image</a>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="border-top border-alpha padding-md">
+                    <div class="flex flex-wrap gap-xs justify-between">
+                        <button class="btn btn--primary">Save</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </main>
 </div>
 
 <!-- dialog -->
 <div class="dialog dialog--sticky js-dialog" id="dialog-delete-user-confirmation" data-animation="on">
-    <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1" aria-describedby="dialog-description">
+    <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1"
+        aria-describedby="dialog-description">
         <div class="text-component">
             <h4 id="dialog-title-1">Are you sure you want to delete this user?</h4>
             <p id="dialog-description">This action cannot be undone.</p>
