@@ -8,7 +8,7 @@
 
         <div class="margin-bottom-md">
             <div class="flex flex-wrap gap-sm items-center justify-between">
-                <a href="<?= URLROOT ?>/orderscontroller/create" class="btn btn--primary">+ New Order</a>
+                <a href="<?= URLROOT ?>/orders/create" class="btn btn--primary">+ New Order</a>
             </div>
         </div>
 
@@ -165,7 +165,7 @@
                         </thead>
 
                         <tbody class="int-table__body js-int-table__body">
-                            <?php foreach ($data['Orders'] as $order) : ?>
+                            <?php foreach ($data['orders'] as $order) : ?>
                             <tr class="int-table__row">
                                 <th class="int-table__cell" scope="row">
                                     <div class="custom-checkbox int-table__checkbox">
@@ -185,10 +185,13 @@
                                 <td class="int-table__cell"><?= $order->orderStatus ?></td>
                                 <td class="int-table__cell"><?= $order->orderPrice ?></td>
                                 <td class="int-table__cell">
-                                    <a href="<?= URLROOT ?>orderscontroller/update/<?= $order->orderId ?>/"
+                                    <a href="<?= URLROOT ?>orders/update/{orderId:<?= $order->orderId ?>}/"
                                         class="btn btn--primary">Edit</a>
-                                    <a href="<?= URLROOT ?>orderscontroller/delete/<?= $order->orderId ?>/"
-                                        class="btn btn--primary">Delete</a>
+                                    <a href="<?= URLROOT ?>orders/delete/{orderId:<?= $order->orderId ?>}/"
+                                        class="btn btn--primary"
+                                        onclick="return confirm('Are you sure you want to delete this order?');">
+                                        Delete
+                                    </a>
                                 </td>
                                 </td>
                             </tr>
@@ -199,13 +202,19 @@
             </div>
 
             <div class="flex items-center justify-between padding-top-sm">
+                <p class="text-sm"><?= count($data['orders']) ?> Results</p>
 
                 <nav class="pagination text-sm" aria-label="Pagination">
                     <ul class="pagination__list flex flex-wrap gap-xxxs">
                         <li>
-                            <a href="#0" class="pagination__item">
+                            <?php
+                            $prevPage = max(1, $data['currentPage'] - 1);
+                            $prevPageLink = URLROOT . "orders/overview/?page=$prevPage";
+                            $prevDisabled = ($data['currentPage'] == 1) ? 'disabled' : '';
+                            // Helper::dump($prevDisabled);exit;
+                            ?>
+                            <a href="<?= $prevPageLink; ?>/" class="pagination__item <?= $prevDisabled; ?>">
                                 <svg class="icon" viewBox="0 0 16 16">
-                                    <title>Go to previous page</title>
                                     <g stroke-width="1.5" stroke="currentColor">
                                         <polyline fill="none" stroke="currentColor" stroke-linecap="round"
                                             stroke-linejoin="round" stroke-miterlimit="10"
@@ -218,15 +227,19 @@
                         <li>
                             <span class="pagination__jumper flex items-center">
                                 <input aria-label="Page number" class="form-control" type="text" id="pageNumber"
-                                    name="pageNumber" value="1">
-                                <em>of 50</em>
+                                    name="pageNumber" value="<?php echo $data['currentPage']; ?>">
+                                <em>of <?php echo $data['totalPages']; ?></em>
                             </span>
                         </li>
 
                         <li>
-                            <a href="#0" class="pagination__item">
+                            <?php
+                            $nextPage = min($data['totalPages'], $data['currentPage'] + 1);
+                            $nextPageLink = URLROOT . "orders/overview/?page=$nextPage";
+                            $nextDisabled = ($data['currentPage'] == $data['totalPages']) ? 'disabled' : '';
+                            ?>
+                            <a href="<?= $nextPageLink; ?>/" class="pagination__item <?= $nextDisabled; ?>">
                                 <svg class="icon" viewBox="0 0 16 16">
-                                    <title>Go to next page</title>
                                     <g stroke-width="1.5" stroke="currentColor">
                                         <polyline fill="none" stroke="currentColor" stroke-linecap="round"
                                             stroke-linejoin="round" stroke-miterlimit="10"

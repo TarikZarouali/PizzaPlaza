@@ -11,7 +11,7 @@ class ScreenModel
     public function getActiveScreens()
     {
         try {
-            $getActiveScreens = 'SELECT `screenId`, `screenCreateDate`, `screenIsActive`, `screenEntityId` FROM `screens` WHERE screenIsActive = 1';
+            $getActiveScreens = 'SELECT `screenId`, `screenCreateDate`, `screenIsActive`, `screenEntityId`, `screenEntity`, `screenScope` FROM `screens` WHERE screenIsActive = 1';
 
             $this->db->query($getActiveScreens);
 
@@ -22,6 +22,33 @@ class ScreenModel
             Helper::log('error', 'Failed to get active screens from the database in class ReviewModel.');
             throw $ex; // Consider throwing the exception for better error handling.
         }
+    }
+
+    public function getScreensByPagination($offset, $limit): array
+    {
+        try {
+            $getScreensByPaginationQuery =  'SELECT `screenId`, `screenCreateDate`, `screenIsActive`, `screenEntityId` FROM `screens` WHERE screenIsActive = 1
+                                              LIMIT :offset,:limit';
+
+            $this->db->query($getScreensByPaginationQuery);
+            $this->db->bind(':offset', $offset);
+            $this->db->bind(':limit', $limit);
+
+            $result = $this->db->resultSet();
+
+            return $result ?? [];
+        } catch (PDOException $ex) {
+            error_log('error', ' Exception occurred while deleting ingredient: '());
+            return false;
+        }
+    }
+
+    public function getTotalScreensCount()
+    {
+        $this->db->query("SELECT COUNT(*) as total FROM screens where screenIsActive = 1 ");
+        $result = $this->db->single();
+
+        return $result->total;
     }
 
     public function getScreenById($screenId)
@@ -93,8 +120,8 @@ class ScreenModel
                                                screenScope,
                                                screenCreateDate,
                                                screenIsActive)
-                           VALUES (:id, :screenEntityId, :screenEntity, :screenScope, :screenCreateDate, 1)");
-        $this->db->bind(':id', $screenId);
+                           VALUES (:screenId, :screenEntityId, :screenEntity, :screenScope, :screenCreateDate, 1)");
+        $this->db->bind(':screenId', $screenId);
         $this->db->bind(':screenEntityId', $entityId);
         $this->db->bind(':screenEntity', $entity);
         $this->db->bind(':screenScope', $scope);
@@ -123,6 +150,39 @@ class ScreenModel
         $this->db->bind(':screenEntityId', $entityId);
         $this->db->bind(':screenEntity', $entity);
         $this->db->bind(':screenScope', $scope);
-        return $this->db->single();
+        return $this->db->single(); // Change to resultSet()
+    }
+
+    public function insertMultipleScreenImages($screenId, $entityId, $entity, $newScope)
+    {
+        global $var;
+        // Use the provided entityId as the screenEntityId
+        $this->db->query("INSERT INTO screens (screenId,
+                                       screenEntityId,
+                                       screenEntity,
+                                       screenScope,
+                                       screenCreateDate,
+                                       screenIsActive)
+                   VALUES (:screenId, :screenEntityId, :screenEntity, :screenScope, :screenCreateDate, 1)");
+        $this->db->bind(':screenId', $screenId);
+        $this->db->bind(':screenEntityId', $entityId); // Use entityId here
+        $this->db->bind(':screenEntity', $entity);
+        $this->db->bind(':screenScope', $newScope);
+        $this->db->bind(':screenCreateDate', $var['timestamp']);
+        $this->db->execute();
+    }
+
+
+    public function getMultipleScreensByEntityId($entityId, $scope = null)
+    {
+        if ($scope !== null) {
+            $this->db->query("SELECT screenId, screenCreateDate, screenIsActive, screenEntityId, screenEntity, screenScope FROM screens WHERE screenEntityId = :entityId AND screenScope = :scope AND screenIsActive = 1");
+            $this->db->bind(':scope', $scope);
+        } else {
+            $this->db->query("SELECT  screenId, screenCreateDate, screenIsActive, screenEntityId, screenEntity, screenScope FROM screens WHERE screenEntityId = :entityId AND screenIsActive = 1");
+        }
+
+        $this->db->bind(':entityId', $entityId);
+        return $this->db->resultSet();
     }
 }

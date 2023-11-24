@@ -26,6 +26,14 @@ class OrderModel
         }
     }
 
+    public function getTotalOrdersCount()
+    {
+        $this->db->query("SELECT COUNT(*) as total FROM orders ");
+        $result = $this->db->single();
+
+        return $result->total;
+    }
+
     public function getOrderById($orderId)
     {
         try {
@@ -40,6 +48,25 @@ class OrderModel
         } catch (PDOException $ex) {
             Helper::log('error', 'Failed to get orders by Id from the database in class OrderModel.');
             exit;
+        }
+    }
+
+    public function getOrdersByPagination($offset, $limit): array
+    {
+        try {
+            $getOrdersByPaginationQuery =  'SELECT `orderId`, `orderCustomerId`, `orderStoreId`, `orderCreateDate`, `orderState`, `orderStatus`, `orderPrice`, `orderDescription` FROM `orders`
+                                            LIMIT :offset,:limit';
+
+            $this->db->query($getOrdersByPaginationQuery);
+            $this->db->bind(':offset', $offset);
+            $this->db->bind(':limit', $limit);
+
+            $result = $this->db->resultSet();
+
+            return $result ?? [];
+        } catch (PDOException $ex) {
+            error_log('error', ' Exception occurred while deleting ingredient: '());
+            return false;
         }
     }
 

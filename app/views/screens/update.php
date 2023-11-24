@@ -11,7 +11,7 @@
             <nav class="breadcrumbs text-sm" aria-label="Breadcrumbs">
                 <ol class="flex flex-wrap gap-xxs">
                     <li class="breadcrumbs__item">
-                        <a href="<?= URLROOT ?>screenscontroller/index" class="color-inherit">All Screens</a>
+                        <a href="<?= URLROOT ?>screens/overview/" class="color-inherit">All Screens</a>
                         <span class="color-contrast-low margin-left-xxs" aria-hidden="true">/</span>
                     </li>
 
@@ -21,7 +21,7 @@
         </div>
 
         <div class="bg radius-md shadow-xs">
-            <form method="POST" action="<?= URLROOT ?>/screenscontroller/update/<?= $data['screen']->screenId ?>">
+            <form method="POST" action="<?= URLROOT ?>/screens/update/{screenId:<?= $data['screen']->screenId ?>}">
                 <div class="padding-md">
                     <fieldset class="margin-bottom-xl">
                         <legend class="form-legend margin-bottom-md">Edit Screen</legend>
@@ -37,17 +37,13 @@
                                         Entity</label>
                                 </div>
                                 <div class="col-6@lg">
-                                    <select class="form-control width-100" name="screenEntityId" id="screenEntityId"
-                                        required>
+                                    <select class="form-control width-100" name="screenEntityId" id="screenEntityId" required>
                                         <!-- Replace with your list of available entities -->
-                                        <option value="1"
-                                            <?= ($data['screen']->screenEntityId == 1) ? 'selected' : '' ?>>Entity 1
+                                        <option value="1" <?= ($data['screen']->screenEntityId == 1) ? 'selected' : '' ?>>Entity 1
                                         </option>
-                                        <option value="2"
-                                            <?= ($data['screen']->screenEntityId == 2) ? 'selected' : '' ?>>Entity 2
+                                        <option value="2" <?= ($data['screen']->screenEntityId == 2) ? 'selected' : '' ?>>Entity 2
                                         </option>
-                                        <option value="3"
-                                            <?= ($data['screen']->screenEntityId == 3) ? 'selected' : '' ?>>Entity 3
+                                        <option value="3" <?= ($data['screen']->screenEntityId == 3) ? 'selected' : '' ?>>Entity 3
                                         </option>
                                         <!-- Add more entity options as needed -->
                                     </select>
@@ -61,8 +57,7 @@
 
                 <div class="border-top border-alpha padding-md">
                     <div class="flex flex-wrap gap-xs justify-between">
-                        <button class="btn btn--accent"
-                            aria-controls="dialog-delete-screen-confirmation">Delete</button>
+                        <button class="btn btn--accent" aria-controls="dialog-delete-screen-confirmation">Delete</button>
                         <button class="btn btn--primary" type="submit">Save</button>
                     </div>
                 </div>
@@ -73,8 +68,7 @@
 
 <!-- dialog -->
 <div class="dialog dialog--sticky js-dialog" id="dialog-delete-screen-confirmation" data-animation="on">
-    <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1"
-        aria-describedby="dialog-description">
+    <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1" aria-describedby="dialog-description">
         <div class="text-component">
             <h4 id="dialog-title-1">Are you sure you want to delete this screen?</h4>
             <p id="dialog-description">This action cannot be undone.</p>

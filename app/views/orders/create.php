@@ -44,7 +44,7 @@
             <nav class="breadcrumbs text-sm" aria-label="Breadcrumbs">
                 <ol class="flex flex-wrap gap-xxs">
                     <li class="breadcrumbs__item">
-                        <a href="<?= URLROOT ?>orderscontroller/overview/" class="color-inherit">All Orders</a>
+                        <a href="<?= URLROOT ?>orders/overview/" class="color-inherit">All Orders</a>
                         <span class="color-contrast-low margin-left-xxs" aria-hidden="true">/</span>
                     </li>
 
@@ -54,7 +54,7 @@
         </div>
 
         <div class="bg radius-md shadow-xs">
-            <form method="POST" action="<?= URLROOT ?>/orderscontroller/create">
+            <form method="POST" action="<?= URLROOT ?>/orders/create">
                 <div class="grid gap-sm">
 
                     <div class="col-12">

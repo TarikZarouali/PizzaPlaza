@@ -8,7 +8,7 @@
 
         <div class="margin-bottom-md">
             <div class="flex flex-wrap gap-sm items-center justify-between">
-                <a href="<?= URLROOT ?>/employeescontroller/create/" class="btn btn--primary">+ New Employee</a>
+                <a href="<?= URLROOT ?>/employees/create/" class="btn btn--primary">+ New Employee</a>
             </div>
         </div>
 
@@ -131,7 +131,7 @@
                             </tr>
                         </thead>
                         <tbody class="int-table__body js-int-table__body">
-                            <?php foreach ($data['Employees'] as $employee) : ?>
+                            <?php foreach ($data['employees'] as $employee) : ?>
                                 <tr class="int-table__row">
                                     <td class="int-table__cell" scope="row">
                                         <div class="custom-checkbox int-table__checkbox">
@@ -164,8 +164,10 @@
                                         <?= date('d/m/y', ($employee->employeeCreateDate)) ?>
                                     </td>
                                     <td class="int-table__cell">
-                                        <a href="<?= URLROOT ?>employeescontroller/update/<?= $employee->employeeId ?>/" class="btn btn--primary">Edit</a>
-                                        <a href="<?= URLROOT ?>employeescontroller/delete/<?= $employee->employeeId ?>/" class="btn btn--primary">Delete</a>
+                                        <a href="<?= URLROOT ?>employees/update/{employeeId:<?= $employee->employeeId ?>}/" class="btn btn--primary">Edit</a>
+                                        <a href="<?= URLROOT ?>employees/delete/{employeeId:<?= $employee->employeeId ?>}/" class="btn btn--primary" onclick="return confirm('Are you sure you want to delete this customer?');">
+                                            Delete
+                                        </a>
                                     </td>
                                 </tr>
                             <?php endforeach ?>
@@ -178,13 +180,19 @@
 
 
             <div class="flex items-center justify-between padding-top-sm">
+                <p class="text-sm"><?= count($data['employees']) ?> Results</p>
 
                 <nav class="pagination text-sm" aria-label="Pagination">
                     <ul class="pagination__list flex flex-wrap gap-xxxs">
                         <li>
-                            <a href="#0" class="pagination__item">
+                            <?php
+                            $prevPage = max(1, $data['currentPage'] - 1);
+                            $prevPageLink = URLROOT . "employees/overview/?page=$prevPage";
+                            $prevDisabled = ($data['currentPage'] == 1) ? 'disabled' : '';
+                            // Helper::dump($prevDisabled);exit;
+                            ?>
+                            <a href="<?= $prevPageLink; ?>/" class="pagination__item <?= $prevDisabled; ?>">
                                 <svg class="icon" viewBox="0 0 16 16">
-                                    <title>Go to previous page</title>
                                     <g stroke-width="1.5" stroke="currentColor">
                                         <polyline fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="9.5,3.5 5,8 9.5,12.5 "></polyline>
                                     </g>
@@ -194,15 +202,19 @@
 
                         <li>
                             <span class="pagination__jumper flex items-center">
-                                <input aria-label="Page number" class="form-control" type="text" id="pageNumber" name="pageNumber" value="1">
-                                <em>of 50</em>
+                                <input aria-label="Page number" class="form-control" type="text" id="pageNumber" name="pageNumber" value="<?php echo $data['currentPage']; ?>">
+                                <em>of <?php echo $data['totalPages']; ?></em>
                             </span>
                         </li>
 
                         <li>
-                            <a href="#0" class="pagination__item">
+                            <?php
+                            $nextPage = min($data['totalPages'], $data['currentPage'] + 1);
+                            $nextPageLink = URLROOT . "employees/overview/?page=$nextPage";
+                            $nextDisabled = ($data['currentPage'] == $data['totalPages']) ? 'disabled' : '';
+                            ?>
+                            <a href="<?= $nextPageLink; ?>/" class="pagination__item <?= $nextDisabled; ?>">
                                 <svg class="icon" viewBox="0 0 16 16">
-                                    <title>Go to next page</title>
                                     <g stroke-width="1.5" stroke="currentColor">
                                         <polyline fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="6.5,3.5 11,8 6.5,12.5 "></polyline>
                                     </g>
@@ -250,133 +262,7 @@
     </main>
 </div>
 
-<!-- notification popover -->
-<div id="notifications-popover" class="popover notif-popover bg radius-md shadow-md js-popover" role="dialog">
-    <header class="bg bg-opacity-90% backdrop-blur-10 text-sm padding-sm shadow-xs position-sticky top-0 z-index-2">
-        <div class="flex justify-between items-baseline">
-            <h1 class="text-md">Notifications</h1>
-            <a href="notifications.html" class="js-tab-focus">View all</a>
-        </div>
-    </header>
-
-    <ul class="notif text-sm">
-        <li class="notif__item ">
-            <a class="notif__link flex padding-sm" href="#0">
-                <figure class="notif__figure margin-right-xs color-primary" aria-hidden="true">
-                    <img src="assets/img/table-v2-img-1.jpg" alt="user picture">
-                </figure>
-
-                <div class="flex-grow margin-right-xs">
-                    <div>
-                        <p><i class="font-semibold">Olivia Saturday</i> commented on your <i class="font-semibold">"This
-                                is all it takes to improve..."</i> post.</p>
-                        <p class="text-sm color-contrast-medium margin-top-xxxs"><time>1 hour ago</time></p>
-                    </div>
-                </div>
-
-                <div class="notif__dot margin-left-auto" aria-hidden="true"></div>
-            </a>
-        </li>
-
-        <li class="notif__item ">
-            <a class="notif__link flex padding-sm" href="#0">
-                <figure class="notif__figure margin-right-xs color-accent" aria-hidden="true">
-                    <img src="assets/img/table-v2-img-2.jpg" alt="user picture">
-                </figure>
-
-                <div class="flex-grow margin-right-xs">
-                    <div>
-                        <p>It's <i class="font-semibold">David Smith</i>'s birthday. Wish him well!</p>
-                        <p class="text-sm color-contrast-medium margin-top-xxxs"><time>12 hours ago</time></p>
-                    </div>
-                </div>
-
-                <div class="notif__dot margin-left-auto" aria-hidden="true"></div>
-            </a>
-        </li>
-
-        <li class="notif__item ">
-            <a class="notif__link flex padding-sm" href="#0">
-                <figure class="notif__figure margin-right-xs color-primary" aria-hidden="true">
-                    <img src="assets/img/table-v2-img-3.jpg" alt="user picture">
-                </figure>
-
-                <div class="flex-grow margin-right-xs">
-                    <div>
-                        <p><i class="font-semibold">Marta Rossi</i> posted <i class="font-semibold">"10 helpful tips to
-                                learn web design"</i>.</p>
-                        <p class="text-sm color-contrast-medium margin-top-xxxs"><time>a day ago</time></p>
-
-                        <div class="bg radius-md padding-sm shadow-sm margin-top-sm">
-                            <p class="color-contrast-medium line-height-lg">Lorem ipsum dolor sit amet consectetur,
-                                adipisicing elit. Harum beatae commodi quibusdam officiis...</p>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </li>
-    </ul>
-</div>
-
-<!-- modal window -->
-<div class="modal modal--animate-translate-up flex flex-center bg-black bg-opacity-90% padding-md js-modal" id="modal-new-vehicle">
-    <div class="modal__content width-100% max-width-xs bg radius-md shadow-md" role="alertdialog" aria-labelledby="modal-title">
-        <header class="bg-contrast-lower bg-opacity-50% padding-y-sm padding-x-md flex items-center justify-between">
-            <h4 class="text-truncate" id="modal-title">New Customer</h4>
-
-            <button class="reset modal__close-btn modal__close-btn--inner js-modal__close js-tab-focus">
-                <svg class="icon" viewBox="0 0 20 20">
-                    <title>Close modal window</title>
-                    <g fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2">
-                        <line x1="3" y1="3" x2="17" y2="17" />
-                        <line x1="17" y1="3" x2="3" y2="17" />
-                    </g>
-                </svg>
-            </button>
-        </header>
-
-        <div class="padding-md">
-            <form method="POST" action="<?= URLROOT ?>/vehiclesController/create">
-                <div class="grid gap-sm">
-                    <div class="col-12">
-                        <label class="form-label margin-bottom-xxs" for="storeId">Select Store</label>
-                        <select class="form-control width-100" name="storeId" id="storeId" required>
-                            <?php foreach ($data['Stores'] as $store) : ?>
-                                <option value="<?= $store['storeId'] ?>">
-                                    <?= $store['storeId'] . ' - ' . $store['storeStreetName'] ?></option>
-                            <?php endforeach; ?>
-                        </select>
-
-
-                    </div>
-                    <div class="col-12">
-                        <label class="form-label margin-bottom-xxs" for="maintenance-date">Maintenance Date</label>
-                        <input class="form-control width-100" type="date" name="maintenanceDate" id="maintenance-date" required>
-                    </div>
-                    <div class="col-12">
-                        <label class="form-label margin-bottom-xxs" for="vehicle-type">Select Vehicle Type</label>
-                        <select class="form-control width-100" name="vehicleType" id="vehicle-type" required>
-                            <option value="scooter">Scooter</option>
-                            <option value="car">Car</option>
-                            <option value="bike">Bike</option>
-                            <!-- Add more vehicle types as needed -->
-                        </select>
-                    </div>
-                    <!-- Add more fields for other vehicle details here -->
-                </div>
-                <footer class="padding-md border-top border-alpha">
-                    <div class="flex justify-end gap-xs">
-                        <button class="btn btn--subtle js-modal__close">Cancel</button>
-                        <button type="submit" class="btn btn--primary">Save</button>
-                    </div>
-                </footer>
-            </form>
 
 
 
-
-        </div>
-
-    </div>
-</div>
 <?php require APPROOT . '/views/includes/footer.php'; ?>

@@ -15,7 +15,7 @@ class productModel
         try {
             $getProductsQuery = "SELECT `productId`, `productOwner`, `productName`, `productDescription`, `productPrice`, `productType`, `productIsActive`, `productCreateDate` 
                                  FROM `products` 
-                                 WHERE productIsActive = 1";
+                                 WHERE `productIsActive` = 1";
 
             $this->db->query($getProductsQuery);
 
@@ -26,6 +26,14 @@ class productModel
             error_log("Error: Failed to get active products from the database in class storeModel.");
             die('Error: Failed to get active products');
         }
+    }
+
+    public function getTotalProductsCount()
+    {
+        $this->db->query("SELECT COUNT(*) as total FROM products where productIsActive = 1 ");
+        $result = $this->db->single();
+
+        return $result->total;
     }
 
     public function getProductById($productId)
@@ -44,6 +52,26 @@ class productModel
         } catch (PDOException $ex) {
             error_log("Error: Failed to get active products by Id from the database in class storeModel.");
             die('Error: Failed to get active products by Id');
+        }
+    }
+
+    public function getProductsByPagination($offset, $limit): array
+    {
+        try {
+            $getProductsByPaginationQuery =  'SELECT `productId`, `productOwner`, `productName`, `productDescription`, `productPrice`, `productType`, `productIsActive`, `productCreateDate`
+                                              FROM `products` WHERE productIsActive = 1
+                                              LIMIT :offset,:limit';
+
+            $this->db->query($getProductsByPaginationQuery);
+            $this->db->bind(':offset', $offset);
+            $this->db->bind(':limit', $limit);
+
+            $result = $this->db->resultSet();
+
+            return $result ?? [];
+        } catch (PDOException $ex) {
+            error_log('error', ' Exception occurred while deleting ingredient: '());
+            return false;
         }
     }
 

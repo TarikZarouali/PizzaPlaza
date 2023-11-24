@@ -26,26 +26,22 @@ class ingredientModel
         }
     }
 
-    public function deleteIngredient($ingredientId)
+    public function getIngredientById($ingredientId)
     {
         try {
-            $deleteIngredient = "UPDATE `ingredients` 
-                                SET `ingredientIsActive` = '0' 
-                                WHERE `ingredients`.`ingredientId` = :ingredientId";
-            $this->db->query($deleteIngredient);
+            $getIngredientByIdQuery = "SELECT `ingredientId`, `ingredientName`, `ingredientIsActive`, `ingredientDescription`, `ingredientCreateDate`, `ingredientPrice`
+                                    FROM `ingredients`
+                                    WHERE `ingredientId` = :ingredientId";
+
+            $this->db->query($getIngredientByIdQuery);
             $this->db->bind(':ingredientId', $ingredientId);
 
-            // Execute the query
-            if ($this->db->execute()) {
-                error_log("INFO: ingredient has been deleted");
-                return true;
-            } else {
-                error_log("ERROR: ingredient could not be deleted");
-                return false;
-            }
+            $result = $this->db->single();
+
+            return $result;
         } catch (PDOException $ex) {
-            error_log("ERROR: Exception occurred while deleting ingredient: " . $ex->getMessage());
-            return false;
+            error_log("Error: Failed to get active Ingredients by Id from the database in class storeModel.");
+            die('Error: Failed to get active products by Id');
         }
     }
 
@@ -71,24 +67,7 @@ class ingredientModel
         }
     }
 
-    public function getIngredientById($ingredientId)
-    {
-        try {
-            $getIngredientByIdQuery = "SELECT `ingredientId`, `ingredientName`, `ingredientIsActive`, `ingredientDescription`, `ingredientCreateDate`, `ingredientPrice`
-                                    FROM `ingredients`
-                                    WHERE `ingredientId` = :ingredientId";
 
-            $this->db->query($getIngredientByIdQuery);
-            $this->db->bind(':ingredientId', $ingredientId);
-
-            $result = $this->db->single();
-
-            return $result;
-        } catch (PDOException $ex) {
-            error_log("Error: Failed to get active Ingredients by Id from the database in class storeModel.");
-            die('Error: Failed to get active products by Id');
-        }
-    }
 
     public function updateIngredient($ingredientId, $updatedIngredient)
     {
@@ -118,5 +97,56 @@ class ingredientModel
         }
 
         return $response;
+    }
+
+    public function deleteIngredient($ingredientId)
+    {
+        try {
+            $deleteIngredient = "UPDATE `ingredients` 
+                                SET `ingredientIsActive` = '0' 
+                                WHERE `ingredients`.`ingredientId` = :ingredientId";
+            $this->db->query($deleteIngredient);
+            $this->db->bind(':ingredientId', $ingredientId);
+
+            // Execute the query
+            if ($this->db->execute()) {
+                error_log("INFO: ingredient has been deleted");
+                return true;
+            } else {
+                error_log("ERROR: ingredient could not be deleted");
+                return false;
+            }
+        } catch (PDOException $ex) {
+            error_log("ERROR: Exception occurred while deleting ingredient: " . $ex->getMessage());
+            return false;
+        }
+    }
+
+    public function getIngredientsByPagination($offset, $limit): array
+    {
+        try {
+            $getIngredientsByPaginationQuery = "SELECT ingredientId, ingredientName, ingredientDescription, ingredientCreateDate, ingredientPrice 
+                                                FROM ingredients
+                                                WHERE ingredientIsActive = 1 LIMIT :offset,:limit";
+
+            $this->db->query($getIngredientsByPaginationQuery);
+            $this->db->bind(':offset', $offset);
+            $this->db->bind(':limit', $limit);
+
+            $result = $this->db->resultSet();
+
+            return $result ?? [];
+        } catch (PDOException $ex) {
+            error_log('error', ' Exception occurred while deleting ingredient: '());
+            return false;
+        }
+    }
+
+    public function getTotalIngredientsCount()
+    {
+        $this->db->query("SELECT COUNT(*) as total FROM ingredients WHERE ingredientIsActive = 1");
+        $result = $this->db->single();
+
+        return $result->total;
     }
 }

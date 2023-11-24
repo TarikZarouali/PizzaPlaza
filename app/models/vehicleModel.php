@@ -27,6 +27,33 @@ class vehicleModel
         }
     }
 
+    public function getTotalVehiclesCount()
+    {
+        $this->db->query("SELECT COUNT(*) as total FROM vehicles WHERE vehicleIsActive = 1");
+        $result = $this->db->single();
+
+        return $result->total;
+    }
+
+    public function getVehiclesByPagination($offset, $limit): array
+    {
+        try {
+            $getVehiclesByPaginationQuery = 'SELECT `vehicleId`, `vehicleStoreId`, `vehicleMaintenanceDate`, `vehicleType`, `vehicleIsActive`, `vehicleCreateDate` FROM `vehicles` WHERE vehicleIsActive = 1
+                                               LIMIT :offset,:limit';
+
+            $this->db->query($getVehiclesByPaginationQuery);
+            $this->db->bind(':offset', $offset);
+            $this->db->bind(':limit', $limit);
+
+            $result = $this->db->resultSet();
+
+            return $result ?? [];
+        } catch (PDOException $ex) {
+            error_log('error', ' Exception occurred while deleting ingredient: '());
+            return false;
+        }
+    }
+
     public function getVehicleById($vehicleId)
     {
         try {

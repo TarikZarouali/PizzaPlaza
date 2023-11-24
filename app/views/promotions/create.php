@@ -6,24 +6,21 @@
     <!-- main content -->
     <main class="app-ui__body padding-md js-app-ui__body">
         <div class="margin-bottom-md">
-            <h1 class="text-lg">Customer</h1>
+            <h1 class="text-lg">Create promotion</h1>
         </div>
 
         <div class="margin-bottom-md">
             <nav class="breadcrumbs text-sm" aria-label="Breadcrumbs">
                 <ol class="flex flex-wrap gap-xxs">
                     <li class="breadcrumbs__item">
-                        <a href="<?= URLROOT ?>productscontroller/index" class="color-inherit">All Products</a>
-                        <span class="color-contrast-low margin-left-xxs" aria-hidden="true">/</span>
+                        <a href="<?= URLROOT ?>promotions/overview/" class="color-inherit">All Promotions</a>
                     </li>
-
-                    <li class="breadcrumbs__item">#U2123</li>
                 </ol>
             </nav>
         </div>
 
         <div class="bg radius-md shadow-xs">
-            <form method="POST" action="<?= URLROOT ?>/promotionscontroller/create">
+            <form method="POST" action="<?= URLROOT ?>/promotions/create">
                 <div class="grid gap-sm">
                     <div class="col-12">
                         <label class="form-label margin-bottom-xxs" for="modal-customer-promotionName">Promotion

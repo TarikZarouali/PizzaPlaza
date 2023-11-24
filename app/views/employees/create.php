@@ -12,7 +12,7 @@
             <nav class="breadcrumbs text-sm" aria-label="Breadcrumbs">
                 <ol class="flex flex-wrap gap-xxs">
                     <li class="breadcrumbs__item">
-                        <a href="<?= URLROOT ?>employeescontroller/overview/" class="color-inherit">All Employees</a>
+                        <a href="<?= URLROOT ?>employees/overview/" class="color-inherit">All Employees</a>
                         <span class="color-contrast-low margin-left-xxs" aria-hidden="true">/</span>
                     </li>
 
@@ -22,7 +22,7 @@
         </div>
 
         <div class="bg radius-md shadow-xs">
-            <form method="POST" action="<?= URLROOT ?>/employeescontroller/create">
+            <form method="POST" action="<?= URLROOT ?>/employees/create">
                 <div class="grid gap-sm">
                     <div class="col-12">
                         <label class="form-label margin-bottom-xxs" for="storeId">Select Store</label>

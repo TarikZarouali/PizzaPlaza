@@ -11,7 +11,7 @@
             <nav class="breadcrumbs text-sm" aria-label="Breadcrumbs">
                 <ol class="flex flex-wrap gap-xxs">
                     <li class="breadcrumbs__item">
-                        <a href="<?= URLROOT ?>reviewscontroller/index" class="color-inherit">All Reviews</a>
+                        <a href="<?= URLROOT ?>reviews/index" class="color-inherit">All Reviews</a>
                         <span class="color-contrast-low margin-left-xxs" aria-hidden="true">/</span>
                     </li>
 
@@ -21,7 +21,7 @@
         </div>
 
         <div class="bg radius-md shadow-xs">
-            <form method="POST" action="<?= URLROOT ?>/reviewscontroller/update/<?= $data['review']->reviewId ?>">
+            <form method="POST" action="<?= URLROOT ?>/reviews/update/{reviewId:<?= $data['review']->reviewId ?>}">
                 <div class="padding-md">
                     <fieldset class="margin-bottom-xl">
                         <legend class="form-legend margin-bottom-md">Edit Review</legend>
@@ -47,15 +47,68 @@
                             </div>
                         </div>
 
-                        <!-- Review Entity ID (Assuming it's related to a product or something similar) -->
                         <div class="margin-bottom-sm">
                             <div class="grid gap-xxs">
                                 <div class="col-3@lg">
-                                    <label class="inline-block text-sm padding-top-xs@lg" for="reviewEntityId">Review
-                                        Entity ID</label>
+                                    <label class="form-label margin-bottom-xxs" for="entityType">Select Entity
+                                        Type</label>
+                                    <select class="form-control width-100" name="entityType" id="entityType" onchange="updateEntityOptions()" required>
+                                        <option value="1">Order</option>
+                                        <option value="2">Store</option>
+                                        <option value="3">Product</option>
+                                    </select>
+
                                 </div>
-                                <div class="col-6@lg">
-                                    <input class="form-control width-100" type="text" name="reviewEntityId" id="reviewEntityId" value="<?= $data['review']->reviewEntityId ?>" required>
+                            </div>
+                        </div>
+
+                        <div class="margin-bottom-sm">
+                            <div class="grid gap-xxs">
+                                <div class="col-3@lg">
+                                    <div class="col-12 js-storeDropdown" style="display:none;">
+                                        <input type="hidden" name="reviewEntityId" id="storeEntityId" value="">
+                                        <label class="form-label margin-bottom-xxs" for="storeId">Select Store</label>
+                                        <select class="form-control width-100" name="reviewEntityId" id="storeId" required>
+                                            <?php foreach ($data['Stores'] as $store) : ?>
+                                                <option value="<?= $store->storeId ?>">
+                                                    <?= $store->storeStreetName ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="margin-bottom-sm">
+                            <div class="grid gap-xxs">
+                                <div class="col-3@lg">
+                                    <div class="col-12 js-orderDropdown" style="display:none;">
+                                        <input type="hidden" name="reviewEntityId" id="orderEntityId" value="">
+                                        <label class="form-label margin-bottom-xxs" for="orderId">Select Order</label>
+                                        <select class="form-control width-100" name="reviewEntityId" id="orderId" required>
+                                            <?php foreach ($data['Orders'] as $order) : ?>
+                                                <option value="<?= $order->orderId ?>">
+                                                    <?= $order->orderId ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="margin-bottom-sm">
+                            <div class="grid gap-xxs">
+                                <div class="col-3@lg">
+                                    <div class="col-12 js-productDropdown" style="display:none;">
+                                        <input type="hidden" name="reviewEntityId" id="productEntityId" value="">
+                                        <label class="form-label margin-bottom-xxs" for="productId">Select
+                                            Product</label>
+                                        <select class="form-control width-100" name="reviewEntityId" id="productId" required>
+                                            <?php foreach ($data['Products'] as $product) : ?>
+                                                <option value="<?= $product->productId ?>">
+                                                    <?= $product->productName ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -97,7 +150,7 @@
             </form>
         </div>
         <div class="bg radius-md shadow-xs">
-            <form action="<?= URLROOT; ?>reviewscontroller/updateImage/<?= $data['review']->reviewId ?>" method="post" enctype="multipart/form-data">
+            <form action="<?= URLROOT; ?>reviews/updateImage/{reviewId:<?= $data['review']->reviewId ?>}" method="post" enctype="multipart/form-data">
                 <div class="padding-md">
                     <!-- basic form controls -->
                     <fieldset class="margin-bottom-xl">
@@ -107,27 +160,46 @@
                                     <label class="inline-block text-sm padding-top-xs@lg" for="file">Image</label>
                                 </div>
                                 <div class="col-6@lg">
-                                    <input type="file" name="file" id="file" accept="image/*">
+                                    <input type="file" name="file[]" id="file" accept="image/*">
                                 </div>
                             </div>
-                            <div class="margin-bottom-sm">
-                                <div class="grid gap-xxs">
-                                    <div class="col-3@lg">
-                                        <label class="inline-block text-sm padding-top-xs@lg" for="file">file</label>
-                                    </div>
-                                    <div class="col-6@lg">
-                                        <?php if ($data['imageSrc'] && $data['imageSrc'] !== URLROOT . 'public/default-image.jpg') : ?>
-                                            <figure class="user-menu-control__img-wrapper radius-50%">
-                                                <img class="user-menu-control__img image_picture" src="<?= $data['imageSrc'] ?>" alt="User picture">
-                                            </figure>
-                                        <?php else : ?>
-                                            <p>There is no image uploaded</p>
-                                        <?php endif; ?>
-                                        <!-- Add delete button conditionally -->
-                                        <?php if ($data['imageSrc'] && $data['imageSrc'] !== URLROOT . 'public/default-image.jpg') : ?>
-                                            <a href="<?= URLROOT; ?>reviewscontroller/deleteImage/<?= $data['image']->screenId ?>" class="btn btn--danger">Delete Image</a>
-                                        <?php endif; ?>
-                                    </div>
+                        </div>
+                        <div class="margin-bottom-sm">
+                            <div class="grid gap-xxs">
+                                <div class="col-3@lg">
+                                    <label class="inline-block text-sm padding-top-xs@lg" for="screenScope">Screen
+                                        Scope</label>
+                                </div>
+                                <div class="col-6@lg">
+                                    <input type="text" name="screenScope[]" class="form-control width-100%" id="screenScope">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="margin-bottom-sm">
+                            <div class="grid gap-xxs">
+                                <div class="col-3@lg">
+                                    <label class="inline-block text-sm padding-top-xs@lg" for="file">Files</label>
+                                </div>
+                                <div class="col-6@lg">
+                                    <?php foreach ($data['images'] as $image) : ?>
+                                        <figure class="user-menu-control__img-wrapper radius-50%">
+                                            <img class="user-menu-control__img image_picture" src="<?= $image->imagePath ?>" alt="User picture">
+                                        </figure>
+                                        <div class="margin-bottom-sm">
+                                            <div class="grid gap-xxs">
+                                                <div class="col-3@lg">
+                                                    <label class="inline-block text-sm padding-top-xs@lg" for="screenScope">Scope</label>
+                                                </div>
+                                                <div class="col-6@lg">
+                                                    <!-- Display the screenScope for the current image -->
+                                                    <input class="form-control width-100%" type="text" name="screenScope[]" value="<?= $image->screenScope ?>" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a href="<?= URLROOT; ?>reviews/deleteImage/<?= $image->screenId ?>" class="btn btn--danger" onclick="return confirm('Are you sure you want to delete this image?');">
+                                            Delete Image
+                                        </a>
+                                    <?php endforeach; ?>
                                 </div>
                             </div>
                         </div>
@@ -139,6 +211,7 @@
                     </div>
                 </div>
             </form>
+
         </div>
     </main>
 </div>

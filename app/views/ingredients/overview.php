@@ -8,7 +8,7 @@
 
         <div class="margin-bottom-md">
             <div class="flex flex-wrap gap-sm items-center justify-between">
-                <a href="<?= URLROOT ?>/ingredientscontroller/create" class="btn btn--primary">+ New Ingredient</a>
+                <a href="<?= URLROOT ?>/ingredients/create" class="btn btn--primary">+ New Ingredient</a>
             </div>
         </div>
 
@@ -148,7 +148,7 @@
                         </thead>
 
                         <tbody class="int-table__body js-int-table__body">
-                            <?php foreach ($data['Ingredients'] as $ingredient) : ?>
+                            <?php foreach ($data['ingredients'] as $ingredient) : ?>
                                 <tr class="int-table__row">
                                     <th class="int-table__cell" scope="row">
                                         <div class="custom-checkbox int-table__checkbox">
@@ -165,8 +165,10 @@
                                     </td>
                                     <td class="int-table__cell"><?= $ingredient->ingredientPrice ?></td>
                                     <td class="int-table__cell">
-                                        <a href="<?= URLROOT ?>ingredientscontroller/update/<?= $ingredient->ingredientId ?>/" class="btn btn--primary">Edit</a>
-                                        <a href="<?= URLROOT ?>ingredientscontroller/delete/<?= $ingredient->ingredientId ?>/" class="btn btn--primary">Delete</a>
+                                        <a href="<?= URLROOT ?>ingredients/update/{ingredientId:<?= $ingredient->ingredientId ?>}/" class="btn btn--primary">Edit</a>
+                                        <a href="<?= URLROOT ?>ingredients/delete/{ingredientId:<?= $ingredient->ingredientId ?>}/" class="btn btn--primary" onclick="return confirm('Are you sure you want to delete this ingredient?');">
+                                            Delete
+                                        </a>
                                     </td>
                                 </tr>
                             <?php endforeach ?>
@@ -176,13 +178,19 @@
             </div>
 
             <div class="flex items-center justify-between padding-top-sm">
+                <p class="text-sm"><?= count($data['ingredients']) ?> Results</p>
 
                 <nav class="pagination text-sm" aria-label="Pagination">
                     <ul class="pagination__list flex flex-wrap gap-xxxs">
                         <li>
-                            <a href="#0" class="pagination__item">
+                            <?php
+                            $prevPage = max(1, $data['currentPage'] - 1);
+                            $prevPageLink = URLROOT . "ingredients/overview/?page=$prevPage";
+                            $prevDisabled = ($data['currentPage'] == 1) ? 'disabled' : '';
+                            // Helper::dump($prevDisabled);exit;
+                            ?>
+                            <a href="<?= $prevPageLink; ?>/" class="pagination__item <?= $prevDisabled; ?>">
                                 <svg class="icon" viewBox="0 0 16 16">
-                                    <title>Go to previous page</title>
                                     <g stroke-width="1.5" stroke="currentColor">
                                         <polyline fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="9.5,3.5 5,8 9.5,12.5 "></polyline>
                                     </g>
@@ -192,15 +200,19 @@
 
                         <li>
                             <span class="pagination__jumper flex items-center">
-                                <input aria-label="Page number" class="form-control" type="text" id="pageNumber" name="pageNumber" value="1">
-                                <em>of 50</em>
+                                <input aria-label="Page number" class="form-control" type="text" id="pageNumber" name="pageNumber" value="<?php echo $data['currentPage']; ?>">
+                                <em>of <?php echo $data['totalPages']; ?></em>
                             </span>
                         </li>
 
                         <li>
-                            <a href="#0" class="pagination__item">
+                            <?php
+                            $nextPage = min($data['totalPages'], $data['currentPage'] + 1);
+                            $nextPageLink = URLROOT . "ingredients/overview/?page=$nextPage";
+                            $nextDisabled = ($data['currentPage'] == $data['totalPages']) ? 'disabled' : '';
+                            ?>
+                            <a href="<?= $nextPageLink; ?>/" class="pagination__item <?= $nextDisabled; ?>">
                                 <svg class="icon" viewBox="0 0 16 16">
-                                    <title>Go to next page</title>
                                     <g stroke-width="1.5" stroke="currentColor">
                                         <polyline fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="6.5,3.5 11,8 6.5,12.5 "></polyline>
                                     </g>
@@ -210,6 +222,11 @@
                     </ul>
                 </nav>
             </div>
+
+
+
+
+
 
             <menu id="menu-example" class="menu js-menu" data-scrollable-element=".js-app-ui__body">
                 <li role="menuitem">
@@ -316,51 +333,5 @@
     </ul>
 </div>
 
-<!-- modal window -->
-<div class="modal modal--animate-translate-up flex flex-center bg-black bg-opacity-90% padding-md js-modal" id="modal-new-customer">
-    <div class="modal__content width-100% max-width-xs bg radius-md shadow-md" role="alertdialog" aria-labelledby="modal-title">
-        <header class="bg-contrast-lower bg-opacity-50% padding-y-sm padding-x-md flex items-center justify-between">
-            <h4 class="text-truncate" id="modal-title">New Ingredient</h4>
 
-            <button class="reset modal__close-btn modal__close-btn--inner js-modal__close js-tab-focus">
-                <svg class="icon" viewBox="0 0 20 20">
-                    <title>Close modal window</title>
-                    <g fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2">
-                        <line x1="3" y1="3" x2="17" y2="17" />
-                        <line x1="17" y1="3" x2="3" y2="17" />
-                    </g>
-                </svg>
-            </button>
-        </header>
-
-        <div class="padding-md">
-            <form method="POST" action="<?= URLROOT ?>/ingredientsController/create">
-                <div class="grid gap-sm">
-                    <div class="col-12">
-                        <label class="form-label margin-bottom-xxs" for="modal-customer-ingredientName">Ingredient
-                            Name</label>
-                        <input class "form-control width-100%" type="text" name="ingredientName" id="modal-customer-ingredientName" required>
-                    </div>
-                    <div class="col-12">
-                        <label class="form-label margin-bottom-xxs" for="modal-customer-ingredientDescription">Ingredient Description</label>
-                        <input class="form-control width-100%" type="text" name="ingredientDescription" id="modal-customer-ingredientDescription" required>
-                    </div>
-                    <div class="col-12">
-                        <label class="form-label margin-bottom-xxs" for="modal-customer-ingredientPrice">Ingredient
-                            Price</label>
-                        <input class="form-control width-100%" type="text" name="ingredientPrice" id="modal-customer-ingredientPrice" required>
-                    </div>
-                </div>
-                <footer class="padding-md border-top border-alpha">
-                    <div class="flex justify-end gap-xs">
-                        <button class="btn btn--subtle js-modal__close">Cancel</button>
-                        <button type="submit" class="btn btn--primary">Save</button>
-                    </div>
-                </footer>
-            </form>
-
-        </div>
-
-    </div>
-</div>
 <?php require APPROOT . '/views/includes/footer.php'; ?>

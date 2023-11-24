@@ -11,17 +11,14 @@
             <nav class="breadcrumbs text-sm" aria-label="Breadcrumbs">
                 <ol class="flex flex-wrap gap-xxs">
                     <li class="breadcrumbs__item">
-                        <a href="<?= URLROOT ?>productscontroller/index" class="color-inherit">All Products</a>
-                        <span class="color-contrast-low margin-left-xxs" aria-hidden="true">/</span>
+                        <a href="<?= URLROOT ?>stores/overview/" class="color-inherit">All Stores</a>
                     </li>
-
-                    <li class="breadcrumbs__item">#U2123</li>
                 </ol>
             </nav>
         </div>
 
         <div class="bg radius-md shadow-xs">
-            <form method="POST" action="<?= URLROOT ?>storescontroller/update/<?= $data['Store']->storeId ?>">
+            <form method="POST" action="<?= URLROOT ?>stores/update/{storeId:<?= $data['Store']->storeId ?>}">
                 <!-- Hidden input for storeId -->
                 <input type="hidden" name="storeId" value="<?= $data['Store']->storeId ?>">
 
@@ -101,7 +98,7 @@
             </form>
         </div>
         <div class="bg radius-md shadow-xs">
-            <form action="<?= URLROOT; ?>storescontroller/updateImage/<?= $data['Store']->storeId ?>" method="post" enctype="multipart/form-data">
+            <form action="<?= URLROOT; ?>stores/updateImage/<?= $data['Store']->storeId ?>" method="post" enctype="multipart/form-data">
                 <div class="padding-md">
                     <!-- basic form controls -->
                     <fieldset class="margin-bottom-xl">
@@ -129,7 +126,10 @@
                                         <?php endif; ?>
                                         <!-- Add delete button conditionally -->
                                         <?php if ($data['imageSrc'] && $data['imageSrc'] !== URLROOT . 'public/default-image.jpg') : ?>
-                                            <a href="<?= URLROOT; ?>productscontroller/deleteImage/<?= $data['image']->screenId ?>" class="btn btn--danger">Delete Image</a>
+                                            <a href="<?= URLROOT; ?>productscontroller/deleteImage/<?= $data['image']->screenId ?>" class="btn btn--danger" onclick="return confirm('Are you sure you want to delete this image?');">
+                                                Delete Image
+                                            </a>
+
                                         <?php endif; ?>
                                     </div>
                                 </div>

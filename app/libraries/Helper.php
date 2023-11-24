@@ -13,18 +13,22 @@ class Helper
     public static function log($type, $data)
     {
         if ($type == 'event') {
+            // Your existing code for 'event'
             error_log('Event: ' . date('Ymd h:i:s') . " - " . $data);
-        } else if ($type == 'error') {
+        } else if ($type == 'error' || $type == 'debug') {
             $bt = debug_backtrace();
             $caller = array_shift($bt);
-            error_log('Error: ' . date('Ymd h:i:s') . " - " . $caller['line'] . ' ' . $caller['file'] . "\n" . $data);
-        } else if ($type == 'debug') {
-            $bt = debug_backtrace();
-            $caller = array_shift($bt);
-            error_log("\n" . date('Ymd h:i:s') . "\n" . $caller['line'] . ' ' . $caller['file'] . "\n" . print_r($data, true) .
-                "\n");
+
+            // Check if $data is an array
+            if (is_array($data)) {
+                // Convert array to a string for logging
+                $data = print_r($data, true);
+            }
+
+            error_log($type . ': ' . date('Ymd h:i:s') . " - " . $caller['line'] . ' ' . $caller['file'] . "\n" . $data);
         }
     }
+
 
     // ENCRYPT DATA
     static function crypt($action, $string)
@@ -49,5 +53,17 @@ class Helper
         }
 
         return $output;
+    }
+
+    public static function generateRandomString($length = 4)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomString = '';
+
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, strlen($characters) - 1)];
+        }
+
+        return $randomString;
     }
 }

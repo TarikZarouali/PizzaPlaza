@@ -4,24 +4,22 @@
     <!-- main content -->
     <main class="app-ui__body padding-md js-app-ui__body">
         <div class="margin-bottom-md">
-            <h1 class="text-lg">Customer</h1>
+            <h1 class="text-lg">Promotion</h1>
         </div>
 
         <div class="margin-bottom-md">
             <nav class="breadcrumbs text-sm" aria-label="Breadcrumbs">
                 <ol class="flex flex-wrap gap-xxs">
                     <li class="breadcrumbs__item">
-                        <a href="<?= URLROOT ?>productscontroller/index" class="color-inherit">All Products</a>
-                        <span class="color-contrast-low margin-left-xxs" aria-hidden="true">/</span>
+                        <a href="<?= URLROOT ?>promotions/overview/" class="color-inherit">All Promotions</a>
                     </li>
-
-                    <li class="breadcrumbs__item">#U2123</li>
                 </ol>
             </nav>
         </div>
 
         <div class="bg radius-md shadow-xs">
-            <form method="POST" action="<?= URLROOT ?>promotionscontroller/update/<?= $data['Promotion']->promotionId ?>">
+            <form method="POST"
+                action="<?= URLROOT ?>promotions/update/{promotionId:<?= $data['promotion']->promotionId ?>}">
                 <!-- Hidden input for promotionId -->
                 <input type="hidden" name="promotionId" value="<?= $data['promotion']->promotionId ?>">
 
@@ -37,7 +35,8 @@
                                         Name</label>
                                 </div>
                                 <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="text" name="promotionName" id="promotionName" value="<?= $data['promotion']->promotionName ?>">
+                                    <input class="form-control width-100%" type="text" name="promotionName"
+                                        id="promotionName" value="<?= $data['promotion']->promotionName ?>">
                                 </div>
                             </div>
                         </div>
@@ -46,10 +45,13 @@
                         <div class="margin-bottom-sm">
                             <div class="grid gap-xxs">
                                 <div class="col-3@lg">
-                                    <label class="inline-block text-sm padding-top-xs@lg" for="promotionDescription">Promotion Description</label>
+                                    <label class="inline-block text-sm padding-top-xs@lg"
+                                        for="promotionDescription">Promotion Description</label>
                                 </div>
                                 <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="text" name="promotionDescription" id="promotionDescription" value="<?= $data['promotion']->promotionDescription ?>">
+                                    <input class="form-control width-100%" type="text" name="promotionDescription"
+                                        id="promotionDescription"
+                                        value="<?= $data['promotion']->promotionDescription ?>">
                                 </div>
                             </div>
                         </div>
@@ -58,10 +60,12 @@
                         <div class="margin-bottom-sm">
                             <div class="grid gap-xxs">
                                 <div class="col-3@lg">
-                                    <label class="inline-block text-sm padding-top-xs@lg" for="promotionEndDate">Promotion End Date</label>
+                                    <label class="inline-block text-sm padding-top-xs@lg"
+                                        for="promotionEndDate">Promotion End Date</label>
                                 </div>
                                 <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="date" name="promotionEndDate" id="promotionEndDate" value="<?= $data['promotion']->promotionEndDate ?>">
+                                    <input class="form-control width-100%" type="date" name="promotionEndDate"
+                                        id="promotionEndDate" value="<?= $data['promotion']->promotionEndDate ?>">
                                 </div>
                             </div>
                         </div>
@@ -70,14 +74,16 @@
 
                 <div class="border-top border-alpha padding-md">
                     <div class="flex flex-wrap gap-xs justify-between">
-                        <button class="btn btn--accent" aria-controls="dialog-delete-promotion-confirmation">Delete</button>
+                        <button class="btn btn--accent"
+                            aria-controls="dialog-delete-promotion-confirmation">Delete</button>
                         <button class="btn btn--primary" type="submit">Save</button>
                     </div>
                 </div>
             </form>
         </div>
         <div class="bg radius-md shadow-xs">
-            <form action="<?= URLROOT; ?>promotionscontroller/updateImage/<?= $data['promotion']->promotionId ?>" method="post" enctype="multipart/form-data">
+            <form action="<?= URLROOT; ?>promotions/updateImage/{promotionId:<?= $data['promotion']->promotionId ?>}"
+                method="post" enctype="multipart/form-data">
                 <div class="padding-md">
                     <!-- basic form controls -->
                     <fieldset class="margin-bottom-xl">
@@ -87,27 +93,52 @@
                                     <label class="inline-block text-sm padding-top-xs@lg" for="file">Image</label>
                                 </div>
                                 <div class="col-6@lg">
-                                    <input type="file" name="file" id="file" accept="image/*">
+                                    <input type="file" name="file[]" id="file" accept="image/*">
                                 </div>
                             </div>
-                            <div class="margin-bottom-sm">
-                                <div class="grid gap-xxs">
-                                    <div class="col-3@lg">
-                                        <label class="inline-block text-sm padding-top-xs@lg" for="file">file</label>
+                        </div>
+                        <div class="margin-bottom-sm">
+                            <div class="grid gap-xxs">
+                                <div class="col-3@lg">
+                                    <label class="inline-block text-sm padding-top-xs@lg" for="screenScope">Screen
+                                        Scope</label>
+                                </div>
+                                <div class="col-6@lg">
+                                    <input type="text" name="screenScope[]" class="form-control width-100%"
+                                        id="screenScope">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="margin-bottom-sm">
+                            <div class="grid gap-xxs">
+                                <div class="col-3@lg">
+                                    <label class="inline-block text-sm padding-top-xs@lg" for="file">Files</label>
+                                </div>
+                                <div class="col-6@lg">
+                                    <?php foreach ($data['images'] as $image) : ?>
+                                    <figure class="user-menu-control__img-wrapper radius-50%">
+                                        <img class="user-menu-control__img image_picture" src="<?= $image->imagePath ?>"
+                                            alt="User picture">
+                                    </figure>
+                                    <div class="margin-bottom-sm">
+                                        <div class="grid gap-xxs">
+                                            <div class="col-3@lg">
+                                                <label class="inline-block text-sm padding-top-xs@lg"
+                                                    for="screenScope">Scope</label>
+                                            </div>
+                                            <div class="col-6@lg">
+                                                <!-- Display the screenScope for the current image -->
+                                                <input class="form-control width-100%" type="text" name="screenScope[]"
+                                                    value="<?= $image->screenScope ?>" required>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-6@lg">
-                                        <?php if ($data['imageSrc'] && $data['imageSrc'] !== URLROOT . 'public/default-image.jpg') : ?>
-                                            <figure class="user-menu-control__img-wrapper radius-50%">
-                                                <img class="user-menu-control__img image_picture" src="<?= $data['imageSrc'] ?>" alt="User picture">
-                                            </figure>
-                                        <?php else : ?>
-                                            <p>There is no image uploaded</p>
-                                        <?php endif; ?>
-                                        <!-- Add delete button conditionally -->
-                                        <?php if ($data['imageSrc'] && $data['imageSrc'] !== URLROOT . 'public/default-image.jpg') : ?>
-                                            <a href="<?= URLROOT; ?>promotionscontroller/deleteImage/<?= $data['image']->screenId ?>" class="btn btn--danger">Delete Image</a>
-                                        <?php endif; ?>
-                                    </div>
+                                    <a href="<?= URLROOT; ?>promotions/deleteImage/<?= $image->screenId ?>"
+                                        class="btn btn--danger"
+                                        onclick="return confirm('Are you sure you want to delete this image?');">
+                                        Delete Image
+                                    </a>
+                                    <?php endforeach; ?>
                                 </div>
                             </div>
                         </div>
@@ -119,13 +150,20 @@
                     </div>
                 </div>
             </form>
+
+
+
         </div>
+
     </main>
 </div>
 
+
+
 <!-- dialog -->
 <div class="dialog dialog--sticky js-dialog" id="dialog-delete-user-confirmation" data-animation="on">
-    <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1" aria-describedby="dialog-description">
+    <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1"
+        aria-describedby="dialog-description">
         <div class="text-component">
             <h4 id="dialog-title-1">Are you sure you want to delete this user?</h4>
             <p id="dialog-description">This action cannot be undone.</p>

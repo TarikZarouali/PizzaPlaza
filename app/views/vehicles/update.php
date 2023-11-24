@@ -4,14 +4,14 @@
     <!-- main content -->
     <main class="app-ui__body padding-md js-app-ui__body">
         <div class="margin-bottom-md">
-            <h1 class="text-lg">Customer</h1>
+            <h1 class="text-lg">Update your selected vehicle.</h1>
         </div>
 
         <div class="margin-bottom-md">
             <nav class="breadcrumbs text-sm" aria-label="Breadcrumbs">
                 <ol class="flex flex-wrap gap-xxs">
                     <li class="breadcrumbs__item">
-                        <a href="<?= URLROOT ?>productscontroller/index" class="color-inherit">All Products</a>
+                        <a href="<?= URLROOT ?>vehicles/overview" class="color-inherit">All Vehicles</a>
                         <span class="color-contrast-low margin-left-xxs" aria-hidden="true">/</span>
                     </li>
 
@@ -21,7 +21,7 @@
         </div>
 
         <div class="bg radius-md shadow-xs">
-            <<form method="POST" action="<?= URLROOT ?>/vehiclescontroller/update/<?= $data['vehicle']->vehicleId ?>">
+            <<form method="POST" action="<?= URLROOT ?>/vehicles/update/{vehicleId:<?= $data['vehicle']->vehicleId ?>}">
                 <div class="padding-md">
                     <fieldset class="margin-bottom-xl">
                         <legend class="form-legend margin-bottom-md">Edit Vehicle</legend>
@@ -37,10 +37,12 @@
                                         Store</label>
                                 </div>
                                 <div class="col-6@lg">
-                                    <select class="form-control width-100" name="vehicleStoreId" id="vehicleStoreId" required>
+                                    <select class="form-control width-100" name="vehicleStoreId" id="vehicleStoreId"
+                                        required>
                                         <?php foreach ($data['Store'] as $store) : ?>
-                                            <option value="<?= $store->storeId ?>" <?= ($store->storeId == $data['vehicle']->vehicleStoreId) ? 'selected' : '' ?>>
-                                                <?= $store->storeId . "-" . $store->storeStreetName ?></option>
+                                        <option value="<?= $store->storeId ?>"
+                                            <?= ($store->storeId == $data['vehicle']->vehicleStoreId) ? 'selected' : '' ?>>
+                                            <?= $store->storeId . "-" . $store->storeStreetName ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
@@ -51,7 +53,8 @@
                         <div class="margin-bottom-sm">
                             <div class="grid gap-xxs">
                                 <div class="col-3@lg">
-                                    <label class="inline-block text-sm padding-top-xs@lg" for="vehicleMaintenanceDate">Maintenance Date</label>
+                                    <label class="inline-block text-sm padding-top-xs@lg"
+                                        for="vehicleMaintenanceDate">Maintenance Date</label>
                                 </div>
                                 <div class="col-6@lg">
                                     <?php
@@ -61,7 +64,8 @@
                                     // Format the date to d/m/Y
                                     $formattedDate = date('d/m/Y', strtotime($maintenanceDate));
                                     ?>
-                                    <input class="form-control width-100" type="date" name="vehicleMaintenanceDate" id="vehicleMaintenanceDate" value="<?= $maintenanceDate ?>">
+                                    <input class="form-control width-100" type="date" name="vehicleMaintenanceDate"
+                                        id="vehicleMaintenanceDate" value="<?= $maintenanceDate ?>">
                                 </div>
                             </div>
                         </div>
@@ -75,11 +79,14 @@
                                 </div>
                                 <div class="col-6@lg">
                                     <select class="form-control width-100" name="vehicleType" id="vehicleType" required>
-                                        <option value="scooter" <?= ($data['vehicle']->vehicleType === 'scooter') ? 'selected' : '' ?>>
+                                        <option value="scooter"
+                                            <?= ($data['vehicle']->vehicleType === 'scooter') ? 'selected' : '' ?>>
                                             Scooter</option>
-                                        <option value="car" <?= ($data['vehicle']->vehicleType === 'car') ? 'selected' : '' ?>>Car
+                                        <option value="car"
+                                            <?= ($data['vehicle']->vehicleType === 'car') ? 'selected' : '' ?>>Car
                                         </option>
-                                        <option value="bike" <?= ($data['vehicle']->vehicleType === 'bike') ? 'selected' : '' ?>>Bike
+                                        <option value="bike"
+                                            <?= ($data['vehicle']->vehicleType === 'bike') ? 'selected' : '' ?>>Bike
                                         </option>
                                         <!-- Add more vehicle types as needed -->
                                     </select>
@@ -91,14 +98,16 @@
 
                 <div class="border-top border-alpha padding-md">
                     <div class="flex flex-wrap gap-xs justify-between">
-                        <button class="btn btn--accent" aria-controls="dialog-delete-vehicle-confirmation">Delete</button>
+                        <button class="btn btn--accent"
+                            aria-controls="dialog-delete-vehicle-confirmation">Delete</button>
                         <button class="btn btn--primary" type="submit">Save</button>
                     </div>
                 </div>
                 </form>
         </div>
         <div class="bg radius-md shadow-xs">
-            <form action="<?= URLROOT; ?>vehiclescontroller/updateImage/<?= $data['vehicle']->vehicleId ?>" method="post" enctype="multipart/form-data">
+            <form action="<?= URLROOT; ?>vehicles/updateImage/{vehicleId:<?= $data['vehicle']->vehicleId ?>}"
+                method="post" enctype="multipart/form-data">
                 <div class="padding-md">
                     <!-- basic form controls -->
                     <fieldset class="margin-bottom-xl">
@@ -118,15 +127,21 @@
                                     </div>
                                     <div class="col-6@lg">
                                         <?php if ($data['imageSrc'] && $data['imageSrc'] !== URLROOT . 'public/default-image.jpg') : ?>
-                                            <figure class="user-menu-control__img-wrapper radius-50%">
-                                                <img class="user-menu-control__img image_picture" src="<?= $data['imageSrc'] ?>" alt="User picture">
-                                            </figure>
+                                        <figure class="user-menu-control__img-wrapper radius-50%">
+                                            <img class="user-menu-control__img image_picture"
+                                                src="<?= $data['imageSrc'] ?>" alt="User picture">
+                                        </figure>
                                         <?php else : ?>
-                                            <p>There is no image uploaded</p>
+                                        <p>There is no image uploaded</p>
                                         <?php endif; ?>
                                         <!-- Add delete button conditionally -->
                                         <?php if ($data['imageSrc'] && $data['imageSrc'] !== URLROOT . 'public/default-image.jpg') : ?>
-                                            <a href="<?= URLROOT; ?>vehiclescontroller/deleteImage/<?= $data['image']->screenId ?>" class="btn btn--danger">Delete Image</a>
+                                        <a href="<?= URLROOT; ?>vehicles/deleteImage/<?= $data['image']->screenId ?>"
+                                            class="btn btn--danger"
+                                            onclick="return confirm('Are you sure you want to delete this image?');">
+                                            Delete Image
+                                        </a>
+
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -146,7 +161,8 @@
 
 <!-- dialog -->
 <div class="dialog dialog--sticky js-dialog" id="dialog-delete-user-confirmation" data-animation="on">
-    <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1" aria-describedby="dialog-description">
+    <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1"
+        aria-describedby="dialog-description">
         <div class="text-component">
             <h4 id="dialog-title-1">Are you sure you want to delete this user?</h4>
             <p id="dialog-description">This action cannot be undone.</p>

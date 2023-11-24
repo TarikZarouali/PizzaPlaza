@@ -22,7 +22,8 @@
         </div>
 
         <div class="bg radius-md shadow-xs">
-            <form method="POST" action="<?= URLROOT ?>ingredientscontroller/update/<?= $data['Ingredient']->ingredientId ?>">
+            <form method="POST"
+                action="<?= URLROOT ?>ingredients/update/{ingredientId:<?= $data['Ingredient']->ingredientId ?>}">
                 <div class="padding-md">
                     <fieldset class="margin-bottom-xl">
                         <legend class="form-legend margin-bottom-md">Edit Ingredient</legend>
@@ -34,11 +35,13 @@
                         <div class="margin-bottom-sm">
                             <div class="grid gap-xxs">
                                 <div class="col-3@lg">
-                                    <label class="inline-block text-sm padding-top-xs@lg" for="ingredientName">Ingredient
+                                    <label class="inline-block text-sm padding-top-xs@lg"
+                                        for="ingredientName">Ingredient
                                         Name</label>
                                 </div>
                                 <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="text" name="ingredientName" id="ingredientName" value="<?= $data['Ingredient']->ingredientName ?>" required>
+                                    <input class="form-control width-100%" type="text" name="ingredientName"
+                                        id="ingredientName" value="<?= $data['Ingredient']->ingredientName ?>" required>
                                 </div>
                             </div>
                         </div>
@@ -47,10 +50,13 @@
                         <div class="margin-bottom-sm">
                             <div class="grid gap-xxs">
                                 <div class="col-3@lg">
-                                    <label class="inline-block text-sm padding-top-xs@lg" for="ingredientDescription">Ingredient Description</label>
+                                    <label class="inline-block text-sm padding-top-xs@lg"
+                                        for="ingredientDescription">Ingredient Description</label>
                                 </div>
                                 <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="text" name="ingredientDescription" id="ingredientDescription" value="<?= $data['Ingredient']->ingredientDescription ?>" required>
+                                    <input class="form-control width-100%" type="text" name="ingredientDescription"
+                                        id="ingredientDescription"
+                                        value="<?= $data['Ingredient']->ingredientDescription ?>" required>
                                 </div>
                             </div>
                         </div>
@@ -59,11 +65,14 @@
                         <div class="margin-bottom-sm">
                             <div class="grid gap-xxs">
                                 <div class="col-3@lg">
-                                    <label class="inline-block text-sm padding-top-xs@lg" for="ingredientPrice">Ingredient
+                                    <label class="inline-block text-sm padding-top-xs@lg"
+                                        for="ingredientPrice">Ingredient
                                         Price</label>
                                 </div>
                                 <div class="col-6@lg">
-                                    <input class="form-control width-100%" type="text" name="ingredientPrice" id="ingredientPrice" value="<?= $data['Ingredient']->ingredientPrice ?>" required>
+                                    <input class="form-control width-100%" type="text" name="ingredientPrice"
+                                        id="ingredientPrice" value="<?= $data['Ingredient']->ingredientPrice ?>"
+                                        required>
                                 </div>
                             </div>
                         </div>
@@ -72,7 +81,8 @@
 
                 <div class="border-top border-alpha padding-md">
                     <div class="flex flex-wrap gap-xs justify-between">
-                        <button class="btn btn--accent" aria-controls="dialog-delete-product-confirmation">Delete</button>
+                        <button class="btn btn--accent"
+                            aria-controls="dialog-delete-product-confirmation">Delete</button>
                         <button class="btn btn--primary" type="submit">Save</button>
                     </div>
                 </div>
@@ -80,7 +90,9 @@
 
         </div>
         <div class="bg radius-md shadow-xs">
-            <form action="<?= URLROOT; ?>ingredientscontroller/updateImage/<?= $data['Ingredient']->ingredientId ?>" method="post" enctype="multipart/form-data">
+            <form
+                action="<?= URLROOT; ?>ingredients/updateImage/{ingredientId:<?= $data['Ingredient']->ingredientId ?>}"
+                method="post" enctype="multipart/form-data">
                 <div class="padding-md">
                     <!-- basic form controls -->
                     <fieldset class="margin-bottom-xl">
@@ -100,15 +112,21 @@
                                     </div>
                                     <div class="col-6@lg">
                                         <?php if ($data['imageSrc'] && $data['imageSrc'] !== URLROOT . 'public/default-image.jpg') : ?>
-                                            <figure class="user-menu-control__img-wrapper radius-50%">
-                                                <img class="user-menu-control__img image_picture" src="<?= $data['imageSrc'] ?>" alt="User picture">
-                                            </figure>
+                                        <figure class="user-menu-control__img-wrapper radius-50%">
+                                            <img class="user-menu-control__img image_picture"
+                                                src="<?= $data['imageSrc'] ?>" alt="User picture">
+                                        </figure>
                                         <?php else : ?>
-                                            <p>There is no image uploaded</p>
+                                        <p>There is no image uploaded</p>
                                         <?php endif; ?>
                                         <!-- Add delete button conditionally -->
                                         <?php if ($data['imageSrc'] && $data['imageSrc'] !== URLROOT . 'public/default-image.jpg') : ?>
-                                            <a href="<?= URLROOT; ?>ingredientscontroller/deleteImage/<?= $data['image']->screenId ?>" class="btn btn--danger">Delete Image</a>
+                                        <a href="<?= URLROOT; ?>ingredients/deleteImage/<?= $data['image']->screenId ?>"
+                                            class="btn btn--danger"
+                                            onclick="return confirm('Are you sure you want to delete this image?');">
+                                            Delete Image
+                                        </a>
+
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -123,12 +141,14 @@
                 </div>
             </form>
         </div>
+
     </main>
 </div>
 
 <!-- dialog -->
 <div class="dialog dialog--sticky js-dialog" id="dialog-delete-user-confirmation" data-animation="on">
-    <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1" aria-describedby="dialog-description">
+    <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1"
+        aria-describedby="dialog-description">
         <div class="text-component">
             <h4 id="dialog-title-1">Are you sure you want to delete this user?</h4>
             <p id="dialog-description">This action cannot be undone.</p>

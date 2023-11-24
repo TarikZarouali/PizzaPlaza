@@ -12,7 +12,7 @@
             <nav class="breadcrumbs text-sm" aria-label="Breadcrumbs">
                 <ol class="flex flex-wrap gap-xxs">
                     <li class="breadcrumbs__item">
-                        <a href="<?= URLROOT ?>customerscontroller/index" class="color-inherit">All Products</a>
+                        <a href="<?= URLROOT ?>ingredients/overview/" class="color-inherit">All Ingredients</a>
                         <span class="color-contrast-low margin-left-xxs" aria-hidden="true">/</span>
                     </li>
 
@@ -22,21 +22,25 @@
         </div>
 
         <div class="bg radius-md shadow-xs">
-            <form method="POST" action="<?= URLROOT ?>/ingredientsController/create">
+            <form method="POST" action="<?= URLROOT ?>/ingredients/create">
                 <div class="grid gap-sm">
                     <div class="col-12">
                         <label class="form-label margin-bottom-xxs" for="modal-customer-ingredientName">Ingredient
                             Name</label>
-                        <input class "form-control width-100%" type="text" name="ingredientName" id="modal-customer-ingredientName" required>
+                        <input class="form-control width-100%" type="text" name="ingredientName"
+                            id="modal-customer-ingredientName" required>
                     </div>
                     <div class="col-12">
-                        <label class="form-label margin-bottom-xxs" for="modal-customer-ingredientDescription">Ingredient Description</label>
-                        <input class="form-control width-100%" type="text" name="ingredientDescription" id="modal-customer-ingredientDescription" required>
+                        <label class="form-label margin-bottom-xxs"
+                            for="modal-customer-ingredientDescription">Ingredient Description</label>
+                        <input class="form-control width-100%" type="text" name="ingredientDescription"
+                            id="modal-customer-ingredientDescription" required>
                     </div>
                     <div class="col-12">
                         <label class="form-label margin-bottom-xxs" for="modal-customer-ingredientPrice">Ingredient
                             Price</label>
-                        <input class="form-control width-100%" type="text" name="ingredientPrice" id="modal-customer-ingredientPrice" required>
+                        <input class="form-control width-100%" type="text" name="ingredientPrice"
+                            id="modal-customer-ingredientPrice" required>
                     </div>
                 </div>
                 <footer class="padding-md border-top border-alpha">
@@ -53,7 +57,8 @@
 
 <!-- dialog -->
 <div class="dialog dialog--sticky js-dialog" id="dialog-delete-user-confirmation" data-animation="on">
-    <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1" aria-describedby="dialog-description">
+    <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1"
+        aria-describedby="dialog-description">
         <div class="text-component">
             <h4 id="dialog-title-1">Are you sure you want to delete this user?</h4>
             <p id="dialog-description">This action cannot be undone.</p>

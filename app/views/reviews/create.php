@@ -9,7 +9,7 @@
         <nav class="breadcrumbs text-sm" aria-label="Breadcrumbs">
             <ol class="flex flex-wrap gap-xxs">
                 <li class="breadcrumbs__item">
-                    <a href="<?= URLROOT ?>reviewscontroller/index" class="color-inherit">All Reviews</a>
+                    <a href="<?= URLROOT ?>reviews/index" class="color-inherit">All Reviews</a>
                     <span class="color-contrast-low margin-left-xxs" aria-hidden="true">/</span>
                 </li>
 
@@ -19,7 +19,7 @@
     </div>
 
     <div class="bg radius-md shadow-xs">
-        <form method="POST" action="<?= URLROOT ?>/reviewscontroller/create">
+        <form method="POST" action="<?= URLROOT ?>/reviews/create">
             <div class="grid gap-sm">
                 <div class="col-12">
                     <label class="form-label margin-bottom-xxs" for="customerId">Select Customer</label>

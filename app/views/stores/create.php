@@ -11,37 +11,40 @@
             <nav class="breadcrumbs text-sm" aria-label="Breadcrumbs">
                 <ol class="flex flex-wrap gap-xxs">
                     <li class="breadcrumbs__item">
-                        <a href="<?= URLROOT ?>productscontroller/index" class="color-inherit">All Products</a>
-                        <span class="color-contrast-low margin-left-xxs" aria-hidden="true">/</span>
+                        <a href="<?= URLROOT ?>stores/overview/" class="color-inherit">All Stores</a>
                     </li>
-
-                    <li class="breadcrumbs__item">#U2123</li>
                 </ol>
             </nav>
         </div>
 
         <div class="bg radius-md shadow-xs">
-            <form method="POST" action="<?= URLROOT ?>/storescontroller/create">
+            <form method="POST" action="<?= URLROOT ?>/stores/create">
                 <div class="grid gap-sm">
                     <div class="col-12">
                         <label class="form-label margin-bottom-xxs" for="modal-customer-storeStreetName">Street
                             name</label>
-                        <input class="form-control width-100%" type="text" name="storeStreetName" id="modal-customer-storeStreetName" required>
+                        <input class="form-control width-100%" type="text" name="storeStreetName"
+                            id="modal-customer-storeStreetName" required>
                     </div>
                     <div class="col-12">
                         <label class="form-label margin-bottom-xxs" for="modal-customer-storeCity">city</label>
-                        <input class="form-control width-100%" type="text" name="storeCity" id="modal-customer-storeCity" required>
+                        <input class="form-control width-100%" type="text" name="storeCity"
+                            id="modal-customer-storeCity" required>
                     </div>
                     <div class="col-12">
                         <label class="form-label margin-bottom-xxs" for="modal-customer-storePhone">Phonenumber</label>
-                        <input class="form-control width-100%" type="text" name="storePhone" id="modal-customer-storePhone" required>
+                        <input class="form-control width-100%" type="text" name="storePhone"
+                            id="modal-customer-storePhone" required>
                         <div class="col-12">
-                            <label class="form-label margin-bottom-xxs" for="modal-customer-storeZipCode">Zipcode</label>
-                            <input class="form-control width-100%" type="text" name="storeZipCode" id="modal-customer-storeZipCode" required>
+                            <label class="form-label margin-bottom-xxs"
+                                for="modal-customer-storeZipCode">Zipcode</label>
+                            <input class="form-control width-100%" type="text" name="storeZipCode"
+                                id="modal-customer-storeZipCode" required>
                         </div>
                         <div class="col-12">
                             <label class="form-label margin-bottom-xxs" for="modal-customer-storeEmail">Email</label>
-                            <input class="form-control width-100%" type="text" name="storeEmail" id="modal-customer-storeEmail" required>
+                            <input class="form-control width-100%" type="text" name="storeEmail"
+                                id="modal-customer-storeEmail" required>
                         </div>
                     </div>
                     <footer class="padding-md border-top border-alpha">
@@ -59,7 +62,8 @@
 
 <!-- dialog -->
 <div class="dialog dialog--sticky js-dialog" id="dialog-delete-user-confirmation" data-animation="on">
-    <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1" aria-describedby="dialog-description">
+    <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1"
+        aria-describedby="dialog-description">
         <div class="text-component">
             <h4 id="dialog-title-1">Are you sure you want to delete this user?</h4>
             <p id="dialog-description">This action cannot be undone.</p>

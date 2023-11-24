@@ -4,14 +4,14 @@
     <!-- main content -->
     <main class="app-ui__body padding-md js-app-ui__body">
         <div class="margin-bottom-md">
-            <h1 class="text-lg">Customer</h1>
+            <h1 class="text-lg">Create customer</h1>
         </div>
 
         <div class="margin-bottom-md">
             <nav class="breadcrumbs text-sm" aria-label="Breadcrumbs">
                 <ol class="flex flex-wrap gap-xxs">
                     <li class="breadcrumbs__item">
-                        <a href="<?= URLROOT ?>customerscontroller/overview/" class="color-inherit">All Customers</a>
+                        <a href="<?= URLROOT ?>customers/overview/" class="color-inherit">All Customers</a>
                         <span class="color-contrast-low margin-left-xxs" aria-hidden="true">/</span>
                     </li>
 
@@ -21,7 +21,7 @@
         </div>
 
         <div class="bg radius-md shadow-xs">
-            <form method="POST" action="<?= URLROOT ?>/customersController/create">
+            <form method="POST" action="<?= URLROOT ?>/customers/create">
                 <div class="grid gap-sm">
                     <div class="col-12">
                         <label class="form-label margin-bottom-xxs" for="modal-customer-customerType">Customer

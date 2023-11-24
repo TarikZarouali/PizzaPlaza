@@ -1,7 +1,7 @@
 <?php
 class Core
 {
-    protected $currentController = 'DashboardController';
+    protected $currentController = 'Homepage';
     protected $currentMethod = 'overview';
     protected $params = [];
 
@@ -33,9 +33,38 @@ class Core
             }
         }
 
-        $this->params = $url ? [$url[2]] : [];
+        $this->params = $url ? $url[2] : '';
 
-        call_user_func_array([$this->currentController, $this->currentMethod], $this->params);
+        // Ensure $this->params is a string
+        if (is_array($this->params)) {
+            $this->params = implode(
+                '',
+                $this->params
+            );
+        }
+
+        // URL decode the string and remove unwanted characters
+        $decodedString = str_replace(['{', '}'], '', urldecode($this->params));
+
+        // Explode the string using ';' as the main delimiter
+        $pairs = explode(';', $decodedString);
+
+        // Initialize an empty associative array
+        $array = [];
+
+        // Iterate through each pair and explode using ':' as the delimiter
+        foreach ($pairs as $pair) {
+            $parts = explode(
+                ':',
+                $pair,
+                2
+            ); // Limit to 2 parts to handle values with colons
+            if (count($parts) == 2) {
+                $array[trim($parts[0], '{}')] = $parts[1];
+            }
+        }
+
+        call_user_func_array([$this->currentController, $this->currentMethod], [$array]);
     }
 
     public function getUrl()
@@ -50,49 +79,88 @@ class Core
         if (!empty($incoming) && substr($incoming, -1) !== '/') {
             $incoming .= '/';
         }
+        if (isset($incoming)) {
+            //remove the backslash from the front of the url
+            $incoming = trim($incoming, "/");
+            $url = filter_var($incoming, FILTER_SANITIZE_URL);
+            if (strpos($incoming, '?') !== false) {
+                // Get everything behind the "?" character
+                $queryString = substr($incoming, strpos($incoming, '?') + 1);
 
-        // Trim leading and trailing slashes
-        $incoming = trim($incoming, "/");
+                // Explode the query string into an array
+                $queryParamsArray = explode('&', $queryString);
 
-        $url = filter_var($incoming, FILTER_SANITIZE_URL);
-        $url = explode('/', $url);
+                // Initialize an associative array to store key-value pairs
+                $params = array();
 
-        $urlController = $url[0];
+                // Iterate through each key-value pair
+                foreach ($queryParamsArray as $pair) {
+                    // Split the pair into key and value
+                    list($key, $value) = explode('=', $pair);
 
-        $urlAction = "";
-        if (array_key_exists(1, $url)) {
-            $urlAction = explode('?', $url[1])[0];
+                    // Add to the associative array
+                    $params[$key] = $value;
+                }
+
+                // Parse the URL
+                $urlParts = parse_url($url);
+
+                // Parse the query string
+                parse_str($urlParts['query'], $queryParams);
+
+                // Create the new URL format
+                $newUrl = $urlParts['path'] . "{";
+
+                // Iterate through each key-value pair
+                foreach ($params as $key => $value) {
+                    // Append key and value to the URL format
+                    $newUrl .= $key . ':' . $value . ';';
+                }
+
+                $newUrl .= "}/";
+
+                $transformedParams = [];
+                foreach ($params as $key => $value) {
+                    $transformedParams[urldecode($key)] = urldecode($value);
+                }
+
+                // Output or use the associative array as needed
+                Helper::dump($transformedParams);
+
+                // Example: Extract 'page' parameter
+                $pageNumber = isset($transformedParams['page']) ? (int)$transformedParams['page'] : 1;
+                Helper::dump($pageNumber);
+
+                // Output or use the associative array as needed
+                Helper::dump($this->params);
+
+                header("Location:" . URLROOT . $newUrl);
+                exit();
+            }
+
+            // Trim leading and trailing slashes
+            $incoming = rtrim($incoming, "/");
+
+            $url = filter_var($incoming, FILTER_SANITIZE_URL);
+            $url = explode('/', $url);
+
+            $urlController = $url[0];
+
+            $urlAction = "";
+            if (array_key_exists(1, $url)) {
+                $urlAction = explode('?', $url[1])[0];
+            }
+
+            $urlSlug = $url;
+            if (array_key_exists(2, $url)) {
+                $urlSlug = $url[2];
+            }
+
+            $output = [$urlController, $urlAction, $urlSlug];
+
+            return $output;
+        } else {
+            return array('Pizza', 'overview');
         }
-
-        $urlSlug = $url;
-        if (array_key_exists(2, $url)) {
-            $urlSlug = $url[2];
-        }
-
-
-
-        // $modal = array('title' => '', 'message' => '');
-
-        // $data = $url[2];
-
-        // // Remove curly braces "{" and "}" from the string
-        // $data = str_replace(['%7B', '%7D'], '', $data);
-        // $data = explode(";", $data);
-
-        // foreach ($data as $entry) {
-        //     $entry = explode(':', $entry);
-        //     if ($entry[0] == 'title') {
-        //         $modal['title'] = $entry[1];
-        //     }
-
-        //     if ($entry[0] == 'message') {
-        //         $modal['message'] = $entry[1];
-        //     }
-        // }
-
-
-        $output = [$urlController, $urlAction, $urlSlug];
-
-        return $output;
     }
 }

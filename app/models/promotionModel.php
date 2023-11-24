@@ -27,6 +27,33 @@ class promotionModel
         }
     }
 
+    public function getTotalPromotionsCount()
+    {
+        $this->db->query("SELECT COUNT(*) as total FROM promotions where promotionIsActive = 1 ");
+        $result = $this->db->single();
+
+        return $result->total;
+    }
+
+    public function getPromotionByPagination($offset, $limit): array
+    {
+        try {
+            $getPromotionsByPaginationQuery = "SELECT `promotionId`, `promotionName`, `promotionDescription`, `promotionIsActive`, `promotionCreateDate`, `promotionEndDate` FROM `promotions` WHERE promotionIsActive = 1
+                                               LIMIT :offset,:limit";
+
+            $this->db->query($getPromotionsByPaginationQuery);
+            $this->db->bind(':offset', $offset);
+            $this->db->bind(':limit', $limit);
+
+            $result = $this->db->resultSet();
+
+            return $result ?? [];
+        } catch (PDOException $ex) {
+            error_log('error', ' Exception occurred while deleting ingredient: '());
+            return false;
+        }
+    }
+
     public function createPromotion($newPromotion)
     {
         global $var;

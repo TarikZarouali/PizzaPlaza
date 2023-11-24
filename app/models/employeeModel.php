@@ -27,6 +27,14 @@ class employeeModel
         }
     }
 
+    public function getTotalEmployeesCount()
+    {
+        $this->db->query("SELECT COUNT(*) as total FROM employees WHERE employeeIsActive = 1");
+        $result = $this->db->single();
+
+        return $result->total;
+    }
+
     public function getEmployeeById($employeeId)
     {
         try {
@@ -42,6 +50,25 @@ class employeeModel
         } catch (PDOException $ex) {
             error_log("Error: Failed to get Employee by ID from the database");
             die('Error: Failed to get Employee by ID');
+        }
+    }
+
+    public function getEmployeesByPagination($offset, $limit): array
+    {
+        try {
+            $getEmployeeByPagination = "SELECT `employeeId`, `employeeStoreId`, `employeeFirstName`, `employeeLastName`, `employeeZipCode`, `employeeRole`, `employeeIsActive`, `employeeCreateDate`, `employeeDescription` FROM `employees`
+                                              WHERE `employeeIsActive` = 1 LIMIT :offset, :limit";
+
+            $this->db->query($getEmployeeByPagination);
+            $this->db->bind(':offset', $offset);
+            $this->db->bind(':limit', $limit);
+
+            $result = $this->db->resultSet();
+
+            return $result ?? [];
+        } catch (PDOException $ex) {
+            error_log('error', ' Exception occurred while getting employee: '());
+            return false;
         }
     }
 

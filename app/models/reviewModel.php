@@ -24,6 +24,33 @@ class ReviewModel
         }
     }
 
+    public function getReviewsByPagination($offset, $limit): array
+    {
+        try {
+            $getReviewsByPaginationQuery =  'SELECT `reviewId`, `reviewCustomerId`, `reviewEntityId`, `reviewRating`, `reviewDescription`, `reviewCreateDate`, `reviewIsActive` FROM `reviews` WHERE reviewIsActive = 1
+                                             LIMIT :offset,:limit';
+
+            $this->db->query($getReviewsByPaginationQuery);
+            $this->db->bind(':offset', $offset);
+            $this->db->bind(':limit', $limit);
+
+            $result = $this->db->resultSet();
+
+            return $result ?? [];
+        } catch (PDOException $ex) {
+            error_log('error', ' Exception occurred while deleting ingredient: '());
+            return false;
+        }
+    }
+
+    public function getTotalReviewsCount()
+    {
+        $this->db->query("SELECT COUNT(*) as total FROM reviews where reviewIsActive = 1 ");
+        $result = $this->db->single();
+
+        return $result->total;
+    }
+
     public function getReviewById($reviewId)
     {
         try {

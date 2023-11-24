@@ -11,7 +11,7 @@
             <nav class="breadcrumbs text-sm" aria-label="Breadcrumbs">
                 <ol class="flex flex-wrap gap-xxs">
                     <li class="breadcrumbs__item">
-                        <a href="<?= URLROOT ?>orderscontroller/overview/" class="color-inherit">All Orders</a>
+                        <a href="<?= URLROOT ?>orders/overview/" class="color-inherit">All Orders</a>
                         <span class="color-contrast-low margin-left-xxs" aria-hidden="true">/</span>
                     </li>
 
@@ -21,7 +21,7 @@
         </div>
 
         <div class="bg radius-md shadow-xs">
-            <form method="POST" action="<?= URLROOT ?>/orderscontroller/update/<?= $data['Orders']->orderId ?>">
+            <form method="POST" action="<?= URLROOT ?>/orders/update/{orderId:<?= $data['Orders']->orderId ?>}">
                 <div class="padding-md">
                     <fieldset class="margin-bottom-xl">
                         <legend class="form-legend margin-bottom-md">Edit Order</legend>

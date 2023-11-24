@@ -26,6 +26,7 @@ class customerModel
         }
     }
 
+
     public function getCustomerById($customerId)
     {
         try {
@@ -40,6 +41,32 @@ class customerModel
             return $result ?? null;
         } catch (PDOException $ex) {
             error_log('Error: Failed to get customer by ID from the database');
+        }
+    }
+
+    public function getTotalCustomersCount()
+    {
+        $this->db->query("SELECT COUNT(*) as total FROM customers WHERE customerIsActive = 1");
+        $result = $this->db->single();
+
+        return $result->total;
+    }
+
+    public function getCustomersByPagination($offset, $limit)
+    {
+        try {
+            $getCustomersByPaginationQuery = "SELECT `customerId`, `customerType`, `customerFirstName`, `customerLastName`, `customerEmail`, `customerPhone`, `customerAddress`, `customerZipCode`, `customerCreateDate`, `customerIsActive`
+                                    FROM `customers`
+                                    WHERE `customerIsActive` = 1 LIMIT :offset, :limit";
+
+            $this->db->query($getCustomersByPaginationQuery);
+            $this->db->bind(':offset', $offset);
+            $this->db->bind(':limit', $limit);
+
+            return $this->db->resultSet();
+        } catch (PDOException $ex) {
+            error_log('error', ' Exception occurred while getting customer: '());
+            return false;
         }
     }
 

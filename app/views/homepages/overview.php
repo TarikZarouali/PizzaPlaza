@@ -7,22 +7,23 @@
 
     <div class="grid gap-md">
         <?php foreach ($data['Stores'] as $store) { ?>
-            <div class="card col-4">
-                <div class="padding-xs">
-                    <h4><?= $store->storeCity ?></h4>
+        <div class="card col-4">
+            <div class="padding-xs">
+                <h4><?= $store->storeCity ?></h4>
 
-                    <p class="margin-top-xs margin-bottom-sm text-sm color-contrast-medium line-height-md">
-                        <?= $store->storeStreetName . ' ' . $store->storeZipCode ?>
-                    </p>
-                    <p class="margin-top-xs margin-bottom-sm text-sm color-contrast-medium line-height-md">
-                        <?= $store->storePhone ?>
-                    </p>
+                <p class="margin-top-xs margin-bottom-sm text-sm color-contrast-medium line-height-md">
+                    <?= $store->storeStreetName . ' ' . $store->storeZipCode ?>
+                </p>
+                <p class="margin-top-xs margin-bottom-sm text-sm color-contrast-medium line-height-md">
+                    <?= $store->storePhone ?>
+                </p>
 
-                    <footer>
-                        <a href="<?= URLROOT; ?>storesController/index/<?= $store->storeId ?>" class="btn btn--primary text-sm">Go to shop</a>
-                    </footer>
-                </div>
+                <footer>
+                    <a href="<?= URLROOT; ?>stores/index/<?= $store->storeId ?>" class="btn btn--primary text-sm">Go to
+                        shop</a>
+                </footer>
             </div>
+        </div>
         <?php } ?>
     </div>
 </div>

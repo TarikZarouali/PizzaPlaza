@@ -26,6 +26,32 @@ class storeModel
         }
     }
 
+    public function getTotalStoresCount()
+    {
+        $this->db->query("SELECT COUNT(*) as total FROM stores WHERE storeIsActive = 1");
+        $result = $this->db->single();
+
+        return $result->total;
+    }
+    public function getStoresByPagination($offset, $limit): array
+    {
+        try {
+            $getStoresByPaginationQuery =  'SELECT `storeId`, `storeStreetName`, `storeCity`, `storePhone`, `storeZipCode`, `storeEmail`, `storeManager`, `storeIsActive`, `storeCreateDate` FROM `stores` WHERE storeIsActive= 1
+                                             LIMIT :offset,:limit';
+
+            $this->db->query($getStoresByPaginationQuery);
+            $this->db->bind(':offset', $offset);
+            $this->db->bind(':limit', $limit);
+
+            $result = $this->db->resultSet();
+
+            return $result ?? [];
+        } catch (PDOException $ex) {
+            error_log('error', ' Exception occurred while deleting ingredient: '());
+            return false;
+        }
+    }
+
     public function getStoreById($storeId)
     {
         try {
