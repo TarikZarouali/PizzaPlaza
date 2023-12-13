@@ -13,9 +13,9 @@ class productModel
     public function getActiveProducts()
     {
         try {
-            $getProductsQuery = "SELECT `productId`, `productOwner`, `productName`, `productDescription`, `productPrice`, `productType`, `productIsActive`, `productCreateDate` 
+            $getProductsQuery = 'SELECT `productId`, `productOwner`, `productName`, `productDescription`, `productPrice`, `productType`, `productIsActive`, `productCreateDate` 
                                  FROM `products` 
-                                 WHERE `productIsActive` = 1";
+                                 WHERE `productIsActive` = 1';
 
             $this->db->query($getProductsQuery);
 
@@ -23,25 +23,32 @@ class productModel
 
             return $result ?? [];
         } catch (PDOException $ex) {
-            error_log("Error: Failed to get active products from the database in class storeModel.");
-            die('Error: Failed to get active products');
+            helper::log('error', ' Failed to get active products from the database in class storeModel.' . $ex->getMessage());
+            return [];
         }
     }
 
     public function getTotalProductsCount()
     {
-        $this->db->query("SELECT COUNT(*) as total FROM products where productIsActive = 1 ");
-        $result = $this->db->single();
+        try {
+            $this->db->query('SELECT COUNT(*) as total FROM products where productIsActive = 1 ');
+            $result = $this->db->single();
 
-        return $result->total;
+            return $result->total;
+        } catch (PDOException $ex) {
+            helper::log('error', 'could not get total products' . $ex->getMessage());
+            return false;
+        }
     }
+
+
 
     public function getProductById($productId)
     {
         try {
-            $getProductByIdQuery = "SELECT `productId`, `productOwner`, `productName`, `productDescription`, `productPrice`, `productType`, `productIsActive`, `productCreateDate`
+            $getProductByIdQuery = 'SELECT `productId`, `productOwner`, `productName`, `productDescription`, `productPrice`, `productType`, `productIsActive`, `productCreateDate`
                                     FROM `products`
-                                    WHERE `productId` = :productId";
+                                    WHERE `productId` = :productId';
 
             $this->db->query($getProductByIdQuery);
             $this->db->bind(':productId', $productId);
@@ -50,8 +57,8 @@ class productModel
 
             return $result;
         } catch (PDOException $ex) {
-            error_log("Error: Failed to get active products by Id from the database in class storeModel.");
-            die('Error: Failed to get active products by Id');
+            helper::log('error', 'Failed to get active products by Id from the database in class storeModel.' . $ex->getMessage());
+            return false;
         }
     }
 
@@ -70,8 +77,8 @@ class productModel
 
             return $result ?? [];
         } catch (PDOException $ex) {
-            error_log('error', ' Exception occurred while deleting ingredient: '());
-            return false;
+            helper::log('error', 'Exception occurred while deleting ingredient:' . $ex->getMessage());
+            return [];
         }
     }
 
@@ -80,8 +87,8 @@ class productModel
         global $var;
 
         try {
-            $createProductQuery = "INSERT INTO `products` (`productId`, `productOwner`, `productName`, `productDescription`, `productPrice`, `productType`, `productIsActive`, `productCreateDate`) 
-                            VALUES (:productId, :productOwner , :productName, :productDescription, :productPrice, :productType, 1, :productCreateDate)";
+            $createProductQuery = 'INSERT INTO `products` (`productId`, `productOwner`, `productName`, `productDescription`, `productPrice`, `productType`, `productIsActive`, `productCreateDate`) 
+                            VALUES (:productId, :productOwner , :productName, :productDescription, :productPrice, :productType, 1, :productCreateDate)';
 
             $this->db->query($createProductQuery);
             $this->db->bind(':productId', $var['rand']);
@@ -94,23 +101,23 @@ class productModel
 
             return $this->db->execute();
         } catch (PDOException $ex) {
-            error_log("ERROR: Failed to create Product");
-            die("ERROR: Failed to create Product");
+            helper::log('error', 'Failed to create Product' . $ex->getMessage());
+            return false;
         }
     }
 
     public function updateProduct($productId, $updatedProduct)
     {
-        $response = ["success" => false, "message" => "Product not found"];
+        $response = ['success' => false, 'message' => 'Product not found'];
 
         try {
-            $updateProductQuery = "UPDATE `products` 
+            $updateProductQuery = 'UPDATE `products` 
                     SET `productName` = :productName,
                         `productDescription` = :productDescription,
                         `productPrice` = :productPrice,
                         `productType` = :productType,
                         `productIsActive` = 1
-                    WHERE `productId` = :productId";
+                    WHERE `productId` = :productId';
 
             $this->db->query($updateProductQuery);
 
@@ -121,17 +128,16 @@ class productModel
             $this->db->bind(':productType', $updatedProduct['productType']);
 
             if ($this->db->execute()) {
-                $response["success"] = true;
-                $response["message"] = "Product updated successfully";
+                $response['success'] = true;
+                $response['message'] = 'Product updated successfully';
             }
         } catch (PDOException $ex) {
-            error_log("Error: Failed to update product - " . $ex->getMessage());
+            helper::log('error', 'Failed to update product - ' . $ex->getMessage());
+            return false;
         }
 
         return $response;
     }
-
-
 
 
     public function deleteProduct($productId)
@@ -145,14 +151,14 @@ class productModel
 
             // Execute the query
             if ($this->db->execute()) {
-                error_log("INFO: Product has been deleted");
+                helper::log('info', 'product has been deleted');
                 return true;
             } else {
-                error_log("ERROR: Product could not be deleted");
+                helper::log('error', 'product could not be deleted');
                 return false;
             }
         } catch (PDOException $ex) {
-            error_log("ERROR: Exception occurred while deleting product: " . $ex->getMessage());
+            helper::log('error', 'exception occurred while deleting product: ' . $ex->getMessage());
             return false;
         }
     }

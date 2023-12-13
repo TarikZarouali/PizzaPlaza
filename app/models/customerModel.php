@@ -22,7 +22,8 @@ class customerModel
 
             return $result ?? [];
         } catch (PDOException $ex) {
-            error_log('Error: Failed to get active customers from the database in class storeModel.');
+            helper::log('error', ' Failed to get active customers from the database in class storeModel.' . $ex->getMessage());
+            return [];
         }
     }
 
@@ -40,16 +41,22 @@ class customerModel
 
             return $result ?? null;
         } catch (PDOException $ex) {
-            error_log('Error: Failed to get customer by ID from the database');
+            helper::log('error', 'Failed to get customer by ID from the database' . $ex->getMessage());
+            return false;
         }
     }
 
     public function getTotalCustomersCount()
     {
-        $this->db->query("SELECT COUNT(*) as total FROM customers WHERE customerIsActive = 1");
-        $result = $this->db->single();
+        try {
+            $this->db->query("SELECT COUNT(*) as total FROM customers WHERE customerIsActive = 1");
+            $result = $this->db->single();
 
-        return $result->total;
+            return $result->total;
+        } catch (PDOException $ex) {
+            helper::log('error', 'could not get total customers count' . $ex->getMessage());
+            return false;
+        }
     }
 
     public function getCustomersByPagination($offset, $limit)
@@ -65,7 +72,7 @@ class customerModel
 
             return $this->db->resultSet();
         } catch (PDOException $ex) {
-            error_log('error', ' Exception occurred while getting customer: '());
+            helper::log('error', ' Exception occurred while getting customer by pagination ' . $ex->getMessage());
             return false;
         }
     }
@@ -91,7 +98,8 @@ class customerModel
 
             return $this->db->execute();
         } catch (PDOException $ex) {
-            error_log('ERROR: Failed to create Customer');
+            helper::log('error', ' Failed to create Customer' . $ex->getMessage());
+            return false;
         }
     }
 
@@ -120,7 +128,8 @@ class customerModel
 
             return $this->db->execute();
         } catch (PDOException $ex) {
-            error_log('Error: Failed to update customer');
+            helper::log('error', ' Failed to update customer' . $ex->getMessage());
+            return false;
         }
     }
 
@@ -135,14 +144,14 @@ class customerModel
 
             // Execute the query
             if ($this->db->execute()) {
-                error_log('INFO: Customer has been marked as inactive');
+                helper::log('info', ' Customer has been marked as inactive');
                 return true;
             } else {
-                error_log('ERROR: Customer could not be marked as inactive');
+                helper::log('error', 'Customer could not be marked as inactive');
                 return false;
             }
         } catch (PDOException $ex) {
-            error_log('ERROR: Exception occurred while marking the customer as inactive: ' . $ex->getMessage());
+            helper::log('error', 'Exception occurred while marking the customer as inactive: ' . $ex->getMessage());
             return false;
         }
     }

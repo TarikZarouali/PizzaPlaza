@@ -21,8 +21,8 @@ class ingredientModel
 
             return $result ?? [];
         } catch (PDOException $ex) {
-            error_log("Error: Failed to get active Ingredients from the database in class storeModel.");
-            die('Error: Failed to get active Ingredients');
+            helper::log('error', 'Failed to get active Ingredients from the database in class storeModel.' . $ex->getMessage());
+            return [];
         }
     }
 
@@ -40,8 +40,8 @@ class ingredientModel
 
             return $result;
         } catch (PDOException $ex) {
-            error_log("Error: Failed to get active Ingredients by Id from the database in class storeModel.");
-            die('Error: Failed to get active products by Id');
+            helper::log('error', ' Failed to get active Ingredients by Id from the database in class storeModel.' . $ex->getMessage());
+            return false;
         }
     }
 
@@ -62,8 +62,8 @@ class ingredientModel
 
             return $this->db->execute();
         } catch (PDOException $ex) {
-            error_log("ERROR: Failed to create Ingredient");
-            die("ERROR: Failed to create Ingredient");
+            helper::log('error', 'Failed to create Ingredient' . $ex->getMessage());
+            return false;
         }
     }
 
@@ -93,7 +93,8 @@ class ingredientModel
                 $response["message"] = "Ingredient updated successfully";
             }
         } catch (PDOException $ex) {
-            error_log("Error: Failed to update Ingredient - " . $ex->getMessage());
+            helper::log('error', 'Failed to update Ingredient' . $ex->getMessage());
+            return false;
         }
 
         return $response;
@@ -110,14 +111,14 @@ class ingredientModel
 
             // Execute the query
             if ($this->db->execute()) {
-                error_log("INFO: ingredient has been deleted");
+                helper::log('info', 'ingredient has been deleted');
                 return true;
             } else {
-                error_log("ERROR: ingredient could not be deleted");
+                helper::log('error', 'ingredient could not be deleted');
                 return false;
             }
         } catch (PDOException $ex) {
-            error_log("ERROR: Exception occurred while deleting ingredient: " . $ex->getMessage());
+            helper::log('error', 'Exception occurred while deleting ingredient: ' . $ex->getMessage());
             return false;
         }
     }
@@ -137,16 +138,21 @@ class ingredientModel
 
             return $result ?? [];
         } catch (PDOException $ex) {
-            error_log('error', ' Exception occurred while deleting ingredient: '());
-            return false;
+            helper::log('error', ' Exception occurred while deleting ingredient:' . $ex->getMessage());
+            return [];
         }
     }
 
     public function getTotalIngredientsCount()
     {
-        $this->db->query("SELECT COUNT(*) as total FROM ingredients WHERE ingredientIsActive = 1");
-        $result = $this->db->single();
+        try {
+            $this->db->query("SELECT COUNT(*) as total FROM ingredients WHERE ingredientIsActive = 1");
+            $result = $this->db->single();
 
-        return $result->total;
+            return $result->total;
+        } catch (PDOException $ex) {
+            helper::log('error', 'could not get ingredients count' . $ex->getMessage());
+            return false;
+        }
     }
 }

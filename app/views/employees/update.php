@@ -5,18 +5,16 @@
     <!-- main content -->
     <main class="app-ui__body padding-md js-app-ui__body">
         <div class="margin-bottom-md">
-            <h1 class="text-lg">Employee</h1>
+            <h1 class="text-lg">Update selected employee</h1>
         </div>
 
         <div class="margin-bottom-md">
             <nav class="breadcrumbs text-sm" aria-label="Breadcrumbs">
                 <ol class="flex flex-wrap gap-xxs">
                     <li class="breadcrumbs__item">
-                        <a href="<?= URLROOT ?>employees/overview" class="color-inherit">All Employees</a>
-                        <span class="color-contrast-low margin-left-xxs" aria-hidden="true">/</span>
+                        <a href="<?= URLROOT ?>employees/overview/{page:1}}/" class="color-inherit">All Employees</a>
                     </li>
 
-                    <li class="breadcrumbs__item">#U2123</li>
                 </ol>
             </nav>
         </div>
@@ -25,7 +23,7 @@
             <form method="POST" action="<?= URLROOT ?>/employees/update/{employeeId:<?= $data['Employee']->employeeId ?>}">
                 <div class="padding-md">
                     <fieldset class="margin-bottom-xl">
-                        <legend class="form-legend margin-bottom-md">Edit Employee</legend>
+                        <legend class="form-legend margin-bottom-md">Edit form</legend>
 
                         <!-- Employee ID (hidden input for updating the correct employee) -->
                         <input type="hidden" name="employeeId" value="<?= $data['Employee']->employeeId ?>">
@@ -161,9 +159,7 @@
                                         <?php endif; ?>
                                         <!-- Add delete button conditionally -->
                                         <?php if ($data['imageSrc'] && $data['imageSrc'] !== URLROOT . 'public/default-image.jpg') : ?>
-                                            <a href="<?= URLROOT; ?>customers/deleteImage/{screenId:<?= $data['image']->screenId ?>}" class="btn btn--danger" onclick="return confirm('Are you sure you want to delete this image?');">
-                                                Delete Image
-                                            </a>
+                                            <a href="#" aria-controls="dialog-delete-user-confirmation" class="btn btn--danger">Delete Image</a>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -181,18 +177,20 @@
     </main>
 </div>
 
-<!-- dialog -->
+<!-- DIALOG -->
 <div class="dialog dialog--sticky js-dialog" id="dialog-delete-user-confirmation" data-animation="on">
     <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1" aria-describedby="dialog-description">
         <div class="text-component">
-            <h4 id="dialog-title-1">Are you sure you want to delete this user?</h4>
+            <br>
+            <br>
+            <h4 id="dialog-title-1">Are you sure you want to delete this image?
+            </h4>
             <p id="dialog-description">This action cannot be undone.</p>
         </div>
-
         <footer class="margin-top-md">
             <div class="flex justify-end gap-xs flex-wrap">
                 <button class="btn btn--subtle js-dialog__close">Cancel</button>
-                <button class="btn btn--accent">Delete</button>
+                <a class="btn btn--accent" href="<?= URLROOT; ?>employees/deleteImage/{screenId:<?= $data['image']->screenId . ';' . 'employeeId:' . $data['Employee']->employeeId ?>}">Delete</a>
             </div>
         </footer>
     </div>
@@ -251,7 +249,8 @@
 
                 <div class="flex-grow margin-right-xs">
                     <div>
-                        <p><i class="font-semibold">Marta Rossi</i> posted <i class="font-semibold">"10 helpful tips to
+                        <p><i class="font-semibold">Marta Rossi</i> posted <i class="font-semibold">"10 helpful tips
+                                to
                                 learn web design"</i>.</p>
                         <p class="text-sm color-contrast-medium margin-top-xxxs"><time>a day ago</time></p>
 

@@ -4,7 +4,7 @@
     <!-- main content -->
     <main class="app-ui__body padding-md js-app-ui__body">
         <div class="margin-bottom-md">
-            <h1 class="text-lg">screens</h1>
+            <h1 class="text-lg">Screens overview</h1>
         </div>
 
 
@@ -126,9 +126,7 @@
                                         <span>screenEntityId</span>
                                     </div>
                                 </th>
-                                <th class="int-table__cell int-table__cell--th text-left">
-                                    Action
-                                </th>
+
                             </tr>
                         </thead>
                         <tbody class="int-table__body js-int-table__body">
@@ -145,13 +143,7 @@
                                 <td class="int-table__cell"><?= date('d/m/y', ($screen->screenCreateDate)) ?>
                                 <td class="int-table__cell"><?= $screen->screenIsActive ?></td>
                                 <td class="int-table__cell"><?= $screen->screenEntityId ?></td>
-                                </td>
-                                <td class="int-table__cell">
-                                    <a href="<?= URLROOT ?>screens/update/{screenId:<?= $screen->screenId ?>}/"
-                                        class="btn btn--primary">Edit</a>
-                                    <a href="<?= URLROOT ?>screens/delete/{screenId:<?= $screen->screenId ?>}/"
-                                        class="btn btn--primary">Delete</a>
-                                </td>
+
                             </tr>
                             <?php endforeach ?>
                         </tbody>
@@ -160,7 +152,7 @@
             </div>
 
             <div class="flex items-center justify-between padding-top-sm">
-                <p class="text-sm"><?= count($data['screens']) ?> Results</p>
+                <p class="text-sm"><?= $data['countScreens'] ?> Results</p>
 
                 <nav class="pagination text-sm" aria-label="Pagination">
                     <ul class="pagination__list flex flex-wrap gap-xxxs">

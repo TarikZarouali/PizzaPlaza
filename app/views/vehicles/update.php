@@ -11,11 +11,9 @@
             <nav class="breadcrumbs text-sm" aria-label="Breadcrumbs">
                 <ol class="flex flex-wrap gap-xxs">
                     <li class="breadcrumbs__item">
-                        <a href="<?= URLROOT ?>vehicles/overview" class="color-inherit">All Vehicles</a>
-                        <span class="color-contrast-low margin-left-xxs" aria-hidden="true">/</span>
+                        <a href="<?= URLROOT ?>vehicles/overview/{page:1}}/" class="color-inherit">All Vehicles</a>
                     </li>
 
-                    <li class="breadcrumbs__item">#U2123</li>
                 </ol>
             </nav>
         </div>
@@ -24,7 +22,7 @@
             <<form method="POST" action="<?= URLROOT ?>/vehicles/update/{vehicleId:<?= $data['vehicle']->vehicleId ?>}">
                 <div class="padding-md">
                     <fieldset class="margin-bottom-xl">
-                        <legend class="form-legend margin-bottom-md">Edit Vehicle</legend>
+                        <legend class="form-legend margin-bottom-md">Edit form</legend>
 
                         <!-- Vehicle ID (hidden input for updating the correct vehicle) -->
                         <input type="hidden" name="vehicleId" value="<?= $data['vehicle']->vehicleId ?>">
@@ -136,11 +134,8 @@
                                         <?php endif; ?>
                                         <!-- Add delete button conditionally -->
                                         <?php if ($data['imageSrc'] && $data['imageSrc'] !== URLROOT . 'public/default-image.jpg') : ?>
-                                        <a href="<?= URLROOT; ?>vehicles/deleteImage/<?= $data['image']->screenId ?>"
-                                            class="btn btn--danger"
-                                            onclick="return confirm('Are you sure you want to delete this image?');">
-                                            Delete Image
-                                        </a>
+                                        <a href="#" aria-controls="dialog-delete-user-confirmation"
+                                            class="btn btn--danger">Delete Image</a>
 
                                         <?php endif; ?>
                                     </div>
@@ -164,14 +159,17 @@
     <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1"
         aria-describedby="dialog-description">
         <div class="text-component">
-            <h4 id="dialog-title-1">Are you sure you want to delete this user?</h4>
+            <br>
+            <br>
+            <h4 id="dialog-title-1">Are you sure you want to delete this image?
+            </h4>
             <p id="dialog-description">This action cannot be undone.</p>
         </div>
-
         <footer class="margin-top-md">
             <div class="flex justify-end gap-xs flex-wrap">
                 <button class="btn btn--subtle js-dialog__close">Cancel</button>
-                <button class="btn btn--accent">Delete</button>
+                <a class="btn btn--accent"
+                    href="<?= URLROOT; ?>employees/deleteImage/{screenId:<?= $data['image']->screenId . ';' . 'vehicleId:' . $data['vehicle']->vehicleId ?>}">Delete</a>
             </div>
         </footer>
     </div>

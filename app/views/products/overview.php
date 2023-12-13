@@ -138,6 +138,11 @@
                                 <th
                                     class="int-table__cell int-table__cell--th int-table__cell--sort js-int-table__cell--sort">
                                     <div class="flex items-center">
+                                        <span>Product Id</span>
+                                </th>
+                                <th
+                                    class="int-table__cell int-table__cell--th int-table__cell--sort js-int-table__cell--sort">
+                                    <div class="flex items-center">
                                         <span>Product Name</span>
                                 </th>
                                 <th class="int-table__cell int-table__cell--th text-left">
@@ -184,7 +189,8 @@
                                         <div class="custom-checkbox__control" aria-hidden="true"></div>
                                     </div>
                                 </th>
-                                <input type="hidden" name="productId" value="<?= $product->productId ?>">
+                                <td class="int-table__cell">
+                                    <?= $product->productId ?></td>
                                 <td class="int-table__cell">
                                     <?= $product->productName ?></td>
                                 <td class="int-table__cell">
@@ -198,11 +204,8 @@
                                 <td class="int-table__cell">
                                     <a href="<?= URLROOT ?>products/update/{productId:<?= $product->productId ?>}/"
                                         class="btn btn--primary">Edit</a>
-                                    <a href="<?= URLROOT ?>products/delete/{productId:<?= $product->productId ?>}/"
-                                        class="btn btn--primary"
-                                        onclick="return confirm('Are you sure you want to delete this product?');">
-                                        Delete
-                                    </a>
+                                    <a href="#" aria-controls="dialog-delete-user-confirmation"
+                                        class="btn btn--primary">Delete </a>
 
                                 </td>
                             </tr>
@@ -214,7 +217,7 @@
 
 
             <div class="flex items-center justify-between padding-top-sm">
-                <p class="text-sm"><?= count($data['products']) ?> Results</p>
+                <p class="text-sm"><?= $data['countProducts'] ?> Results</p>
 
                 <nav class="pagination text-sm" aria-label="Pagination">
                     <ul class="pagination__list flex flex-wrap gap-xxxs">
@@ -262,6 +265,27 @@
                         </li>
                     </ul>
                 </nav>
+            </div>
+
+
+            <div class="dialog dialog--sticky js-dialog" id="dialog-delete-user-confirmation" data-animation="on">
+                <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1"
+                    aria-describedby="dialog-description">
+                    <div class="text-component">
+                        <br>
+                        <br>
+                        <h4 id="dialog-title-1">Are you sure you want to delete this product?
+                        </h4>
+                        <p id="dialog-description">This action cannot be undone.</p>
+                    </div>
+                    <footer class="margin-top-md">
+                        <div class="flex justify-end gap-xs flex-wrap">
+                            <button class="btn btn--subtle js-dialog__close">Cancel</button>
+                            <a class="btn btn--accent"
+                                href="<?= URLROOT; ?>products/delete/productId:<?= $product->productId ?>}">Delete</a>
+                        </div>
+                    </footer>
+                </div>
             </div>
 
             <menu id="menu-example" class="menu js-menu" data-scrollable-element=".js-app-ui__body">

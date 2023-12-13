@@ -5,7 +5,7 @@
     <!-- main content -->
     <main class="app-ui__body padding-md js-app-ui__body">
         <div class="margin-bottom-md">
-            <h1 class="text-lg">Employee Overview</h1>
+            <h1 class="text-lg">Create employee</h1>
         </div>
 
         <div class="margin-bottom-md">
@@ -28,21 +28,19 @@
                         <label class="form-label margin-bottom-xxs" for="storeId">Select Store</label>
                         <select class="form-control width-100" name="employeeStoreId" id="storeId" required>
                             <?php foreach ($data['Stores'] as $store) : ?>
-                            <option value="<?= $store->storeId ?>">
-                                <?= $store->storeId . "-" . $store->storeStreetName ?></option>
+                                <option value="<?= $store->storeId ?>">
+                                    <?= $store->storeId . "-" . $store->storeStreetName ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="col-12">
                         <label class="form-label margin-bottom-xxs" for="employee-first-name">First name</label>
-                        <input class="form-control width-100" type="text" name="employeeFirstName" id="first-name"
-                            required>
+                        <input class="form-control width-100" type="text" name="employeeFirstName" id="first-name" required>
                     </div>
 
                     <div class="col-12">
                         <label class="form-label margin-bottom-xxs" for="employee-last-name">Last name</label>
-                        <input class="form-control width-100" type="text" name="employeeLastName" id="last-name"
-                            required>
+                        <input class="form-control width-100" type="text" name="employeeLastName" id="last-name" required>
                     </div>
 
                     <div class="col-12">
@@ -81,8 +79,7 @@
 
 <!-- dialog -->
 <div class="dialog dialog--sticky js-dialog" id="dialog-delete-user-confirmation" data-animation="on">
-    <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1"
-        aria-describedby="dialog-description">
+    <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1" aria-describedby="dialog-description">
         <div class="text-component">
             <h4 id="dialog-title-1">Are you sure you want to delete this user?</h4>
             <p id="dialog-description">This action cannot be undone.</p>

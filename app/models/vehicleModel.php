@@ -22,8 +22,8 @@ class vehicleModel
 
             return $result ?? [];
         } catch (PDOException $ex) {
-            error_log("Error: Failed to get active vehicles from the database in class vehicleModel.");
-            die('Error: Failed to get active vehicles');
+            helper::log('error', 'Failed to get active vehicles from the database in class vehicleModel.' . $ex->getMessage());
+            return [];
         }
     }
 
@@ -49,8 +49,8 @@ class vehicleModel
 
             return $result ?? [];
         } catch (PDOException $ex) {
-            error_log('error', ' Exception occurred while deleting ingredient: '());
-            return false;
+            helper::log('error', ' Exception occurred while deleting ingredient' . $ex->getMessage());
+            return [];
         }
     }
 
@@ -66,8 +66,8 @@ class vehicleModel
 
             return $result;
         } catch (PDOException $ex) {
-            error_log("ERROR: Failed to retrieve vehicle by ID");
-            die("ERROR: Failed to retrieve vehicle by ID");
+            helper::log('error', 'Failed to retrieve vehicle by ID' . $ex->getMessage());
+            return false;
         }
     }
 
@@ -88,8 +88,8 @@ class vehicleModel
 
             return $this->db->execute();
         } catch (PDOException $ex) {
-            error_log("ERROR: Failed to create Vehicle");
-            die("ERROR: Failed to create Vehicle");
+            helper::log('error', 'Failed to create Vehicle' . $ex->getMessage());
+            return false;
         }
     }
 
@@ -117,7 +117,8 @@ class vehicleModel
                 $response["message"] = "Vehicle updated successfully";
             }
         } catch (PDOException $ex) {
-            error_log("Error: Failed to update Vehicle - " . $ex->getMessage());
+            helper::log('error', 'Failed to update Vehicle' . $ex->getMessage());
+            return false;
         }
 
         return $response;
@@ -135,14 +136,14 @@ class vehicleModel
 
             // Execute the query
             if ($this->db->execute()) {
-                error_log("INFO: vehicle has been marked as inactive");
+                helper::log('info', 'vehicle has been marked as inactive');
                 return true;
             } else {
-                error_log("ERROR: vehicle could not be marked as inactive");
+                helper::log('error', 'vehicle could not be marked as inactive');
                 return false;
             }
         } catch (PDOException $ex) {
-            error_log("ERROR: Exception occurred while marking the vehicle as inactive: " . $ex->getMessage());
+            helper::log('error', 'Exception occurred while marking the vehicle as inactive' . $ex->getMessage());
             return false;
         }
     }

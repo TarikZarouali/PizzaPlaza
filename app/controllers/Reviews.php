@@ -128,6 +128,7 @@ class Reviews extends Controller
             $row = $this->reviewModel->getReviewById($reviewId);
             $images = $this->screenModel->getMultipleScreensByEntityId($reviewId);
 
+
             foreach ($images as $image) {
                 if (property_exists($image, 'screenCreateDate') && property_exists($image, 'screenId')) {
                     $createDate = date('Ymd', $image->screenCreateDate);
@@ -167,33 +168,37 @@ class Reviews extends Controller
         for ($i = 0; $i < $totalImages; $i++) {
             $screenId = Helper::generateRandomString(4);
 
-            $imageUploaderResult = $this->imageUploader($screenId, $i);
+            // Check if the file is uploaded successfully
+            if ($_FILES['file']['error'][$i] === UPLOAD_ERR_OK) {
+                $imageUploaderResult = $this->imageUploader($screenId, $i);
 
-            if ($imageUploaderResult['status'] === 200) {
-                $entity = 'review';
+                if ($imageUploaderResult['status'] === 200) {
+                    $entity = 'review';
 
-                // Ensure that the index exists in the array before accessing it
-                $newScope = isset($_POST['screenScope'][$i]) ? $_POST['screenScope'][$i] : '';
+                    // Ensure that the index exists in the array before accessing it
+                    $newScope = isset($_POST['screenScope'][$i]) ? $_POST['screenScope'][$i] : '';
 
-                // Insert the new screen images using the new function
-                $this->screenModel->insertMultipleScreenImages($screenId, $reviewId, $entity, $newScope);
+                    // Insert the new screen images using the new function
+                    $this->screenModel->insertMultipleScreenImages($screenId, $reviewId, $entity, $newScope);
 
-                // Retrieve the updated list of images for the review
-                $updatedImages = $this->screenModel->getMultipleScreensByEntityId($reviewId);
 
-                // Update the $data variable with the new set of images
-                $data['images'] = $updatedImages;
-
-                // Success toast and redirection
-                $toast = urlencode('true');
-                $toasttitle = urlencode('Success');
-                $toastmessage = urlencode('Your creation of the image was successful');
+                    // Success toast and redirection
+                    $toast = urlencode('true');
+                    $toasttitle = urlencode('Success');
+                    $toastmessage = urlencode('Your creation of the image was successful');
+                } else {
+                    // Failure handling
+                    Helper::log('error', $imageUploaderResult);
+                    $toast = urlencode('false');
+                    $toasttitle = urlencode('Failed');
+                    $toastmessage = urlencode('Your creation of the image has failed');
+                }
             } else {
-                // Failure handling
-                Helper::log('error', $imageUploaderResult);
+                // Handle file upload error
+                Helper::log('error', 'File upload error: ' . $_FILES['file']['error'][$i]);
                 $toast = urlencode('false');
                 $toasttitle = urlencode('Failed');
-                $toastmessage = urlencode('Your creation of the image has failed');
+                $toastmessage = urlencode('File upload error');
             }
         }
 
@@ -217,7 +222,6 @@ class Reviews extends Controller
             $toastmessage = urlencode('Image deleted Failed');
             header('Location:' . URLROOT . 'reviews/overview/{' . $toast . ':' . $toasttitle . ';' . $toastmessage . '}');
         }
-        // Redirect to the overview page
     }
 
 

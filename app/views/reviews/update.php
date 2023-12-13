@@ -4,18 +4,17 @@
     <!-- main content -->
     <main class="app-ui__body padding-md js-app-ui__body">
         <div class="margin-bottom-md">
-            <h1 class="text-lg">Review</h1>
+            <h1 class="text-lg">Update selected review</h1>
         </div>
 
         <div class="margin-bottom-md">
             <nav class="breadcrumbs text-sm" aria-label="Breadcrumbs">
                 <ol class="flex flex-wrap gap-xxs">
                     <li class="breadcrumbs__item">
-                        <a href="<?= URLROOT ?>reviews/index" class="color-inherit">All Reviews</a>
-                        <span class="color-contrast-low margin-left-xxs" aria-hidden="true">/</span>
+                        <a href="<?= URLROOT ?>reviews/overview/{page:1}}/" class="color-inherit">All Reviews</a>
                     </li>
 
-                    <li class="breadcrumbs__item">#R1234</li>
+
                 </ol>
             </nav>
         </div>
@@ -24,7 +23,7 @@
             <form method="POST" action="<?= URLROOT ?>/reviews/update/{reviewId:<?= $data['review']->reviewId ?>}">
                 <div class="padding-md">
                     <fieldset class="margin-bottom-xl">
-                        <legend class="form-legend margin-bottom-md">Edit Review</legend>
+                        <legend class="form-legend margin-bottom-md">Edit form</legend>
 
                         <!-- Review ID (hidden input for updating the correct review) -->
                         <input type="hidden" name="reviewId" value="<?= $data['review']->reviewId ?>">
@@ -143,7 +142,6 @@
 
                 <div class="border-top border-alpha padding-md">
                     <div class="flex flex-wrap gap-xs justify-between">
-                        <button class="btn btn--accent" aria-controls="dialog-delete-review-confirmation">Delete</button>
                         <button class="btn btn--primary" type="submit">Save</button>
                     </div>
                 </div>
@@ -182,23 +180,20 @@
                                 </div>
                                 <div class="col-6@lg">
                                     <?php foreach ($data['images'] as $image) : ?>
-                                        <figure class="user-menu-control__img-wrapper radius-50%">
-                                            <img class="user-menu-control__img image_picture" src="<?= $image->imagePath ?>" alt="User picture">
-                                        </figure>
-                                        <div class="margin-bottom-sm">
-                                            <div class="grid gap-xxs">
-                                                <div class="col-3@lg">
-                                                    <label class="inline-block text-sm padding-top-xs@lg" for="screenScope">Scope</label>
-                                                </div>
-                                                <div class="col-6@lg">
-                                                    <!-- Display the screenScope for the current image -->
-                                                    <input class="form-control width-100%" type="text" name="screenScope[]" value="<?= $image->screenScope ?>" required>
+                                        <div class="stats-card bg radius-md padding-md inner-glow shadow-xs col-6@sm col-2@xl">
+                                            <div class="flex flex-wrap gap-xxs items-center">
+                                                <div>
+                                                    <h3 class="color-contrast-low">
+                                                        <?= !empty($image->screenScope) ? $image->screenScope : "No Scope" ?>
+                                                    </h3>
                                                 </div>
                                             </div>
+                                            <img class="text-xxl font-semibold color-contrast-higher" src="<?= $image->imagePath ?>" height="200px" width="100%">
+                                            <?php if ($image && $image !== URLROOT . 'public/default-image.jpg') : ?>
+                                                <!-- Modify the link to include aria-controls dynamically -->
+                                                <a href="#" aria-controls="dialog-delete-user-confirmation" class="btn btn--danger">Delete Image</a>
+                                            <?php endif; ?>
                                         </div>
-                                        <a href="<?= URLROOT; ?>reviews/deleteImage/<?= $image->screenId ?>" class="btn btn--danger" onclick="return confirm('Are you sure you want to delete this image?');">
-                                            Delete Image
-                                        </a>
                                     <?php endforeach; ?>
                                 </div>
                             </div>
@@ -217,17 +212,19 @@
 </div>
 
 <!-- dialog -->
-<div class="dialog dialog--sticky js-dialog" id="dialog-delete-review-confirmation" data-animation="on">
+<div class="dialog dialog--sticky js-dialog" id="dialog-delete-user-confirmation" data-animation="on">
     <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1" aria-describedby="dialog-description">
         <div class="text-component">
-            <h4 id="dialog-title-1">Are you sure you want to delete this review?</h4>
+            <br>
+            <br>
+            <h4 id="dialog-title-1">Are you sure you want to delete this image?
+            </h4>
             <p id="dialog-description">This action cannot be undone.</p>
         </div>
-
         <footer class="margin-top-md">
             <div class="flex justify-end gap-xs flex-wrap">
                 <button class="btn btn--subtle js-dialog__close">Cancel</button>
-                <button class="btn btn--accent">Delete</button>
+                <a class="btn btn--accent" href="<?= URLROOT; ?>reviews/deleteImage/{screenId:<?= $image->screenId . ';' . 'reviewId:' . $data['review']->reviewId ?>}">Delete</a>
             </div>
         </footer>
     </div>

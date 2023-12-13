@@ -1988,157 +1988,198 @@ function resetFocusTabsStyle() {
 }());
 // File#: _1_filter-navigation
 // Usage: codyhouse.co/license
-(function() {
-  var FilterNav = function(element) {
+(function () {
+  var FilterNav = function (element) {
     this.element = element;
-    this.wrapper = this.element.getElementsByClassName('js-filter-nav__wrapper')[0];
-    this.nav = this.element.getElementsByClassName('js-filter-nav__nav')[0];
-    this.list = this.nav.getElementsByClassName('js-filter-nav__list')[0];
-    this.control = this.element.getElementsByClassName('js-filter-nav__control')[0];
-    this.modalClose = this.element.getElementsByClassName('js-filter-nav__close-btn')[0];
-    this.placeholder = this.element.getElementsByClassName('js-filter-nav__placeholder')[0];
-    this.marker = this.element.getElementsByClassName('js-filter-nav__marker');
-    this.layout = 'expanded';
+    this.wrapper = this.element.getElementsByClassName(
+      "js-filter-nav__wrapper"
+    )[0];
+    this.nav = this.element.getElementsByClassName("js-filter-nav__nav")[0];
+    this.list = this.nav.getElementsByClassName("js-filter-nav__list")[0];
+    this.control = this.element.getElementsByClassName(
+      "js-filter-nav__control"
+    )[0];
+    this.modalClose = this.element.getElementsByClassName(
+      "js-filter-nav__close-btn"
+    )[0];
+    this.placeholder = this.element.getElementsByClassName(
+      "js-filter-nav__placeholder"
+    )[0];
+    this.marker = this.element.getElementsByClassName("js-filter-nav__marker");
+    this.layout = "expanded";
     initFilterNav(this);
   };
 
   function initFilterNav(element) {
     checkLayout(element); // init layout
-    if(element.layout == 'expanded') placeMarker(element);
-    element.element.addEventListener('update-layout', function(event){ // on resize - modify layout
+    if (element.layout == "expanded") placeMarker(element);
+    element.element.addEventListener("update-layout", function (event) {
+      // on resize - modify layout
       checkLayout(element);
     });
 
     // update selected item
-    element.wrapper.addEventListener('click', function(event){
-      var newItem = event.target.closest('.js-filter-nav__btn');
-      if(newItem) {
+    element.wrapper.addEventListener("click", function (event) {
+      var newItem = event.target.closest(".js-filter-nav__btn");
+      if (newItem) {
         updateCurrentItem(element, newItem);
         return;
       }
       // close modal list - mobile version only
-      if(event.target.classList.contains('js-filter-nav__wrapper') || event.target.closest('.js-filter-nav__close-btn')) toggleModalList(element, false);
+      if (
+        event.target.classList.contains("js-filter-nav__wrapper") ||
+        event.target.closest(".js-filter-nav__close-btn")
+      )
+        toggleModalList(element, false);
     });
 
     // open modal list - mobile version only
-    element.control.addEventListener('click', function(event){
+    element.control.addEventListener("click", function (event) {
       toggleModalList(element, true);
     });
-    
+
     // listen for key events
-		window.addEventListener('keyup', function(event){
-			// listen for esc key
-			if( (event.keyCode && event.keyCode == 27) || (event.key && event.key.toLowerCase() == 'escape' )) {
-				// close navigation on mobile if open
-				if(element.control.getAttribute('aria-expanded') == 'true' && isVisible(element.control)) {
-					toggleModalList(element, false);
-				}
-			}
-			// listen for tab key
-			if( (event.keyCode && event.keyCode == 9) || (event.key && event.key.toLowerCase() == 'tab' )) {
-				// close navigation on mobile if open when nav loses focus
-				if(element.control.getAttribute('aria-expanded') == 'true' && isVisible(element.control) && !document.activeElement.closest('.js-filter-nav__wrapper')) toggleModalList(element, false);
-			}
-		});
-  };
+    window.addEventListener("keyup", function (event) {
+      // listen for esc key
+      if (
+        (event.keyCode && event.keyCode == 27) ||
+        (event.key && event.key.toLowerCase() == "escape")
+      ) {
+        // close navigation on mobile if open
+        if (
+          element.control.getAttribute("aria-expanded") == "true" &&
+          isVisible(element.control)
+        ) {
+          toggleModalList(element, false);
+        }
+      }
+      // listen for tab key
+      if (
+        (event.keyCode && event.keyCode == 9) ||
+        (event.key && event.key.toLowerCase() == "tab")
+      ) {
+        // close navigation on mobile if open when nav loses focus
+        if (
+          element.control.getAttribute("aria-expanded") == "true" &&
+          isVisible(element.control) &&
+          !document.activeElement.closest(".js-filter-nav__wrapper")
+        )
+          toggleModalList(element, false);
+      }
+    });
+  }
 
   function updateCurrentItem(element, btn) {
-    if(btn.getAttribute('aria-current') == 'true') {
+    if (btn.getAttribute("aria-current") == "true") {
       toggleModalList(element, false);
       return;
     }
-    var activeBtn = element.wrapper.querySelector('[aria-current]');
-    if(activeBtn) activeBtn.removeAttribute('aria-current');
-    btn.setAttribute('aria-current', 'true');
+    var activeBtn = element.wrapper.querySelector("[aria-current]");
+    if (activeBtn) activeBtn.removeAttribute("aria-current");
+    btn.setAttribute("aria-current", "true");
     // update trigger label on selection (visible on mobile only)
     element.placeholder.textContent = btn.textContent;
     toggleModalList(element, false);
-    if(element.layout == 'expanded') placeMarker(element);
-  };
+    if (element.layout == "expanded") placeMarker(element);
+  }
 
   function toggleModalList(element, bool) {
-    element.control.setAttribute('aria-expanded', bool);
-    element.wrapper.classList.toggle('filter-nav__wrapper--is-visible', bool);
-    if(bool) {
-      element.nav.querySelectorAll('[href], button:not([disabled])')[0].focus();
-    } else if(isVisible(element.control)) {
+    element.control.setAttribute("aria-expanded", bool);
+    element.wrapper.classList.toggle("filter-nav__wrapper--is-visible", bool);
+    if (bool) {
+      element.nav.querySelectorAll("[href], button:not([disabled])")[0].focus();
+    } else if (isVisible(element.control)) {
       element.control.focus();
     }
-  };
+  }
 
   function isVisible(element) {
-		return (element.offsetWidth || element.offsetHeight || element.getClientRects().length);
-	};
+    return (
+      element.offsetWidth ||
+      element.offsetHeight ||
+      element.getClientRects().length
+    );
+  }
 
   function checkLayout(element) {
-    if(element.layout == 'expanded' && switchToCollapsed(element)) { // check if there's enough space 
-      element.layout = 'collapsed';
-      element.element.classList.remove('filter-nav--expanded');
-      element.element.classList.add('filter-nav--collapsed');
-      element.modalClose.classList.remove('is-hidden');
-      element.control.classList.remove('is-hidden');
-    } else if(element.layout == 'collapsed' && switchToExpanded(element)) {
-      element.layout = 'expanded';
-      element.element.classList.add('filter-nav--expanded');
-      element.element.classList.remove('filter-nav--collapsed');
-      element.modalClose.classList.add('is-hidden');
-      element.control.classList.add('is-hidden');
+    if (element.layout == "expanded" && switchToCollapsed(element)) {
+      // check if there's enough space
+      element.layout = "collapsed";
+      element.element.classList.remove("filter-nav--expanded");
+      element.element.classList.add("filter-nav--collapsed");
+      element.modalClose.classList.remove("is-hidden");
+      element.control.classList.remove("is-hidden");
+    } else if (element.layout == "collapsed" && switchToExpanded(element)) {
+      element.layout = "expanded";
+      element.element.classList.add("filter-nav--expanded");
+      element.element.classList.remove("filter-nav--collapsed");
+      element.modalClose.classList.add("is-hidden");
+      element.control.classList.add("is-hidden");
     }
     // place background element
-    if(element.layout == 'expanded') placeMarker(element);
-  };
+    if (element.layout == "expanded") placeMarker(element);
+  }
 
   function switchToCollapsed(element) {
     return element.nav.scrollWidth > element.nav.offsetWidth;
-  };
+  }
 
   function switchToExpanded(element) {
-    element.element.style.visibility = 'hidden';
-    element.element.classList.add('filter-nav--expanded');
-    element.element.classList.remove('filter-nav--collapsed');
+    element.element.style.visibility = "hidden";
+    element.element.classList.add("filter-nav--expanded");
+    element.element.classList.remove("filter-nav--collapsed");
     var switchLayout = element.nav.scrollWidth <= element.nav.offsetWidth;
-    element.element.classList.remove('filter-nav--expanded');
-    element.element.classList.add('filter-nav--collapsed');
-    element.element.style.visibility = 'visible';
+    element.element.classList.remove("filter-nav--expanded");
+    element.element.classList.add("filter-nav--collapsed");
+    element.element.style.visibility = "visible";
     return switchLayout;
-  };
+  }
 
   function placeMarker(element) {
-    var activeElement = element.wrapper.querySelector('.js-filter-nav__btn[aria-current="true"]');
-    if(element.marker.length == 0 || !activeElement ) return;
-    element.marker[0].style.width = activeElement.offsetWidth+'px';
-    element.marker[0].style.transform = 'translateX('+(activeElement.getBoundingClientRect().left - element.list.getBoundingClientRect().left)+'px)';
-  };
+    var activeElement = element.wrapper.querySelector(
+      '.js-filter-nav__btn[aria-current="true"]'
+    );
+    if (element.marker.length == 0 || !activeElement) return;
+    element.marker[0].style.width = activeElement.offsetWidth + "px";
+    element.marker[0].style.transform =
+      "translateX(" +
+      (activeElement.getBoundingClientRect().left -
+        element.list.getBoundingClientRect().left) +
+      "px)";
+  }
 
-  var filterNav = document.getElementsByClassName('js-filter-nav');
-  if(filterNav.length > 0) {
+  var filterNav = document.getElementsByClassName("js-filter-nav");
+  if (filterNav.length > 0) {
     var filterNavArray = [];
-    for(var i = 0; i < filterNav.length; i++) {
+    for (var i = 0; i < filterNav.length; i++) {
       filterNavArray.push(new FilterNav(filterNav[i]));
     }
 
     var resizingId = false,
-      customEvent = new CustomEvent('update-layout');
+      customEvent = new CustomEvent("update-layout");
 
-    window.addEventListener('resize', function() {
+    window.addEventListener("resize", function () {
       clearTimeout(resizingId);
       resizingId = setTimeout(doneResizing, 100);
     });
 
     // wait for font to be loaded
-    if(document.fonts) {
+    if (document.fonts) {
       document.fonts.onloadingdone = function (fontFaceSetEvent) {
         doneResizing();
       };
     }
 
     function doneResizing() {
-      for( var i = 0; i < filterNavArray.length; i++) {
-        (function(i){filterNavArray[i].element.dispatchEvent(customEvent)})(i);
-      };
-    };
+      for (var i = 0; i < filterNavArray.length; i++) {
+        (function (i) {
+          filterNavArray[i].element.dispatchEvent(customEvent);
+        })(i);
+      }
+    }
   }
-}());
+})();
+
 // File#: _1_filter
 // Usage: codyhouse.co/license
 (function() {
@@ -8173,6 +8214,211 @@ Util.moveFocus = function (element) {
       };
     }
   }
+}());
+if(!Util) function Util () {};
+
+Util.hasClass = function(el, className) {
+  return el.classList.contains(className);
+};
+
+Util.addClass = function(el, className) {
+  var classList = className.split(' ');
+  el.classList.add(classList[0]);
+  if (classList.length > 1) Util.addClass(el, classList.slice(1).join(' '));
+};
+
+Util.removeClass = function(el, className) {
+  var classList = className.split(' ');
+  el.classList.remove(classList[0]);
+  if (classList.length > 1) Util.removeClass(el, classList.slice(1).join(' '));
+};
+
+Util.toggleClass = function(el, className, bool) {
+  if(bool) Util.addClass(el, className);
+  else Util.removeClass(el, className);
+};
+
+Util.extend = function() {
+  var extended = {};
+  var deep = false;
+  var i = 0;
+  var length = arguments.length;
+
+  if ( Object.prototype.toString.call( arguments[0] ) === '[object Boolean]' ) {
+    deep = arguments[0];
+    i++;
+  }
+
+  var merge = function (obj) {
+    for ( var prop in obj ) {
+      if ( Object.prototype.hasOwnProperty.call( obj, prop ) ) {
+        if ( deep && Object.prototype.toString.call(obj[prop]) === '[object Object]' ) {
+          extended[prop] = extend( true, extended[prop], obj[prop] );
+        } else {
+          extended[prop] = obj[prop];
+        }
+      }
+    }
+  };
+
+  for ( ; i < length; i++ ) {
+    var obj = arguments[i];
+    merge(obj);
+  }
+
+  return extended;
+};
+
+// File#: _2_password-strength
+// Usage: codyhouse.co/license
+(function() {
+  var PasswordStrength = function(opts) {
+    this.options = Util.extend(PasswordStrength.defaults , opts); // used to store custom filter/sort functions
+    this.element = this.options.element;
+    this.input = this.element.getElementsByClassName('js-password-strength__input');
+    this.reqs = this.element.getElementsByClassName('js-password-strength__req');
+    this.strengthSection = this.element.getElementsByClassName('js-password-strength__meter-wrapper');
+    this.strengthValue = this.element.getElementsByClassName('js-password-strength__value');
+    this.strengthMeter = this.element.getElementsByClassName('js-password-strength__meter');
+    this.passwordInteracted = false;
+    this.reqMetClass = 'password-strength__req--met';
+    this.reqNoMetClass = 'password-strength__req--no-met';
+    shouldCheckStrength(this); // check if password strength should be checked
+    getStrengthLabels(this); // labels for password strength
+    initPasswordStrength(this);
+  };
+
+  function shouldCheckStrength(password) {
+    password.checkStrength = true;
+    var checkStrength = password.element.getAttribute('data-check-strength');
+    if(checkStrength && checkStrength == 'off') password.checkStrength = false;
+  };
+
+  function getStrengthLabels(password) {
+    if(!password.checkStrength) password.strengthLabels = false;
+    password.strengthLabels = ['Bad', 'Weak', 'Good', 'Strong'];
+    var dataLabel = password.element.getAttribute('data-strength-labels');
+    if(dataLabel) {
+      var labels = dataLabel.split(',');
+      if(labels.length < 4) return;
+      password.strengthLabels = labels.map(function(element){return element.trim()});
+    }
+  };
+
+  function initPasswordStrength(password) {
+    if(password.input.length == 0) return;
+    toggleCheckStrength(password); // hide/show password strenght section
+    checkStrength(password);
+    checkConditions(password);
+    initInput(password);
+  };
+
+  function initInput(password) {
+    password.input[0].addEventListener('input', function(event) { // password changed
+      toggleCheckStrength(password); // hide/show password strenght section
+      checkStrength(password);
+      checkConditions(password);
+    });
+
+    password.input[0].addEventListener('blur', function cb(event) {
+      password.input[0].removeEventListener('blur', cb);
+      password.passwordInteracted = true;
+      // show error for requirement not met
+      for(var i = 0; i < password.reqs.length; i++) {
+        if(!Util.hasClass(password.reqs[i], password.reqMetClass)) Util.addClass(password.reqs[i], password.reqNoMetClass);
+      }
+    });
+  };
+
+  function toggleCheckStrength(password) {
+    if(password.strengthSection.length == 0) return;
+    Util.toggleClass(password.strengthSection[0], 'is-hidden', (password.input[0].value.length == 0));
+  };
+
+  function checkStrength(password) {
+    if(!password.checkStrength || !zxcvbn) return;
+    var response = zxcvbn(password.input[0].value);
+    if(password.strengthValue.length > 0) { // update strength label
+      if(response.score >= 1) password.strengthValue[0].textContent = password.strengthLabels[response.score - 1];
+      else password.strengthValue[0].textContent = password.strengthLabels[0];
+    }
+
+    if(password.strengthMeter.length > 0) { // update strength meter
+      var score = response.score;
+      if(score == 0 && password.input[0].value.length > 0) score = 1;
+      password.strengthMeter[0].firstElementChild.style.width = score/0.04+'%';
+      removeStrengthClasses(password);
+      if(response.score >= 1) Util.addClass(password.strengthMeter[0], 'password-strength__meter--fill-'+response.score);
+      else Util.addClass(password.strengthMeter[0], 'password-strength__meter--fill-1');
+    }
+  };
+
+  function checkConditions(password) {
+    // uppercase, lowercase, special characters, length, number + custom
+    for(var i = 0; i < password.reqs.length; i++) {
+      var req = password.reqs[i].getAttribute('data-password-req');
+      var result = false;
+      if(password.options[req]) {
+        result = password.options[req](password.input[0].value);
+      } else {
+        result = checkSingleCondition(password.input[0].value, req);
+      }
+
+      Util.toggleClass(password.reqs[i], password.reqMetClass, result);
+      if(password.passwordInteracted) Util.toggleClass(password.reqs[i], password.reqNoMetClass, !result);
+    }
+  };
+
+  function checkSingleCondition(value, req) {
+    var result;
+    switch (true) {
+      case (req.trim() == 'uppercase'):
+        result = (value.toLowerCase() != value);
+        break;
+      case (req.trim() == 'lowercase'):
+        result = (value.toUpperCase() != value);
+        break;
+      case (req.trim() == 'number'):
+        result = /\d/.test(value);
+        break;
+      case (req.indexOf('length:') == 0):
+        var reqArray = req.split(':');
+        result = (value.length >= parseInt(reqArray[1]));
+        if(reqArray.length > 2 && result) result = (value.length <= parseInt(reqArray[2]));
+        break;
+      case (req.trim() == 'special'):
+        result = /[!@#$%^&*=~`'"|/\?\_\-\,\;\.\:\(\)\{\}\[\]\+\>\<\\]/.test(value);
+        break;
+      case (req.trim() == 'letter'):
+        result = /[a-zA-Z]/.test(value);
+        break;
+      default:
+        result = false;
+        break;
+    }
+    return result;
+  };
+
+  function removeStrengthClasses(password) {
+    var classes = password.strengthMeter[0].className.split(" ").filter(function(c) {
+      return c.lastIndexOf('password-strength__meter--fill-', 0) !== 0;
+    });
+    password.strengthMeter[0].className = classes.join(" ").trim();
+  };
+
+  PasswordStrength.defaults = {
+    element : false,
+  };
+
+  window.PasswordStrength = PasswordStrength;
+
+  //initialize the PasswordStrength objects
+	var passwordStrength = document.getElementsByClassName('js-password-strength');
+	if( passwordStrength.length > 0 ) {
+		for( var i = 0; i < passwordStrength.length; i++) {
+			(function(i){new PasswordStrength({element: passwordStrength[i]});})(i);
+		}
+  };
 }());
 if(!Util) function Util () {};
 

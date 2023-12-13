@@ -1,3 +1,4 @@
+//START TOAST HANDLING{
 function openToastSuccess(title, message) {
   var toast = document.querySelector(".toast--success");
   var toastTitle = toast.querySelector(".toast__title");
@@ -73,7 +74,9 @@ if (segments.length >= 5) {
 } else {
   console.log("Insufficient URL segments for toast.");
 }
+// END TOAST HANDLING}
 
+//START ENITY HANDLING ON REVIEW PAGE
 function updateEntityOptions() {
   // Get the selected Entity Type
   var entityType = document.getElementById("entityType").value;
@@ -115,3 +118,84 @@ function showDropdowns(dropdowns) {
     dropdowns[i].style.display = "block";
   }
 }
+// END ENTITY HANDLING ON REVIEW PAGE
+
+// START navigation HOMEPAGE
+// Add an event listener to the radio buttons
+document.querySelectorAll('input[name="type"]').forEach(function (radio) {
+  radio.addEventListener("change", function () {
+    // Get the selected product type
+    var selectedType = this.getAttribute("data-filter");
+
+    // Hide all ingredients
+    document.querySelectorAll(".ingredient").forEach(function (ingredient) {
+      ingredient.style.display = "none";
+    });
+
+    // Show ingredients for the selected type
+    if (selectedType !== "*") {
+      document
+        .querySelectorAll('.ingredient[data-filter="' + selectedType + '"]')
+        .forEach(function (ingredient) {
+          ingredient.style.display = "block";
+        });
+    }
+  });
+});
+// END navigation HOMEPAGE
+// START ON FORM CHECKING
+document
+  .getElementById("joinButton")
+  .addEventListener("click", function (event) {
+    event.preventDefault();
+
+    const firstNameValue = document.getElementById("js-FirstName").value;
+    const lastNameValue = document.getElementById("js-LastName").value;
+    const emailValue = document.getElementById("js-Email").value;
+    const passwordValue = document.getElementById("js-Password").value;
+    const confirmPasswordValue =
+      document.getElementById("js-ConfirmPassword").value;
+
+    // CREATE FORMDATA
+    const formData = new FormData();
+    formData.append("customerFirstName", firstNameValue);
+    formData.append("customerLastName", lastNameValue);
+    formData.append("customerEmail", emailValue);
+    formData.append("customerPassword", passwordValue);
+    formData.append("customerConfirmPassword", confirmPasswordValue);
+
+    // AJAX REQUEST
+    fetch("homepage.php", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const jsonResponse = data; // Store the JSON response in a variable
+
+        if (jsonResponse.success) {
+          console.log("Registration successful!");
+        } else {
+          displayErrorMessages(jsonResponse.errors);
+        }
+      })
+      .catch((error) => {
+        console.log("Error during Ajax request:", error);
+      });
+  });
+
+function displayErrorMessages(errors) {
+  // Iterate through errors and display them next to corresponding input fields
+  Object.keys(errors).forEach((fieldName) => {
+    const inputField = document.getElementById(`js-${fieldName}`);
+    const errorMessage = errors[fieldName];
+
+    // Display error message next to the input field
+    const errorElement = document.createElement("p");
+    errorElement.textContent = errorMessage;
+    errorElement.classList.add("error-message"); // You can style this class in your CSS
+    inputField.parentNode.appendChild(errorElement);
+  });
+}
+
+// END ON FORM CHECKING

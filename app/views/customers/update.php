@@ -1,22 +1,39 @@
 <?php require APPROOT . '/views/includes/head.php'; ?>
 
 <div class="app-ui js-app-ui">
+    <div class="dialog dialog--sticky js-dialog" id="dialog-delete-user-confirmation" data-animation="on">
+        <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1"
+            aria-describedby="dialog-description">
+            <div class="text-component">
+                <br>
+                <br>
+                <h4 id="dialog-title-1">Are you sure you want to delete this image?
+                </h4>
+                <p id="dialog-description">This action cannot be undone.</p>
+            </div>
+            <footer class="margin-top-md">
+                <div class="flex justify-end gap-xs flex-wrap">
+                    <button class="btn btn--subtle js-dialog__close">Cancel</button>
+                    <a class="btn btn--accent"
+                        href="<?= URLROOT; ?>customers/deleteImage/{screenId:<?= $data['image']->screenId . ';' . 'customerId:' . $data['Customer']->customerId ?>}">Delete</a>
+                </div>
+            </footer>
+        </div>
+    </div>
 
     <!-- main content -->
     <main class="app-ui__body padding-md js-app-ui__body">
         <div class="margin-bottom-md">
-            <h1 class="text-lg">Customer</h1>
+            <h1 class="text-lg">Edit selected customer</h1>
         </div>
 
         <div class="margin-bottom-md">
             <nav class="breadcrumbs text-sm" aria-label="Breadcrumbs">
                 <ol class="flex flex-wrap gap-xxs">
                     <li class="breadcrumbs__item">
-                        <a href="<?= URLROOT ?>customers/overview/" class="color-inherit">All Customers</a>
-                        <span class="color-contrast-low margin-left-xxs" aria-hidden="true">/</span>
+                        <a href="<?= URLROOT ?>customers/overview/{page:1}}/" class="color-inherit">All Customers</a>
                     </li>
 
-                    <li class="breadcrumbs__item">#U2123</li>
                 </ol>
             </nav>
         </div>
@@ -26,7 +43,7 @@
                 action="<?= URLROOT ?>customers/update/{customerId:<?= $data['Customer']->customerId ?>}">
                 <div class="padding-md">
                     <fieldset class="margin-bottom-xl">
-                        <legend class="form-legend margin-bottom-md">Edit Selected Customer</legend>
+                        <legend class="form-legend margin-bottom-md">Edit form</legend>
 
                         <!-- Customer ID -->
                         <input type="hidden" name="customerId" value="<?= $data['Customer']->customerId ?>">
@@ -184,11 +201,8 @@
                                         <?php endif; ?>
                                         <!-- Add delete button conditionally -->
                                         <?php if ($data['imageSrc'] && $data['imageSrc'] !== URLROOT . 'public/default-image.jpg') : ?>
-                                        <a href="<?= URLROOT; ?>customers/deleteImage/{screenId:<?= $data['image']->screenId ?>}"
-                                            class="btn btn--danger"
-                                            onclick="return confirm('Are you sure you want to delete this image?');">
-                                            Delete Image
-                                        </a>
+                                        <a href="#" aria-controls="dialog-delete-user-confirmation"
+                                            class="btn btn--danger">Delete Image</a>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -208,23 +222,6 @@
     </main>
 </div>
 
-<!-- dialog -->
-<div class="dialog dialog--sticky js-dialog" id="dialog-delete-user-confirmation" data-animation="on">
-    <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1"
-        aria-describedby="dialog-description">
-        <div class="text-component">
-            <h4 id="dialog-title-1">Are you sure you want to delete this user?</h4>
-            <p id="dialog-description">This action cannot be undone.</p>
-        </div>
-
-        <footer class="margin-top-md">
-            <div class="flex justify-end gap-xs flex-wrap">
-                <button class="btn btn--subtle js-dialog__close">Cancel</button>
-                <button class="btn btn--accent">Delete</button>
-            </div>
-        </footer>
-    </div>
-</div>
 
 <!-- notification popover -->
 <div id="notifications-popover" class="popover notif-popover bg radius-md shadow-md js-popover" role="dialog">

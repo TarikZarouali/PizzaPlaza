@@ -21,17 +21,22 @@ class OrderModel
 
             return $result ?? [];
         } catch (PDOException $ex) {
-            Helper::log('error', 'Failed to get active orders from the database in class OrderModel.');
-            exit;
+            Helper::log('error', 'Failed to get active orders from the database in class OrderModel.' . $ex->getMessage());
+            return [];
         }
     }
 
     public function getTotalOrdersCount()
     {
-        $this->db->query("SELECT COUNT(*) as total FROM orders ");
-        $result = $this->db->single();
+        try {
+            $this->db->query("SELECT COUNT(*) as total FROM orders ");
+            $result = $this->db->single();
 
-        return $result->total;
+            return $result->total;
+        } catch (PDOException $ex) {
+            helper::log('error', 'could not get total orders count' . $ex->getMessage());
+            return false;
+        }
     }
 
     public function getOrderById($orderId)
@@ -44,10 +49,10 @@ class OrderModel
 
             $result = $this->db->single();
 
-            return $result ?? [];
+            return $result;
         } catch (PDOException $ex) {
-            Helper::log('error', 'Failed to get orders by Id from the database in class OrderModel.');
-            exit;
+            Helper::log('error', 'Failed to get orders by Id from the database in class OrderModel.' . $ex->getMessage());
+            return false;
         }
     }
 
@@ -65,8 +70,8 @@ class OrderModel
 
             return $result ?? [];
         } catch (PDOException $ex) {
-            error_log('error', ' Exception occurred while deleting ingredient: '());
-            return false;
+            helper::log('error', ' Exception occurred while deleting ingredient' . $ex->getMessage());
+            return [];
         }
     }
 
@@ -90,8 +95,8 @@ class OrderModel
 
             return $this->db->execute();
         } catch (PDOException $ex) {
-            Helper::log('error', 'Failed to create order in OrderModel');
-            exit;
+            Helper::log('error', 'Failed to create order in OrderModel' . $ex->getMessage());
+            return false;
         }
     }
 
@@ -120,7 +125,7 @@ class OrderModel
             return $this->db->execute();
         } catch (PDOException $ex) {
             Helper::log('error', 'Could not update the order in the OrderModel: ' . $ex->getMessage());
-            exit;
+            return false;
         }
     }
 
@@ -135,8 +140,8 @@ class OrderModel
 
             return $this->db->execute();
         } catch (PDOException $ex) {
-            Helper::log('error', 'Failed to delete order in OrderModel');
-            exit;
+            Helper::log('error', 'Failed to delete order in OrderModel' . $ex->getMessage());
+            return false;
         }
     }
 }

@@ -19,8 +19,8 @@ class ScreenModel
 
             return $result ?? [];
         } catch (PDOException $ex) {
-            Helper::log('error', 'Failed to get active screens from the database in class ReviewModel.');
-            throw $ex; // Consider throwing the exception for better error handling.
+            Helper::log('error', 'Failed to get active screens from the database in class ReviewModel.' . $ex->getMessage());
+            return [];
         }
     }
 
@@ -38,17 +38,39 @@ class ScreenModel
 
             return $result ?? [];
         } catch (PDOException $ex) {
-            error_log('error', ' Exception occurred while deleting ingredient: '());
-            return false;
+            helper::log('error', ' Exception occurred while deleting ingredient' . $ex->getMessage());
+            return [];
+        }
+    }
+
+    public function getScreenImage($entityId)
+    {
+        $screenData = $this->getScreenByEntityId($entityId);
+
+        if ($screenData) {
+            $screenId = $screenData->screenId;
+            $screenCreateDate = date('Ymd', $screenData->screenCreateDate);
+
+            $imagePath = IMAGEROOT . $screenCreateDate . '/' . $screenId . '.jpg'; // Adjust the file extension as needed
+
+            return $imagePath;
+        } else {
+            helper::log('error', 'no image found');
+            return null;
         }
     }
 
     public function getTotalScreensCount()
     {
-        $this->db->query("SELECT COUNT(*) as total FROM screens where screenIsActive = 1 ");
-        $result = $this->db->single();
+        try {
+            $this->db->query("SELECT COUNT(*) as total FROM screens where screenIsActive = 1 ");
+            $result = $this->db->single();
 
-        return $result->total;
+            return $result->total;
+        } catch (PDOException $ex) {
+            helper::log('error', 'could not get total screens' . $ex->getmessage());
+            return false;
+        }
     }
 
     public function getScreenById($screenId)
@@ -61,10 +83,10 @@ class ScreenModel
 
             $result = $this->db->single();
 
-            return $result ?? [];
+            return $result;
         } catch (PDOException $ex) {
-            Helper::log('error', 'Failed to get screen by Id from the database in class ReviewModel.');
-            throw $ex; // Consider throwing the exception for better error handling.
+            Helper::log('error', 'Failed to get screen by Id from the database in class ReviewModel.' . $ex->getMessage());
+            return false;
         }
     }
 
@@ -83,7 +105,7 @@ class ScreenModel
             return $this->db->execute();
         } catch (PDOException $ex) {
             Helper::log('error', 'Could not update the screen in the ScreenModel: ' . $ex->getMessage());
-            exit;
+            return false;
         }
     }
 
@@ -131,58 +153,83 @@ class ScreenModel
 
     public function updateScreenIsActive($screenId, $isActive)
     {
-        $this->db->query("UPDATE screens SET screenIsActive = :isActive WHERE screenId = :screenId");
-        $this->db->bind(':isActive', $isActive);
-        $this->db->bind(':screenId', $screenId);
-        $this->db->execute();
+        try {
+            $this->db->query("UPDATE screens SET screenIsActive = :isActive WHERE screenId = :screenId");
+            $this->db->bind(':isActive', $isActive);
+            $this->db->bind(':screenId', $screenId);
+            $this->db->execute();
+        } catch (PDOException $ex) {
+            helper::log('error', 'problem with screen' . $ex->getMessage());
+            return false;
+        }
     }
 
     public function getScreenByEntityId($entityId)
     {
-        $this->db->query("SELECT * FROM screens WHERE screenEntityId = :entityId");
-        $this->db->bind(':entityId', $entityId);
-        return $this->db->single();
+        try {
+            $this->db->query("SELECT * FROM screens WHERE screenEntityId = :entityId");
+            $this->db->bind(':entityId', $entityId);
+            return $this->db->single();
+        } catch (PDOException $ex) {
+            helper::log('error', 'problem with screen entity by Id' . $ex->getMessage());
+            return false;
+        }
     }
 
     public function getScreenDataById($entityId, $entity, $scope)
     {
-        $this->db->query("SELECT screenId, screenEntity, screenCreateDate FROM screens WHERE screenEntityId = :screenEntityId AND screenEntity = :screenEntity AND screenScope = :screenScope AND screenIsActive = 1");
-        $this->db->bind(':screenEntityId', $entityId);
-        $this->db->bind(':screenEntity', $entity);
-        $this->db->bind(':screenScope', $scope);
-        return $this->db->single(); // Change to resultSet()
+        try {
+            $this->db->query("SELECT screenId, screenEntity, screenCreateDate FROM screens WHERE screenEntityId = :screenEntityId AND screenEntity = :screenEntity AND screenScope = :screenScope AND screenIsActive = 1");
+            $this->db->bind(':screenEntityId', $entityId);
+            $this->db->bind(':screenEntity', $entity);
+            $this->db->bind(':screenScope', $scope);
+            return $this->db->single();
+        } catch (PDOException $ex) {
+            helper::log('error', 'problem with screen data by Id' . $ex->getMessage());
+            return false;
+        }
     }
 
     public function insertMultipleScreenImages($screenId, $entityId, $entity, $newScope)
     {
-        global $var;
-        // Use the provided entityId as the screenEntityId
-        $this->db->query("INSERT INTO screens (screenId,
+        try {
+            global $var;
+            // Use the provided entityId as the screenEntityId
+            $this->db->query("INSERT INTO screens (screenId,
                                        screenEntityId,
                                        screenEntity,
                                        screenScope,
                                        screenCreateDate,
                                        screenIsActive)
                    VALUES (:screenId, :screenEntityId, :screenEntity, :screenScope, :screenCreateDate, 1)");
-        $this->db->bind(':screenId', $screenId);
-        $this->db->bind(':screenEntityId', $entityId); // Use entityId here
-        $this->db->bind(':screenEntity', $entity);
-        $this->db->bind(':screenScope', $newScope);
-        $this->db->bind(':screenCreateDate', $var['timestamp']);
-        $this->db->execute();
+            $this->db->bind(':screenId', $screenId);
+            $this->db->bind(':screenEntityId', $entityId); // Use entityId here
+            $this->db->bind(':screenEntity', $entity);
+            $this->db->bind(':screenScope', $newScope);
+            $this->db->bind(':screenCreateDate', $var['timestamp']);
+            $this->db->execute();
+        } catch (PDOException $ex) {
+            helper::log('error', 'problem with screen insert multiple images' . $ex->getMessage());
+            return false;
+        }
     }
 
 
     public function getMultipleScreensByEntityId($entityId, $scope = null)
     {
-        if ($scope !== null) {
-            $this->db->query("SELECT screenId, screenCreateDate, screenIsActive, screenEntityId, screenEntity, screenScope FROM screens WHERE screenEntityId = :entityId AND screenScope = :scope AND screenIsActive = 1");
-            $this->db->bind(':scope', $scope);
-        } else {
-            $this->db->query("SELECT  screenId, screenCreateDate, screenIsActive, screenEntityId, screenEntity, screenScope FROM screens WHERE screenEntityId = :entityId AND screenIsActive = 1");
-        }
+        try {
+            if ($scope !== null) {
+                $this->db->query("SELECT screenId, screenCreateDate, screenIsActive, screenEntityId, screenEntity, screenScope FROM screens WHERE screenEntityId = :entityId AND screenScope = :scope AND screenIsActive = 1");
+                $this->db->bind(':scope', $scope);
+            } else {
+                $this->db->query("SELECT  screenId, screenCreateDate, screenIsActive, screenEntityId, screenEntity, screenScope FROM screens WHERE screenEntityId = :entityId AND screenIsActive = 1");
+            }
 
-        $this->db->bind(':entityId', $entityId);
-        return $this->db->resultSet();
+            $this->db->bind(':entityId', $entityId);
+            return $this->db->resultSet();
+        } catch (PDOException $ex) {
+            helper::log('error', 'problem with screen multiple screens getting' . $ex->getMessage());
+            return [];
+        }
     }
 }

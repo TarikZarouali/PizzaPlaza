@@ -2,7 +2,7 @@
 <!-- main content -->
 <main class="app-ui__body padding-md js-app-ui__body">
     <div class="margin-bottom-md">
-        <h1 class="text-lg">Review</h1>
+        <h1 class="text-lg">Create review</h1>
     </div>
 
     <div class="margin-bottom-md">
@@ -25,15 +25,14 @@
                     <label class="form-label margin-bottom-xxs" for="customerId">Select Customer</label>
                     <select class="form-control width-100" name="reviewCustomerId" id="customerId" required>
                         <?php foreach ($data['Customers'] as $customer) : ?>
-                        <option value="<?= $customer->customerId ?>">
-                            <?= $customer->customerId . " - " . $customer->customerFirstName ?></option>
+                            <option value="<?= $customer->customerId ?>">
+                                <?= $customer->customerId . " - " . $customer->customerFirstName ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="col-12">
                     <label class="form-label margin-bottom-xxs" for="entityType">Select Entity Type</label>
-                    <select class="form-control width-100" name="entityType" id="entityType"
-                        onchange="updateEntityOptions()" required>
+                    <select class="form-control width-100" name="entityType" id="entityType" onchange="updateEntityOptions()" required>
                         <option value="1">Order</option>
                         <option value="2">Store</option>
                         <option value="3">Product</option>
@@ -44,8 +43,8 @@
                     <label class="form-label margin-bottom-xxs" for="storeId">Select Store</label>
                     <select class="form-control width-100" name="reviewEntityId" id="storeId" required>
                         <?php foreach ($data['Stores'] as $store) : ?>
-                        <option value="<?= $store->storeId ?>">
-                            <?= $store->storeStreetName ?></option>
+                            <option value="<?= $store->storeId ?>">
+                                <?= $store->storeStreetName ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -54,8 +53,8 @@
                     <label class="form-label margin-bottom-xxs" for="orderId">Select Order</label>
                     <select class="form-control width-100" name="reviewEntityId" id="orderId" required>
                         <?php foreach ($data['Orders'] as $order) : ?>
-                        <option value="<?= $order->orderId ?>">
-                            <?= $order->orderId ?></option>
+                            <option value="<?= $order->orderId ?>">
+                                <?= $order->orderId ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -64,8 +63,8 @@
                     <label class="form-label margin-bottom-xxs" for="productId">Select Product</label>
                     <select class="form-control width-100" name="reviewEntityId" id="productId" required>
                         <?php foreach ($data['Products'] as $product) : ?>
-                        <option value="<?= $product->productId ?>">
-                            <?= $product->productName ?></option>
+                            <option value="<?= $product->productId ?>">
+                                <?= $product->productName ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -75,8 +74,7 @@
                 </div>
                 <div class="col-12">
                     <label class="form-label margin-bottom-xxs" for="reviewDescription">Review Description</label>
-                    <textarea class="form-control width-100" name="reviewDescription" id="reviewDescription" rows="4"
-                        required></textarea>
+                    <textarea class="form-control width-100" name="reviewDescription" id="reviewDescription" rows="4" required></textarea>
                 </div>
                 <!-- Add more fields for other review details here -->
             </div>

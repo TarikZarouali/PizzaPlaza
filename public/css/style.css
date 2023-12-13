@@ -1,0 +1,8 @@
+/* ERROR MESSAGE ON FORM */
+.error-message {
+    background-color: #ffdddd;
+    color: #cc0000; 
+    padding: 12px;
+    border-radius: 8px; 
+    margin-bottom: 16px; 
+}

@@ -4,18 +4,16 @@
     <!-- main content -->
     <main class="app-ui__body padding-md js-app-ui__body">
         <div class="margin-bottom-md">
-            <h1 class="text-lg">Order</h1>
+            <h1 class="text-lg">Update selected order</h1>
         </div>
 
         <div class="margin-bottom-md">
             <nav class="breadcrumbs text-sm" aria-label="Breadcrumbs">
                 <ol class="flex flex-wrap gap-xxs">
                     <li class="breadcrumbs__item">
-                        <a href="<?= URLROOT ?>orders/overview/" class="color-inherit">All Orders</a>
-                        <span class="color-contrast-low margin-left-xxs" aria-hidden="true">/</span>
+                        <a href="<?= URLROOT ?>orders/overview//{page:1}}/" class="color-inherit">All Orders</a>
                     </li>
 
-                    <li class="breadcrumbs__item">#U2123</li>
                 </ol>
             </nav>
         </div>
@@ -24,7 +22,7 @@
             <form method="POST" action="<?= URLROOT ?>/orders/update/{orderId:<?= $data['Orders']->orderId ?>}">
                 <div class="padding-md">
                     <fieldset class="margin-bottom-xl">
-                        <legend class="form-legend margin-bottom-md">Edit Order</legend>
+                        <legend class="form-legend margin-bottom-md">Edit form</legend>
 
                         <!-- Order ID (hidden input for updating the correct order) -->
                         <input type="hidden" name="orderId" value="<?= $data['Orders']->orderId ?>">

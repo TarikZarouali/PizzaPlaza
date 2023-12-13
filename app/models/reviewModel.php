@@ -19,8 +19,8 @@ class ReviewModel
 
             return $result ?? [];
         } catch (PDOException $ex) {
-            Helper::log('error', 'Failed to get active reviews from the database in class ReviewModel.');
-            throw $ex; // Consider throwing the exception for better error handling.
+            Helper::log('error', 'Failed to get active reviews from the database in class ReviewModel.' . $ex->getMessage());
+            return [];
         }
     }
 
@@ -38,17 +38,21 @@ class ReviewModel
 
             return $result ?? [];
         } catch (PDOException $ex) {
-            error_log('error', ' Exception occurred while deleting ingredient: '());
-            return false;
+            helper::log('error', ' Exception occurred while deleting ingredient' . $ex->getMessage());
+            return [];
         }
     }
 
     public function getTotalReviewsCount()
     {
-        $this->db->query("SELECT COUNT(*) as total FROM reviews where reviewIsActive = 1 ");
-        $result = $this->db->single();
+        try {
+            $this->db->query("SELECT COUNT(*) as total FROM reviews where reviewIsActive = 1 ");
+            $result = $this->db->single();
 
-        return $result->total;
+            return $result->total;
+        } catch (PDOException $ex) {
+            Helper::log('error', 'could not get total reviews' . $ex->getMessage());
+        }
     }
 
     public function getReviewById($reviewId)
@@ -63,8 +67,8 @@ class ReviewModel
 
             return $result ?? [];
         } catch (PDOException $ex) {
-            Helper::log('error', 'Failed to get  reviews by Id from the database in class ReviewModel.');
-            throw $ex; // Consider throwing the exception for better error handling.
+            Helper::log('error', 'Failed to get  reviews by Id from the database in class ReviewModel.' . $ex->getMessage());
+            return [];
         }
     }
 
@@ -85,8 +89,8 @@ class ReviewModel
 
             return $this->db->execute();
         } catch (PDOException $ex) {
-            Helper::log('error', 'Failed to create review in ReviewModel');
-            throw $ex;
+            Helper::log('error', 'Failed to create review in ReviewModel' . $ex->getMessage());
+            return false;
         }
     }
 
@@ -109,8 +113,8 @@ class ReviewModel
 
             return $this->db->execute();
         } catch (PDOException $ex) {
-            Helper::log('error', 'Failed to update review in ReviewModel');
-            throw $ex;
+            Helper::log('error', 'Failed to update review in ReviewModel' . $ex->getMessage());
+            return false;
         }
     }
 
@@ -124,8 +128,8 @@ class ReviewModel
             $this->db->bind(':reviewId', $reviewId);
             return $this->db->execute();
         } catch (PDOException $ex) {
-            Helper::log('error', 'could not set review to inactive...');
-            throw $ex;
+            Helper::log('error', 'could not set review to inactive...' . $ex->getMessage());
+            return false;
         }
     }
 }

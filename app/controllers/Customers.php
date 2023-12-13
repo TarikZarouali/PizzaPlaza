@@ -227,7 +227,5 @@ class Customers extends Controller
             header('Location:' . URLROOT . '/customers/overview/{' . $toast . ':' . $toasttitle . ';}' . '{' . $toastmessage . '}');
             exit;
         }
-
-        $this->view('customers/delete');
     }
 }

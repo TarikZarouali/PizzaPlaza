@@ -5,7 +5,7 @@
     <!-- main content -->
     <main class="app-ui__body padding-md js-app-ui__body">
         <div class="margin-bottom-md">
-            <h1 class="text-lg">Customer</h1>
+            <h1 class="text-lg">Create ingredient</h1>
         </div>
 
         <div class="margin-bottom-md">
@@ -27,20 +27,16 @@
                     <div class="col-12">
                         <label class="form-label margin-bottom-xxs" for="modal-customer-ingredientName">Ingredient
                             Name</label>
-                        <input class="form-control width-100%" type="text" name="ingredientName"
-                            id="modal-customer-ingredientName" required>
+                        <input class="form-control width-100%" type="text" name="ingredientName" id="modal-customer-ingredientName" required>
                     </div>
                     <div class="col-12">
-                        <label class="form-label margin-bottom-xxs"
-                            for="modal-customer-ingredientDescription">Ingredient Description</label>
-                        <input class="form-control width-100%" type="text" name="ingredientDescription"
-                            id="modal-customer-ingredientDescription" required>
+                        <label class="form-label margin-bottom-xxs" for="modal-customer-ingredientDescription">Ingredient Description</label>
+                        <input class="form-control width-100%" type="text" name="ingredientDescription" id="modal-customer-ingredientDescription" required>
                     </div>
                     <div class="col-12">
                         <label class="form-label margin-bottom-xxs" for="modal-customer-ingredientPrice">Ingredient
                             Price</label>
-                        <input class="form-control width-100%" type="text" name="ingredientPrice"
-                            id="modal-customer-ingredientPrice" required>
+                        <input class="form-control width-100%" type="text" name="ingredientPrice" id="modal-customer-ingredientPrice" required>
                     </div>
                 </div>
                 <footer class="padding-md border-top border-alpha">
@@ -57,8 +53,7 @@
 
 <!-- dialog -->
 <div class="dialog dialog--sticky js-dialog" id="dialog-delete-user-confirmation" data-animation="on">
-    <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1"
-        aria-describedby="dialog-description">
+    <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1" aria-describedby="dialog-description">
         <div class="text-component">
             <h4 id="dialog-title-1">Are you sure you want to delete this user?</h4>
             <p id="dialog-description">This action cannot be undone.</p>

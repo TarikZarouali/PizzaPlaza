@@ -22,17 +22,22 @@ class employeeModel
 
             return $result ?? [];
         } catch (PDOException $ex) {
-            error_log("Error: Failed to get active employees from the database in class storeModel.");
-            die('Error: Failed to get active employees');
+            helper::log('error', 'Failed to get active employees from the database in class storeModel.' . $ex->getMessage());
+            return [];
         }
     }
 
     public function getTotalEmployeesCount()
     {
-        $this->db->query("SELECT COUNT(*) as total FROM employees WHERE employeeIsActive = 1");
-        $result = $this->db->single();
+        try {
+            $this->db->query("SELECT COUNT(*) as total FROM employees WHERE employeeIsActive = 1");
+            $result = $this->db->single();
 
-        return $result->total;
+            return $result->total;
+        } catch (PDOException $ex) {
+            helper::log('error', 'could not get total employees count' . $ex->getMessage());
+            return false;
+        }
     }
 
     public function getEmployeeById($employeeId)
@@ -48,8 +53,8 @@ class employeeModel
 
             return $result ?? null;
         } catch (PDOException $ex) {
-            error_log("Error: Failed to get Employee by ID from the database");
-            die('Error: Failed to get Employee by ID');
+            helper::log('error', 'Failed to get Employee by ID from the database' . $ex->getMessage());
+            return false;
         }
     }
 
@@ -67,8 +72,8 @@ class employeeModel
 
             return $result ?? [];
         } catch (PDOException $ex) {
-            error_log('error', ' Exception occurred while getting employee: '());
-            return false;
+            helper::log('error', ' Exception occurred while getting employee' . $ex->getMessage());
+            return [];
         }
     }
 
@@ -92,8 +97,8 @@ class employeeModel
 
             return $this->db->execute();
         } catch (PDOException $ex) {
-            error_log("ERROR: Failed to create Employee");
-            die("ERROR: Failed to create Employee");
+            helper::log('error', 'Failed to create Employee' . $ex->getMessage());
+            return false;
         }
     }
 
@@ -127,7 +132,8 @@ class employeeModel
                 $response["message"] = "Vehicle updated successfully";
             }
         } catch (PDOException $ex) {
-            error_log("Error: Failed to update Vehicle - " . $ex->getMessage());
+            helper::log('error', 'Failed to update Vehicle' . $ex->getMessage());
+            return false;
         }
 
         return $response;
@@ -144,14 +150,14 @@ class employeeModel
 
             // Execute the query
             if ($this->db->execute()) {
-                error_log("INFO: employeeId has been marked as inactive");
+                helper::log('info', 'employeeId has been marked as inactive');
                 return true;
             } else {
-                error_log("ERROR: employeeId could not be marked as inactive");
+                helper::log('error', 'employeeId could not be marked as inactive');
                 return false;
             }
         } catch (PDOException $ex) {
-            error_log("ERROR: Exception occurred while marking the employeeId as inactive: " . $ex->getMessage());
+            helper::log('error', 'Exception occurred while marking the employeeId as inactive: ' . $ex->getMessage());
             return false;
         }
     }

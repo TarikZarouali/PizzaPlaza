@@ -158,19 +158,20 @@ class Stores extends Controller
         global $var;
         $screenId = $var['rand'];
         $imageUploaderResult = $this->imageUploader($screenId);
+
         if ($imageUploaderResult['status'] === 200 && strpos($imageUploaderResult['message'], 'Image uploaded successfully') !== false) {
             $entity = 'store';
             $this->screenModel->insertScreenImages($screenId, $storeId, $entity, 'main');
             $toast = urlencode('true');
             $toasttitle = urlencode('Success');
             $toastmessage = urlencode('Your create of the image was successful');
-        header('Location:' . URLROOT . '/stores/update/{storeId:' . $storeId . ';' . $toast . ';' . $toasttitle . ';' . $toastmessage . '}');
+            header('Location:' . URLROOT . '/stores/update/{storeId:' . $storeId . ';' . $toast . ';' . $toasttitle . ';' . $toastmessage . '}');
         } else {
             Helper::log('error', $imageUploaderResult);
             $toast = urlencode('false');
             $toasttitle = urlencode('Failed');
             $toastmessage = urlencode('Your create of the image has failed');
-        header('Location:' . URLROOT . '/stores/update/{storeId:' . $storeId . ';' . $toast . ';' . $toasttitle . ';' . $toastmessage . '}');
+            header('Location:' . URLROOT . '/stores/update/{storeId:' . $storeId . ';' . $toast . ';' . $toasttitle . ';' . $toastmessage . '}');
         }
     }
 

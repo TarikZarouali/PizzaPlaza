@@ -17191,6 +17191,99 @@ Usage: codyhouse.co/license
 
 /* -------------------------------- 
 
+File#: _2_password-strength
+Title: Password Strength Indicator
+Descr: Password requirements and strength indicator
+Usage: codyhouse.co/license
+
+-------------------------------- */
+:root {
+  --password-strength-meter-height: 8px;
+  --password-strength-meter-radius: 50em;
+  --password-strength-icon-size: 16px;
+  --password-strength-icon-margin-right: 4px;
+  --password-strength-icon-stroke-width: 2px;
+}
+
+.password-strength__req {
+  line-height: 1.2;
+  margin-bottom: var(--space-xxxxs);
+  display: flex;
+  align-items: center;
+}
+.password-strength__req .icon {
+  font-size: var(--password-strength-icon-size);
+  margin-right: var(--password-strength-icon-margin-right);
+}
+
+.password-strength__icon-group {
+  stroke-width: var(--password-strength-icon-stroke-width);
+}
+.password-strength__icon-group * {
+  transition: transform 0.3s var(--ease-out-back), stroke-dashoffset 0.3s var(--ease-out-back);
+  transform-origin: 8px 8px;
+  stroke-dasharray: 16;
+}
+.password-strength__icon-group *:first-child {
+  stroke-dashoffset: 24;
+}
+.password-strength__icon-group *:last-child {
+  stroke-dashoffset: 10;
+}
+
+.password-strength__req--met {
+  color: var(--color-success-darker);
+  transition: color 0.3s;
+}
+.password-strength__req--met .password-strength__icon-group *:first-child {
+  stroke-dashoffset: 23;
+  transform: translateX(-2px) translateY(4px) rotate(45deg);
+}
+.password-strength__req--met .password-strength__icon-group *:last-child {
+  stroke-dashoffset: 5;
+  transform: translateX(-2px) translateY(4px) rotate(-45deg);
+}
+
+.password-strength__req--no-met {
+  color: var(--color-error);
+}
+.password-strength__req--no-met .password-strength__icon-group *:first-child {
+  stroke-dashoffset: 32;
+  transform: translateX(5px) translateY(5px) rotate(45deg);
+}
+.password-strength__req--no-met .password-strength__icon-group *:last-child {
+  stroke-dashoffset: 2;
+  transform: translateX(-5px) translateY(5px) rotate(-45deg);
+}
+
+.password-strength__meter {
+  height: var(--password-strength-meter-height);
+  border-radius: var(--password-strength-meter-radius);
+  overflow: hidden;
+}
+.password-strength__meter * {
+  will-change: width;
+  transition: width 0.3s var(--ease-in-out), background-color 0.3s;
+}
+
+.password-strength__meter--fill-1 * {
+  background-color: var(--color-error);
+}
+
+.password-strength__meter--fill-2 * {
+  background-color: var(--color-warning);
+}
+
+.password-strength__meter--fill-3 * {
+  background-color: var(--color-success);
+}
+
+.password-strength__meter--fill-4 * {
+  background-color: var(--color-success);
+}
+
+/* -------------------------------- 
+
 File#: _2_settings-table
 Title: Settings Table
 Descr: A table containing a list of options that can be enabled/disabled

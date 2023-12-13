@@ -1,15 +1,13 @@
 <?php require APPROOT . '/views/includes/head.php'; ?>
 
 <div class="app-ui js-app-ui">
-    <div class="toast toast--hidden toast--top-right js-toast" role="alert" aria-live="assertive" aria-atomic="true"
-        id="toast-5">
+    <div class="toast toast--hidden toast--top-right js-toast" role="alert" aria-live="assertive" aria-atomic="true" id="toast-5">
         <div class="flex items-start justify-between">
             <div class="toast__icon-wrapper toast__icon-wrapper--success margin-right-xs">
                 <svg class="icon" viewBox="0 0 16 16">
                     <title>Success</title>
                     <g>
-                        <path
-                            d="M6,15a1,1,0,0,1-.707-.293l-5-5A1,1,0,1,1,1.707,8.293L5.86,12.445,14.178.431a1,1,0,1,1,1.644,1.138l-9,13A1,1,0,0,1,6.09,15C6.06,15,6.03,15,6,15Z">
+                        <path d="M6,15a1,1,0,0,1-.707-.293l-5-5A1,1,0,1,1,1.707,8.293L5.86,12.445,14.178.431a1,1,0,1,1,1.644,1.138l-9,13A1,1,0,0,1,6.09,15C6.06,15,6.03,15,6,15Z">
                         </path>
                     </g>
                 </svg>
@@ -24,8 +22,7 @@
             <button class="reset toast__close-btn margin-left-xxxxs js-toast__close-btn js-tab-focus">
                 <svg class="icon" viewBox="0 0 12 12">
                     <title>Close notification</title>
-                    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2">
+                    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
                         <line x1="1" y1="1" x2="11" y2="11" />
                         <line x1="11" y1="1" x2="1" y2="11" />
                     </g>
@@ -37,7 +34,7 @@
     <!-- main content -->
     <main class="app-ui__body padding-md js-app-ui__body">
         <div class="margin-bottom-md">
-            <h1 class="text-lg">Order</h1>
+            <h1 class="text-lg">Create order</h1>
         </div>
 
         <div class="margin-bottom-md">
@@ -61,9 +58,9 @@
                         <label class="form-label margin-bottom-xxs" for="orderCustomerId">Select Customer</label>
                         <select class="form-control width-100" name="orderCustomerId" id="orderCustomerId" required>
                             <?php foreach ($data['Customers'] as $customer) : ?>
-                            <option value="<?= $customer->customerId ?>">
-                                <?= $customer->customerId . '-' . $customer->customerType . '-' . $customer->customerFirstName . '-' . $customer->customerLastName ?>
-                            </option>
+                                <option value="<?= $customer->customerId ?>">
+                                    <?= $customer->customerId . '-' . $customer->customerType . '-' . $customer->customerFirstName . '-' . $customer->customerLastName ?>
+                                </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -72,8 +69,8 @@
                         <label class="form-label margin-bottom-xxs" for="storeId">Select Store</label>
                         <select class="form-control width-100" name="orderStoreId" id="storeId" required>
                             <?php foreach ($data['Stores'] as $store) : ?>
-                            <option value="<?= $store->storeId ?>">
-                                <?= $store->storeId . "-" . $store->storeStreetName ?></option>
+                                <option value="<?= $store->storeId ?>">
+                                    <?= $store->storeId . "-" . $store->storeStreetName ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -100,15 +97,12 @@
 
                     <div class="col-12">
                         <label class="form-label margin-bottom-xxs" for="modal-customer-orderPrice">Price</label>
-                        <input class="form-control" type="number" step="0.01" min="0" name="orderPrice"
-                            id="modal-customer-orderPrice" required>
+                        <input class="form-control" type="number" step="0.01" min="0" name="orderPrice" id="modal-customer-orderPrice" required>
                     </div>
 
                     <div class="col-12">
-                        <label class="form-label margin-bottom-xxs"
-                            for="modal-customer-orderDescription">Description</label>
-                        <textarea class="form-control width-100%" name="orderDescription"
-                            id="modal-customer-orderDescription" rows="3" required></textarea>
+                        <label class="form-label margin-bottom-xxs" for="modal-customer-orderDescription">Description</label>
+                        <textarea class="form-control width-100%" name="orderDescription" id="modal-customer-orderDescription" rows="3" required></textarea>
                     </div>
 
 
@@ -129,8 +123,7 @@
 
 <!-- dialog -->
 <div class="dialog dialog--sticky js-dialog" id="dialog-delete-user-confirmation" data-animation="on">
-    <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1"
-        aria-describedby="dialog-description">
+    <div class="dialog__content max-width-xxs" role="alertdialog" aria-labelledby="dialog-title-1" aria-describedby="dialog-description">
         <div class="text-component">
             <h4 id="dialog-title-1">Are you sure you want to delete this user?</h4>
             <p id="dialog-description">This action cannot be undone.</p>

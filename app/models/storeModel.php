@@ -21,8 +21,8 @@ class storeModel
 
             return $result ?? [];
         } catch (PDOException $ex) {
-            error_log("Error: Failed to get active stores from the database in class storeModel.");
-            die('Error: Failed to get active stores');
+            helper::log('Error', 'Failed to get active stores from the database in class storeModel.' . $ex->getMessage());
+            return [];
         }
     }
 
@@ -47,8 +47,8 @@ class storeModel
 
             return $result ?? [];
         } catch (PDOException $ex) {
-            error_log('error', ' Exception occurred while deleting ingredient: '());
-            return false;
+            helper::log('error', ' Exception occurred while deleting ingredient: '());
+            return [];
         }
     }
 
@@ -64,8 +64,8 @@ class storeModel
 
             return $result;
         } catch (PDOException $ex) {
-            error_log("ERROR: Failed to retrieve store by ID");
-            die("ERROR: Failed to retrieve store by ID");
+            helper::log('ERROR', 'Failed to retrieve store by ID' . $ex->getMessage());
+            return false;
         }
     }
 
@@ -88,8 +88,8 @@ class storeModel
 
             return $this->db->execute();
         } catch (PDOException $ex) {
-            error_log("ERROR: Failed to create store");
-            die("ERROR: Failed to create store");
+            helper::log('ERROR', 'Failed to create store' . $ex->getMessage());
+            return false;
         }
     }
 
@@ -122,7 +122,8 @@ class storeModel
                 $response["message"] = "Store updated successfully";
             }
         } catch (PDOException $ex) {
-            error_log("Error: Failed to update store - " . $ex->getMessage());
+            helper::log('error', 'Failed to update store' . $ex->getMessage());
+            return false;
         }
 
         return $response;
@@ -139,14 +140,14 @@ class storeModel
 
             // Execute the query
             if ($this->db->execute()) {
-                error_log("INFO: Store has been marked as inactive");
+                helper::log('info', 'Store has been marked as inactive');
                 return true;
             } else {
-                error_log("ERROR: Store could not be marked as inactive");
+                helper::log('error', 'Store could not be marked as inactive');
                 return false;
             }
         } catch (PDOException $ex) {
-            error_log("ERROR: Exception occurred while marking the store as inactive: " . $ex->getMessage());
+            helper::log('error', 'Exception occurred while marking the store as inactive' . $ex->getMessage());
             return false;
         }
     }

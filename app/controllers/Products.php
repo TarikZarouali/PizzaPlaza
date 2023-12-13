@@ -199,6 +199,5 @@ class Products extends Controller
             $toastmessage = urlencode('Image deleted Failed');
             header('Location:' . URLROOT . 'products/overview/{' . $toast . ':' . $toasttitle . ';' . $toastmessage . '}');
         }
-        // Redirect to the overview page
     }
 }

@@ -76,6 +76,7 @@
 </div>
 
 
+
 <body>
 
     <!-- HEADER -->
@@ -205,62 +206,62 @@
 
                             <ul class="sidenav__list">
                                 <li class="sidenav__item">
-                                    <a href="<?= URLROOT; ?>products/overview/{page:1}" class="sidenav__link">
-                                        <span class="sidenav__text text-sm@md">products</span>
+                                    <a href="<?= URLROOT; ?>products/overview" class="sidenav__link">
+                                        <span class="sidenav__text text-sm@md">Products</span>
                                     </a>
                                 </li>
 
                                 <li class="sidenav__item">
-                                    <a href="<?= URLROOT; ?>customers/overview/{page:1}" class="sidenav__link">
+                                    <a href="<?= URLROOT; ?>customers/overview" class="sidenav__link">
                                         <span class="sidenav__text text-sm@md">Customers</span>
                                     </a>
                                 </li>
 
                                 <li class="sidenav__item">
-                                    <a href="<?= URLROOT; ?>promotions/overview/{page:1}" class="sidenav__link">
+                                    <a href="<?= URLROOT; ?>promotions/overview" class="sidenav__link">
                                         <span class="sidenav__text text-sm@md">Promotions</span>
                                     </a>
                                 </li>
 
                                 <li class="sidenav__item">
-                                    <a href="<?= URLROOT; ?>stores/overview/{page:1}" class="sidenav__link">
+                                    <a href="<?= URLROOT; ?>stores/overview" class="sidenav__link">
                                         <span class="sidenav__text text-sm@md">Stores</span>
                                     </a>
                                 </li>
 
                                 <li class="sidenav__item">
-                                    <a href="<?= URLROOT; ?>ingredients/overview/{page:1}" class="sidenav__link">
+                                    <a href="<?= URLROOT; ?>ingredients/overview" class="sidenav__link">
                                         <span class="sidenav__text text-sm@md">Ingredients</span>
                                     </a>
                                 </li>
 
                                 <li class="sidenav__item">
-                                    <a href="<?= URLROOT; ?>vehicles/overview/{page:1}" class="sidenav__link">
-                                        <span class="sidenav__text text-sm@md">vehicles</span>
+                                    <a href="<?= URLROOT; ?>vehicles/overview" class="sidenav__link">
+                                        <span class="sidenav__text text-sm@md">Vehicles</span>
                                     </a>
                                 </li>
 
                                 <li class="sidenav__item">
-                                    <a href="<?= URLROOT; ?>employees/overview/{page:1}" class="sidenav__link">
-                                        <span class="sidenav__text text-sm@md">employees</span>
+                                    <a href="<?= URLROOT; ?>employees/overview" class="sidenav__link">
+                                        <span class="sidenav__text text-sm@md">Employees</span>
                                     </a>
                                 </li>
 
                                 <li class="sidenav__item">
-                                    <a href="<?= URLROOT; ?>orders/overview/{page:1}" class="sidenav__link">
-                                        <span class="sidenav__text text-sm@md">orders</span>
+                                    <a href="<?= URLROOT; ?>orders/overview" class="sidenav__link">
+                                        <span class="sidenav__text text-sm@md">Orders</span>
                                     </a>
                                 </li>
 
                                 <li class="sidenav__item">
-                                    <a href="<?= URLROOT; ?>reviews/overview/{page:1}" class="sidenav__link">
-                                        <span class="sidenav__text text-sm@md">review</span>
+                                    <a href="<?= URLROOT; ?>reviews/overview" class="sidenav__link">
+                                        <span class="sidenav__text text-sm@md">Review</span>
                                     </a>
                                 </li>
 
                                 <li class="sidenav__item">
-                                    <a href="<?= URLROOT; ?>screens/overview/{page:1}" class="sidenav__link">
-                                        <span class="sidenav__text text-sm@md">screens</span>
+                                    <a href="<?= URLROOT; ?>screens/overview" class="sidenav__link">
+                                        <span class="sidenav__text text-sm@md">Screens</span>
                                     </a>
                                 </li>
                             </ul>
