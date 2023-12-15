@@ -42,38 +42,36 @@ if (segments.length >= 5) {
   const cleanedSegment = lastSegment.slice(3, -3);
 
   // Split the cleaned segment into toast parameters
-  const [toastValue, toastMessage] = cleanedSegment.split(":");
-  const [toasttitleValue, ...messageParts] = toastMessage.split(";");
-
-  const toastmessageValue = messageParts.join(";");
-
-  console.log(
-    "Decoded Parameters:",
-    toastValue,
-    toasttitleValue,
-    toastmessageValue
-  );
-
-  if (
-    toastValue !== undefined &&
-    toasttitleValue !== undefined &&
-    toastmessageValue !== undefined
-  ) {
-    if (toastValue === "true") {
-      console.log("Triggering openToastSuccess function");
-      openToastSuccess(toasttitleValue, toastmessageValue);
-    } else if (toastValue === "false") {
-      console.log("Triggering openToastFailed function");
-      openToastFailed(toasttitleValue, toastmessageValue);
-    } else {
-      console.log("Invalid 'toast' parameter value.");
+  if (cleanedSegment !== undefined) {
+    const [toastValue, toastMessage] = cleanedSegment.split(":");
+    if (toastMessage !== undefined) {
+      const [toasttitleValue, ...messageParts] = toastMessage.split(";");
+      if (toastmessageValue !== undefined) {
+        const toastmessageValue = messageParts.join(";");
+        if (
+          toastValue !== undefined &&
+          toasttitleValue !== undefined &&
+          toastmessageValue !== undefined
+        ) {
+          if (toastValue === "true") {
+            console.log("Triggering openToastSuccess function");
+            openToastSuccess(toasttitleValue, toastmessageValue);
+          } else if (toastValue === "false") {
+            console.log("Triggering openToastFailed function");
+            openToastFailed(toasttitleValue, toastmessageValue);
+          } else {
+            console.log("Invalid 'toast' parameter value.");
+          }
+        } else {
+          console.log("Missing parameters for toast.");
+        }
+      } else {
+        console.log("Insufficient URL segments for toast.");
+      }
     }
-  } else {
-    console.log("Missing parameters for toast.");
   }
-} else {
-  console.log("Insufficient URL segments for toast.");
 }
+
 // END TOAST HANDLING}
 
 //START ENITY HANDLING ON REVIEW PAGE
@@ -143,59 +141,103 @@ document.querySelectorAll('input[name="type"]').forEach(function (radio) {
   });
 });
 // END navigation HOMEPAGE
-// START ON FORM CHECKING
-document
-  .getElementById("joinButton")
-  .addEventListener("click", function (event) {
-    event.preventDefault();
 
-    const firstNameValue = document.getElementById("js-FirstName").value;
-    const lastNameValue = document.getElementById("js-LastName").value;
-    const emailValue = document.getElementById("js-Email").value;
-    const passwordValue = document.getElementById("js-Password").value;
-    const confirmPasswordValue =
-      document.getElementById("js-ConfirmPassword").value;
+// START FORMCHECKING ON REGISTERE
+async function signUp(event) {
+  event.preventDefault();
 
-    // CREATE FORMDATA
-    const formData = new FormData();
-    formData.append("customerFirstName", firstNameValue);
-    formData.append("customerLastName", lastNameValue);
-    formData.append("customerEmail", emailValue);
-    formData.append("customerPassword", passwordValue);
-    formData.append("customerConfirmPassword", confirmPasswordValue);
+  const form = document.querySelector("form");
 
-    // AJAX REQUEST
-    fetch("homepage.php", {
+  // Remove existing error messages
+  const existingErrors = form.querySelectorAll(".bg-accent");
+  existingErrors.forEach((error) => error.remove());
+
+  // Create an object to store the form data
+  const formData = new FormData(form);
+
+  // Make a POST request using the fetch API
+  const ajaxFetch = await fetch(
+    "http://localhost/pizzaplaza/homepages/register",
+    {
       method: "POST",
       body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const jsonResponse = data; // Store the JSON response in a variable
+    }
+  );
 
-        if (jsonResponse.success) {
-          console.log("Registration successful!");
-        } else {
-          displayErrorMessages(jsonResponse.errors);
-        }
-      })
-      .catch((error) => {
-        console.log("Error during Ajax request:", error);
-      });
+  const response = await ajaxFetch.json();
+
+  if (response.success) {
+    console.log(response.success.message);
+    window.location.href = "http://localhost/pizzaplaza/homepages/login/";
+  } else {
+    // Loop through the response and append error messages to the corresponding input fields
+    Object.keys(response).forEach((fieldName) => {
+      const inputField = form.querySelector(`[name="${fieldName}"]`);
+      const errorMessage = response[fieldName].message;
+
+      if (inputField) {
+        // Create and append error element
+        const errorElement = document.createElement("div");
+        errorElement.className =
+          "bg-accent bg-opacity-20% padding-xs radius-md text-sm color-contrast-higher margin-top-xxs";
+        errorElement.textContent = errorMessage;
+
+        // Append error element after the input field
+        inputField.parentNode.insertBefore(
+          errorElement,
+          inputField.nextSibling
+        );
+      }
+    });
+  }
+}
+//END FORMCHECKING ON REGISTER
+
+//FORMCHECKING ON LOGIN
+async function signIn(event) {
+  event.preventDefault();
+
+  const form = document.querySelector("form");
+
+  // Remove existing error messages
+  const existingErrors = form.querySelectorAll(".bg-accent");
+  existingErrors.forEach((error) => error.remove());
+
+  // Create an object to store the form data
+  const formData = new FormData(form);
+
+  // Make a POST request using the fetch API
+  const ajaxFetch = await fetch("http://localhost/pizzaplaza/homepages/login", {
+    method: "POST",
+    body: formData,
   });
 
-function displayErrorMessages(errors) {
-  // Iterate through errors and display them next to corresponding input fields
-  Object.keys(errors).forEach((fieldName) => {
-    const inputField = document.getElementById(`js-${fieldName}`);
-    const errorMessage = errors[fieldName];
+  const response = await ajaxFetch.json();
 
-    // Display error message next to the input field
-    const errorElement = document.createElement("p");
-    errorElement.textContent = errorMessage;
-    errorElement.classList.add("error-message"); // You can style this class in your CSS
-    inputField.parentNode.appendChild(errorElement);
-  });
+  if (response.success) {
+    console.log(response.success.message);
+    window.location.href = "http://localhost/pizzaplaza/homepages/overview/";
+  } else {
+    // Loop through the response and append error messages to the corresponding input fields
+    Object.keys(response).forEach((fieldName) => {
+      const inputField = form.querySelector(`[name="${fieldName}"]`);
+      const errorMessage = response[fieldName].message;
+      console.log(response);
+      if (inputField) {
+        // Create and append error element
+        const errorElement = document.createElement("div");
+        errorElement.className =
+          "bg-accent bg-opacity-20% padding-xs radius-md text-sm color-contrast-higher margin-top-xxs";
+        errorElement.textContent = errorMessage;
+
+        // Append error element after the input field
+        inputField.parentNode.insertBefore(
+          errorElement,
+          inputField.nextSibling
+        );
+      }
+    });
+  }
 }
 
-// END ON FORM CHECKING
+// END FORMCHECKING ON LOGIN

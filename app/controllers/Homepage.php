@@ -141,51 +141,87 @@ class Homepage extends Controller
 
     public function register()
     {
-        // Initialize error messages
-        $nameMessageEr = '';
-        $mailMessageEr = '';
-        $passwordMessageEr = '';
-        $confirmPasswordMessageEr = '';
-        $registerCustomerMessageEr = '';
-        $requiredFieldsMessageEr = '';
-
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Handle the form submission
             $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            $ajaxResponse = [
+                'success' => [
+                    'state' => 200,
+                    'message' => 'Succesfully signed up!'
+                ]
+            ];
+
             // Extract form data
-            $customerFirstName = $post['customerFirstName'];
-            $customerLastName = $post['customerLastName'];
             $customerEmail = $post['customerEmail'];
             $customerPassword = $post['customerPassword'];
             $confirmCustomerPassword = $post['customerConfirmPassword'];
 
             // Check if any required fields are empty
-            if (empty($customerFirstName) || empty($customerLastName) || empty($customerEmail) || empty($customerPassword) || empty($confirmCustomerPassword)) {
-                // Set the error message
-                $requiredFieldsMessageEr = 'Please fill in all the required fields';
+            if (empty($post['customerFirstName'])) {
+                $ajaxResponse['customerFirstName'] = [
+                    'state' => 500,
+                    'message' => 'First name cannot be empty.'
+                ];
             }
 
-            // Validate individual fields
-            if (!ctype_alpha(str_replace(' ', '', $customerFirstName)) || !ctype_alpha(str_replace(' ', '', $customerLastName))) {
-                // Set the error message
-                $nameMessageEr = 'First name and last name must be alphabetic!';
+            if (empty($post['customerLastName'])) {
+                $ajaxResponse['customerLastName'] = [
+                    'state' => 500,
+                    'message' => 'Last name cannot be empty.'
+                ];
             }
 
-            if (!filter_var($customerEmail, FILTER_VALIDATE_EMAIL)) {
-                // Set the error message
-                $mailMessageEr = 'Please enter a valid email!';
+            if (empty($post['customerEmail'])) {
+                $ajaxResponse['customerEmail'] = [
+                    'state' => 500,
+                    'message' => 'Email cannot be empty.'
+                ];
             }
+
+            if (empty($post['customerPassword'])) {
+                $ajaxResponse['customerPassword'] = [
+                    'state' => 500,
+                    'message' => 'Password cannot be empty.'
+                ];
+            }
+
+            if (empty($post['customerConfirmPassword'])) {
+                unset($ajaxResponse['success']);
+                $ajaxResponse['customerConfirmPassword'] = [
+                    'state' => 500,
+                    'message' => 'Confirm password cannot be empty.'
+                ];
+            }
+
 
             // Validate password strength
-            if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{6,}$/', $customerPassword)) {
+            if (!empty($customerPassword) && !preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{6,}$/', $customerPassword)) {
                 // Set the error message
-                $passwordMessageEr = 'Password should have at least 6 characters, one uppercase letter, one number, and one special character!';
+                unset($ajaxResponse['success']);
+                $ajaxResponse['customerPassword'] = [
+                    'state' => 500,
+                    'message' => 'password must atleast have 6 charachters, one special charachter and one uppercase charachter'
+                ];
+            }
+
+            if (!empty($customerEmail) && !filter_var($customerEmail, FILTER_VALIDATE_EMAIL)) {
+                // Set the error message
+                unset($ajaxResponse['success']);
+                $ajaxResponse['customerEmail'] = [
+                    'state' => 500,
+                    'message' => 'Please enter a valid email!'
+                ];
             }
 
             // Form data is valid; check for password match
-            if ($customerPassword !== $confirmCustomerPassword) {
+            if (!empty($customerConfirmPassword) && $customerConfirmPassword !== $confirmCustomerPassword) {
                 // Set the error message
-                $confirmPasswordMessageEr = 'Password confirmation does not match!';
+                unset($ajaxResponse['success']);
+                $ajaxResponse['customerConfirmPassword'] = [
+                    'state' => 500,
+                    'message' => 'passwords must match!'
+                ];
             }
 
             // Form data is valid; proceed with creating the customer
@@ -193,37 +229,84 @@ class Homepage extends Controller
                 $createCustomer = $this->homepageModel->register($post);
 
                 // Check if the customer creation was successful
-                if (isset($createCustomer) && !empty($createCustomer)) {
-                    // Redirect on success
-                    header('Location:' . URLROOT . 'homepages/login');
-                    exit;
-                } else {
+                if (!isset($createCustomer) && empty($createCustomer)) {
                     // Log the error using Helper
                     Helper::log('error', 'Customer creation failed. Error: ' . json_encode($createCustomer));
-                    // Set the error message
-                    $registerCustomerMessageEr = 'Something went wrong, please try again later!';
                 }
             }
+
+            echo json_encode($ajaxResponse);
+            exit;
         }
-
-
-
-        // Pass error messages to the view
-        $data = [
-            'nameMessageEr' => $nameMessageEr,
-            'mailMessageEr' => $mailMessageEr,
-            'passwordMessageEr' => $passwordMessageEr,
-            'confirmPasswordMessageEr' => $confirmPasswordMessageEr,
-            'registerCustomerMessageEr' => $registerCustomerMessageEr,
-            'requiredFieldsMessageEr' => $requiredFieldsMessageEr
-        ];
-
         // Render the view with error messages
-        $this->view('homepages/register', $data);
+        $this->view('homepages/register');
     }
 
     public function login()
     {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $post = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            $ajaxResponse = [
+                'success' => [
+                    'state' => 200,
+                    'message' => 'Successfully logged in!'
+                ]
+            ];
+
+            $customerEmail = $post['customerEmail'];
+            $customerPassword = $post['customerPassword'];
+
+            // CHECK FOR EMPTY FIELDS
+            if (empty($post['customerEmail'])) {
+                unset($ajaxResponse['success']);
+                $ajaxResponse['customerEmail'] = [
+                    'state' => 500,
+                    'message' => 'Please fill in your email!'
+                ];
+            }
+
+            if (empty($post['customerPassword'])) {
+                unset($ajaxResponse['success']);
+                $ajaxResponse['customerPassword'] = [
+                    'state' => 500,
+                    'message' => 'Please fill in your password!'
+                ];
+            }
+
+            if (isset($post['customerEmail']) && !empty($post['customerEmail']) && isset($post['customerPassword']) && !empty($post['customerPassword'])) {
+                $userExists = $this->homepageModel->checkUserExist($customerEmail, $customerPassword);
+
+                if (isset($userExists) && !empty($userExists)) {
+                    session_start();
+                    $_SESSION['user'] = $userExists;
+                    session_write_close();
+                } else {
+                    unset($ajaxResponse['success']);
+                    $ajaxResponse['loginFailed'] = [
+                        'state' => 500,
+                        'message' => 'Email or password is incorrect'
+                    ];
+                }
+            }
+
+            echo json_encode($ajaxResponse);
+            exit;
+        }
         $this->view('homepages/login');
+    }
+
+    public function logout()
+    {
+        session_start();
+        // Unset all session variables
+        $_SESSION = array();
+
+        // Destroy the session
+        session_destroy();
+
+        // Redirect to the login page or any other page as needed
+        header('Location:' . URLROOT . 'homepages/overview/');
+        exit();
     }
 }

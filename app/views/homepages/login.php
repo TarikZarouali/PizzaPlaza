@@ -10,31 +10,31 @@
     </script>
     <!-- font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="<?= URLROOT; ?>/assets/css/style.css">
-    <script src="<?= URLROOT; ?>assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="<?= URLROOT; ?>assets/css/style.css">
     <link rel="stylesheet" href="<?= URLROOT ?>public\css\style.css">
     <title>Pizzaplaza</title>
 </head>
 
 
 <body class="bg-dark min-height-100vh flex flex-center padding-md">
-    <form class="bg radius-md shadow-sm padding-lg max-width-xxs">
+    <form class="bg radius-md shadow-sm padding-lg max-width-xxs" id="loginform" onsubmit="signIn(event)">
         <div class="text-center margin-bottom-md">
             <h1>Log in</h1>
         </div>
+
+        <input type="hidden" name="loginFailed">
         <div class="margin-bottom-sm">
-            <label class="form-label margin-bottom-xxxs" for="inputEmail1">Email</label>
-            <input class="form-control width-100%" type="email" name="inputEmail1" id="inputEmail1"
+            <label class="form-label margin-bottom-xxxs" for="customerEmail">Email</label>
+            <input class="form-control width-100%" type="text" name="customerEmail" id="customerEmail"
                 placeholder="email@myemail.com">
         </div>
 
         <div class="margin-bottom-sm">
             <div class="flex justify-between margin-bottom-xxxs">
-                <label class="form-label" for="inputPassword1">Password</label>
-                <span class="text-sm"><a href="password-reset.html">Forgot?</a></span>
+                <label class="form-label" for="customerPassword">Password</label>
             </div>
 
-            <input class="form-control width-100%" type="password" name="inputPassword1" id="inputPassword1">
+            <input class="form-control width-100%" type="password" name="customerPassword" id="customerPassword">
         </div>
 
         <div class="margin-bottom-sm">
@@ -45,7 +45,6 @@
             <p class="text-sm">Don't have an account? <a href="<?= URLROOT ?>homepages/register/">Get started</a></p>
         </div>
     </form>
-    <script src="<? URLROOT . 'assets/js/script.js' ?>"></script>
+    <script src="<?= URLROOT; ?>assets/js/scripts.js"></script>
+    <script src="<?= URLROOT; ?>public/js/app.js"></script>
 </body>
-
-</html>

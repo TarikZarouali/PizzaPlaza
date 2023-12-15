@@ -18,42 +18,13 @@
 
 
 <body class="bg-dark min-height-100vh flex flex-center padding-md">
-    <form class="bg radius-md shadow-sm padding-lg max-width-xxs" id="registrationForm" method="POST"
-        action="<?= URLROOT ?>homepages/register">
+    <form class="bg radius-md shadow-sm padding-lg max-width-xxs" id="registrationForm" onsubmit="signUp(event)"
+        method="POST" action="<?= URLROOT ?>homepages/register">
 
         <div class="text-component text-center margin-bottom-md">
             <h1>Get started</h1>
             <p>Already have an account? <a href="<?= URLROOT ?>homepages/login/">Login</a></p>
         </div>
-
-        <?php if (!empty($data['requiredFieldsMessageEr']) || !empty($data['nameMessageEr']) || !empty($data['mailMessageEr']) || !empty($data['passwordMessageEr']) || !empty($data['confirmPasswordMessageEr']) || !empty($data['registerCustomerMessageEr'])) : ?>
-        <div class="error-message-block">
-            <?php if (!empty($data['requiredFieldsMessageEr'])) : ?>
-            <p class="error-message"><?= $data['requiredFieldsMessageEr'] ?></p>
-            <?php endif ?>
-
-            <?php if (!empty($data['nameMessageEr'])) : ?>
-            <p class="error-message"><?= $data['nameMessageEr'] ?></p>
-            <?php endif ?>
-
-            <?php if (!empty($data['mailMessageEr'])) : ?>
-            <p class="error-message"><?= $data['mailMessageEr'] ?></p>
-            <?php endif ?>
-
-            <?php if (!empty($data['passwordMessageEr'])) : ?>
-            <p class="error-message"><?= $data['passwordMessageEr'] ?></p>
-            <?php endif ?>
-
-            <?php if (!empty($data['confirmPasswordMessageEr'])) : ?>
-            <p class="error-message"><?= $data['confirmPasswordMessageEr'] ?></p>
-            <?php endif ?>
-
-            <?php if (!empty($data['registerCustomerMessageEr'])) : ?>
-            <p class="error-message"><?= $data['registerCustomerMessageEr'] ?></p>
-            <?php endif ?>
-        </div>
-        <?php endif ?>
-
         <div class="margin-bottom-sm">
             <div class="grid gap-xs">
                 <div class="col-6@md">
@@ -191,9 +162,4 @@
 
 
     </form>
-    <script src="<?= URLROOT; ?>/public/js/passwordchecker.js"> </script>
-    <script src="<?= URLROOT; ?>/assets/js/scripts.js"> </script>
-    <script src="<?= URLROOT; ?>/public/js/app.js"> </script>
-</body>
-
-</html>
+    <?php require APPROOT . '/views/includes/footer.php'; ?>
