@@ -42,7 +42,7 @@
         </div>
 
         <div class="text-center">
-            <p class="text-sm">Don't have an account? <a href="<?= URLROOT ?>homepages/register/">Get started</a></p>
+            <p class="text-sm">Don't have an account? <a href="<?= URLROOT ?>users/register/">Get started</a></p>
         </div>
     </form>
     <script src="<?= URLROOT; ?>assets/js/scripts.js"></script>

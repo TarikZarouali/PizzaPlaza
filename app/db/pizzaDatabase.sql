@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2023 at 10:45 AM
+-- Generation Time: Dec 18, 2023 at 10:43 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 7.4.30
 
@@ -33,9 +33,10 @@ CREATE TABLE `customers` (
   `customerFirstName` varchar(255) NOT NULL,
   `customerLastName` varchar(255) NOT NULL,
   `customerEmail` varchar(255) NOT NULL,
-  `customerPhone` varchar(12) NOT NULL,
-  `customerAddress` varchar(255) NOT NULL,
-  `customerZipCode` varchar(10) NOT NULL,
+  `customerPassword` varchar(50) NOT NULL,
+  `customerPhone` varchar(12) DEFAULT NULL,
+  `customerAddress` varchar(255) DEFAULT NULL,
+  `customerZipCode` varchar(10) DEFAULT NULL,
   `customerCreateDate` int(10) NOT NULL,
   `customerIsActive` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -44,19 +45,25 @@ CREATE TABLE `customers` (
 -- Dumping data for table `customers`
 --
 
-INSERT INTO `customers` (`customerId`, `customerType`, `customerFirstName`, `customerLastName`, `customerEmail`, `customerPhone`, `customerAddress`, `customerZipCode`, `customerCreateDate`, `customerIsActive`) VALUES
-('3s18', 'customer', 'Tarik ', 'Zarouali', 'hupp@hupp', '06 24330105', 'kievit 57', '3972PH', 1700138810, 0),
-('BLEC', 'customer', 'Tarik ', 'Zarouali', 'hupp@hupp', '06 24330105', 'kievit 57', '3972PH', 1700488839, 0),
-('Db44', 'customer', 'Tarik ', 'Zarouali', 'hupp@hupp', '06 24330105', 'kievit 57', '3972PH', 1700489527, 0),
-('HN41', 'guest', 'Tarik ', 'Zarouali', 'hupp@hupp', '06 24330105', 'kievit 57', '3972PH', 1700472680, 0),
-('J0WI', 'customer', 'Tarik ', 'Zarouali', 'hupp@hupp', '06 24330105', 'kievit 57', '3972PH', 1700490130, 0),
-('N18h', 'customer', 'Tariks', 'Zarouali', 'hupp@hupp', '06 24330105', 'ad', 'ad', 1700556638, 0),
-('pdoW', 'customer', 'Tarik ', 'Zarouali', 'hupp@hupp', '06 24330105', 'kievit 57', '3972PH', 1700489010, 0),
-('Q8PP', 'customer', 'Tarik ', 'Zarouali', 'hupp@hupp', '06 24330105', 'kievit 57', '3972PH', 1700489445, 0),
-('Sumz', 'customer', 'Tarik ', 'Zarouali', 'hupp@hupp', '06 24330105', 'kievit 57', '3972PH', 1700556649, 1),
-('WKjT', 'customer', 'Tarik ', 'Zarouali', 'hupp@hupp', '06 24330105', 'kievit 57', '3972PH', 1700556662, 1),
-('xr6x', 'customer', 'Tarik ', 'Zarouali', 'hupp@hupp', '06 24330105', 'kievit 57', '3972PH', 1700492587, 0),
-('Yriu', 'customer', 'Tarik ', 'Zarouali', 'hupp@hupp', '06 24330105', 'kievit 57', '3972PH', 1700488982, 0);
+INSERT INTO `customers` (`customerId`, `customerType`, `customerFirstName`, `customerLastName`, `customerEmail`, `customerPassword`, `customerPhone`, `customerAddress`, `customerZipCode`, `customerCreateDate`, `customerIsActive`) VALUES
+('6LHu', 'customer', 'Tarik ', 'Zarouali', 'hupp@hupp', '', '06 24330105', 'kievit 57', 'd', 1701873941, 1),
+('E41M', 'customer', '', '', '', '', NULL, NULL, NULL, 1702651173, 1),
+('J0WI', 'customer', 'Tarik ', 'Zarouali', 'hupp@hupp', '', '06 24330105', 'kievit 57', '3972PH', 1700490130, 0),
+('JW5s', 'customer', '', '', '', '', NULL, NULL, NULL, 1702892166, 1),
+('mC8m', 'customer', '', '', '', '', NULL, NULL, NULL, 1702892467, 1),
+('pdoW', 'customer', 'Tarik ', 'Zarouali', 'hupp@hupp', '', '06 24330105', 'kievit 57', '3972PH', 1700489010, 0),
+('ptZJ', 'customer', 'Tarik ', 'Zarouali', 'tarik@tarik.nl', '', '06 24330105', 'kievit 57', '3972PH', 1701090427, 0),
+('Q8PP', 'customer', 'Tarik ', 'Zarouali', 'hupp@hupp', '', '06 24330105', 'kievit 57', '3972PH', 1700489445, 0),
+('Sj9I', 'customer', 'John', 'Doe', 'johndoe@gmail.com', 'CooleKerel01!', NULL, NULL, NULL, 1702637561, 1),
+('Sumz', 'customer', 'Tarik ', 'Zarouali', 'hupp@hupp', '', '06 24330105', 'kievit 57', '3972PH', 1700556649, 0),
+('Tht9', 'admin', 'Tarik ', 'Zarouali', 'tarik@tarik.nl', '', '06 24330105', 'kievit 57', '3972PH', 1701169658, 0),
+('TvvT', 'customer', 'ouassim', 'doe', 'ouassimdoe@gmail.com', 'Vruchten01!', NULL, NULL, NULL, 1702892259, 1),
+('uaYn', 'customer', 'ouassim', 'doe', 'ouassimdoe@gmail.com', 'Vruchten01!', NULL, NULL, NULL, 1702892262, 1),
+('WKjT', 'customer', 'Tarik ', 'Zarouali', 'hupp@hupp', '', '06 24330105', 'kievit 57', '3972PH', 1700556662, 0),
+('x6bZ', 'customer', '', '', '', '', NULL, NULL, NULL, 1702892244, 1),
+('xr6x', 'customer', 'Tarik ', 'Zarouali', 'hupp@hupp', '', '06 24330105', 'kievit 57', '3972PH', 1700492587, 0),
+('Yriu', 'customer', 'Tarik ', 'Zarouali', 'hupp@hupp', '', '06 24330105', 'kievit 57', '3972PH', 1700488982, 0),
+('zWjy', 'customer', 'ouassim', 'Doe', 'ouassimdoe@gmail.com', '', NULL, NULL, NULL, 1702892203, 1);
 
 -- --------------------------------------------------------
 
@@ -83,7 +90,7 @@ CREATE TABLE `employees` (
 INSERT INTO `employees` (`employeeId`, `employeeStoreId`, `employeeFirstName`, `employeeLastName`, `employeeZipCode`, `employeeRole`, `employeeIsActive`, `employeeCreateDate`, `employeeDescription`) VALUES
 ('3MXY', 'zqtF', 'ttaasd', 'rtt', 't123', 'baker', 0, 1700139321, 'a'),
 ('Ae3k', 'zqtF', 'tt', 'rtt', 't123', 'deliverer', 1, 1700557009, 'rewr'),
-('f5yz', 'zqtF', 'tt', 'rtt', 't123', 'baker', 1, 1700557016, 'wrewr'),
+('f5yz', 'zqtF', 'tt', 'rtt', 't123', 'baker', 0, 1700557016, 'wrewr'),
 ('iRIk', '0eB5', 'tta', 'rtt', 't123', 'baker', 0, 1699954387, 'as'),
 ('RXqt', 'zqtF', 'sdf', 'sdf', 'dsf', 'baker', 1, 1700557021, 'dsf'),
 ('uSBu', '4jCx', 'tt', 'rtt', 't123', 'baker', 1, 1700842548, 'ju'),
@@ -109,13 +116,16 @@ CREATE TABLE `ingredients` (
 --
 
 INSERT INTO `ingredients` (`ingredientId`, `ingredientName`, `ingredientIsActive`, `ingredientDescription`, `ingredientCreateDate`, `ingredientPrice`) VALUES
-('BoOQ', 'pepperonia', 0, 'halal pepperoni ', 1700139078, '0.00'),
-('kTrI', 'pepperoni', 1, 'halal pepperoni ', 1700495277, '6.99'),
-('my0d', 'pepperoni', 1, 'halal pepperoni ', 1700495271, '6.99'),
-('Pg5H', 'pepperoni', 1, 'halal pepperoni ', 1700495286, '6.99'),
-('R3Qk', 'pepperoni', 1, 'halal pepperoni ', 1700820758, '6.99'),
-('SFL0', 'pepperoni', 0, 'halal pepperoni a', 1699954453, '6.99'),
-('UE2Q', 'pepperoni', 1, 'halal pepperoni a', 1700493831, '6.99');
+('1vC6', 'mushrooms', 1, 'mushrooms', 1701172204, '2.99'),
+('4vAE', 'cheese', 1, 'cheese', 1701172160, '2.99'),
+('ancX', 'mozarella', 1, 'mozarella ', 1701172241, '2.99'),
+('b0WB', 'pepperoni', 1, 'pepperoni', 1701172271, '4.99'),
+('bVPW', 'red onions', 1, 'onions', 1701172885, '0.99'),
+('tjgY', 'ham', 1, 'meat', 1701172176, '3.99'),
+('w7NY', 'tonijn', 1, 'fish', 1701172871, '2.99'),
+('wTD8', 'chorizo', 1, 'meat', 1701172194, '3.99'),
+('zDwG', 'pesto', 1, 'pesto', 1701172225, '3.99'),
+('zS7G', 'tomatoes', 1, 'tomatoes', 1701172215, '2.99');
 
 -- --------------------------------------------------------
 
@@ -167,6 +177,26 @@ CREATE TABLE `producthasingredients` (
   `ingredientId` varchar(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `producthasingredients`
+--
+
+INSERT INTO `producthasingredients` (`productId`, `ingredientId`) VALUES
+('aYSj', '4vAE'),
+('l2XV', '1vC6'),
+('l2XV', '4vAE'),
+('miLe', '4vAE'),
+('miLe', 'tjgY'),
+('miLe', 'wTD8'),
+('omAQ', '4vAE'),
+('omAQ', 'zDwG'),
+('omAQ', 'zS7G'),
+('pGuk', '4vAE'),
+('SHQt', '4vAE'),
+('SHQt', 'bVPW'),
+('SHQt', 'w7NY'),
+('Vz4z', 'b0WB');
+
 -- --------------------------------------------------------
 
 --
@@ -189,13 +219,15 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`productId`, `productOwner`, `productName`, `productDescription`, `productPrice`, `productType`, `productIsActive`, `productCreateDate`) VALUES
-('5a7M', 'J0WI', 'hello', 'da', '2.22', 'pizza', 0, 1700559417),
-('Fvh6', 'J0WI', 'hello', 'da', '2.22', 'pizza', 0, 1700558009),
-('Kqjd', 'J0WI', 'hello', 'da', '2.22', 'pizza', 1, 1700558278),
-('l3j3', 'J0WI', 'hello', 'da', '2.22', 'pizza', 0, 1700558287),
-('ma7r', 'J0WI', 'hello', 'da', '2.22', 'pizza', 1, 1700558002),
-('p4pU', 'J0WI', 'hello', 'da', '2.22', 'pizza', 0, 1700558026),
-('RrHy', 'J0WI', 'hello', 'da', '2.22', 'pizza', 1, 1700558019);
+('9DkF', 'Tht9', 'cola', 'soda drink', '4.00', 'drinks', 1, 1701169692),
+('aYSj', 'Tht9', 'pizza margharita', 'pizza with cheese', '8.00', 'pizza', 1, 1701169818),
+('j22L', 'Tht9', 'fries', 'thin sliced potatoes', '6.99', 'snacks', 1, 1701169717),
+('l2XV', 'Tht9', 'mushroom pizza', 'pizza with mushrooms', '13.99', 'pizza', 1, 1701169750),
+('miLe', 'Tht9', 'pizza meatlovers', 'pizza with alot of meat', '15.99', 'pizza', 1, 1701169735),
+('omAQ', 'Tht9', 'caprese pizza', 'pizza with tomatoes, mozarella and pesto', '12.99', 'pizza', 1, 1701169790),
+('pGuk', 'Tht9', '4 cheese pizza', 'pizza with 4 cheeses', '15.99', 'pizza', 1, 1701169769),
+('SHQt', 'Tht9', 'Pizza tono', 'Pizza with red onions, cheese and tuna', '12.99', 'pizza', 1, 1701169669),
+('Vz4z', 'Tht9', 'Pizza pepperoni', 'Pizza with pepperoni', '9.99', 'pizza', 1, 1701172292);
 
 -- --------------------------------------------------------
 
@@ -217,10 +249,10 @@ CREATE TABLE `promotions` (
 --
 
 INSERT INTO `promotions` (`promotionId`, `promotionName`, `promotionDescription`, `promotionIsActive`, `promotionCreateDate`, `promotionEndDate`) VALUES
-('3GhD', 'eastera', 'easters', 1, 1700558554, 0),
-('9gTe', 'easter', 'a', 1, 1700558514, 1700866800),
-('BP6U', 'easter', 'christmas action with sales', 1, 1700471623, 1700866800),
-('c2Fj', 'easter', 'easter', 1, 1700558533, 1700607600),
+('3GhD', 'eastera', 'easters', 0, 1700558554, 0),
+('9gTe', 'easter', 'a', 0, 1700558514, 1700866800),
+('BP6U', 'easter', 'christmas action with sales', 0, 1700471623, 1700866800),
+('c2Fj', 'easter', 'easter', 0, 1700558533, 1700607600),
 ('il9a', 'easter', 'easter', 0, 1700473039, 0),
 ('LDEX', 'easter', 'easter', 0, 1700472447, 1701385200),
 ('ntHZ', 'easter', 'christmas action with sales', 0, 1700144856, 1700175600),
@@ -248,19 +280,15 @@ CREATE TABLE `reviews` (
 --
 
 INSERT INTO `reviews` (`reviewId`, `reviewCustomerId`, `reviewEntityId`, `reviewRating`, `reviewDescription`, `reviewCreateDate`, `reviewIsActive`) VALUES
-('9z8W', '3s18', '', '2.00', '1', 1700142722, 0),
-('Jx6b', '3s18', '', '2.00', 'a', 1700142772, 0),
-('JYHE', 'Sumz', 'Kqjd', '5.00', 'mad', 1700558711, 0),
-('KYf6', '3s18', '', '13.00', '13', 1700143855, 0),
-('MKrZ', '3s18', '', '78.00', '98', 1700144167, 0),
-('niVt', '3s18', 'LIDk', '2.00', '1edsdfasd', 1700144274, 1),
-('o6m2', '3s18', '', '2.00', '1', 1700142678, 0),
-('U7j1', 'J0WI', 'Kqjd', '5.00', 'dsa', 1700558707, 1),
-('v0Cj', '3s18', '', '13.00', 'a', 1700143706, 0),
-('V6dw', 'J0WI', 'Kqjd', '5.00', 'asdad', 1700558717, 1),
-('VzKk', 'J0WI', 'Kqjd', '5.00', 'asdd', 1700558714, 1),
-('WkH5', '3s18', '', '2.00', 'a', 1700142661, 0),
-('YQbd', '3s18', '', '2.00', '1', 1700142701, 0);
+('37Xl', 'Tht9', 'SHQt', '8.00', 'like the pizza but the onions werent fresh', 1701768104, 1),
+('HoTR', 'Tht9', 'aYSj', '7.00', 'dg', 1701768015, 1),
+('KoUc', 'Tht9', 'Vz4z', '9.00', 'I love the pepperoni', 1701768116, 1),
+('kZrO', 'Tht9', 'j22L', '8.00', 'nice fries!', 1701768026, 1),
+('oiCg', 'Tht9', 'miLe', '7.00', 'did not like the ham that much', 1701768058, 1),
+('q6FD', 'Tht9', '9DkF', '6.00', 'good', 1701768006, 1),
+('SeKs', 'Tht9', 'omAQ', '8.00', 'nice pizza', 1701768073, 1),
+('t77X', 'Tht9', 'l2XV', '9.00', 'very good quality mushrooms', 1701768040, 1),
+('UGF8', 'Tht9', 'pGuk', '10.00', 'Loved it', 1701768084, 1);
 
 -- --------------------------------------------------------
 
@@ -282,10 +310,33 @@ CREATE TABLE `screens` (
 --
 
 INSERT INTO `screens` (`screenId`, `screenCreateDate`, `screenIsActive`, `screenEntityId`, `screenEntity`, `screenScope`) VALUES
-('v2pB', 1701077657, 1, 'niVt', 'review', 'asd'),
+('0xd9', 1701100466, 0, '4jCx', 'store', 'main'),
+('2iL2', 1701100273, 1, ' giL', 'store', 'main'),
+('3LeR', 1701169875, 1, 'pGuk', 'product', 'main'),
+('664q', 1701172305, 1, 'Vz4z', 'product', 'main'),
+('8GMC', 1701100524, 0, 'FoBZ', 'vehicle', 'main'),
+('8ixj', 1701169829, 1, 'aYSj', 'product', 'main'),
+('DjQY', 1701092071, 0, '9gTe', 'promotion', 'da'),
+('eq2I', 1701099283, 0, 'Ae3k', 'employee', 'main'),
+('euUX', 1701092023, 1, 'pfwu', 'product', 'main'),
+('H58A', 1701170038, 1, 'j22L', 'product', 'main'),
+('HhXe', 1701097869, 1, 'qvOL', 'product', 'main'),
+('MYP4', 1701099637, 0, '2f4x', 'ingredient', 'main'),
+('oslP', 1701170028, 1, '9DkF', 'product', 'main'),
+('QplM', 1701169852, 1, 'miLe', 'product', 'main'),
+('qvqq', 1701090438, 0, 'ptZJ', 'customer', 'main'),
+('uT3j', 1701096783, 0, 'ptZJ', 'customer', 'main'),
+('v2pB', 1701077657, 0, 'niVt', 'review', 'asd'),
+('vHjL', 1701169841, 1, 'l2XV', 'product', 'main'),
+('wLKg', 1701097846, 0, 'niVt', 'review', 'asdas'),
+('x3gE', 1701090470, 1, '3GhD', 'promotion', 'margharita'),
+('Xb3k', 1701169886, 1, 'SHQt', 'product', 'main'),
+('xNlA', 1701097877, 0, 'ptZJ', 'customer', 'main'),
 ('Y4Fh', 1700843887, 1, '5a7M', 'product', 'main'),
 ('YeyJ', 1700842786, 1, 'Sumz', 'customer', 'main'),
-('YViM', 1700842314, 1, 'Ae3k', 'customer', 'main');
+('YViM', 1700842314, 0, 'Ae3k', 'customer', 'main'),
+('zj1n', 1701169864, 1, 'omAQ', 'product', 'main'),
+('zq5b', 1701092089, 0, '9gTe', 'promotion', '4cheese');
 
 -- --------------------------------------------------------
 
@@ -312,7 +363,7 @@ CREATE TABLE `stores` (
 INSERT INTO `stores` (`storeId`, `storeStreetName`, `storeCity`, `storePhone`, `storeZipCode`, `storeEmail`, `storeManager`, `storeIsActive`, `storeCreateDate`) VALUES
 ('0eB5', 'oaklane 12', 'sdaa', '23132', 'qwe', '21wq', NULL, 0, 1699954377),
 ('4jCx', 'oaklane 12', 'sda', '23132ads', 'qwe', '21wq', NULL, 1, 1700559103),
-('giLA', 'oaklane 12', 'sda', '23132', 'qwe', '21wq', NULL, 1, 1700559078),
+('giLA', 'oaklane 12', 'sda', '23132', 'qwe', '21wq', NULL, 0, 1700559078),
 ('T9y1', 'oaklane 12', 'sda', '23132', 'qwe', '21wq', NULL, 1, 1700559086),
 ('zIDp', 'oaklane 12', 'sda', '23132', 'qwe', '21wq', NULL, 1, 1700559094),
 ('zqtF', 'oaklane 12', 'sda', 'a', 'qwe', '21wq', NULL, 1, 1699954581);
